@@ -28,7 +28,7 @@ media_id int,
 type varchar(255) NOT NULL,
 contenu text NOT NULL,
 legende varchar(255),
-ordre int NOT NULL,
+ordre int AUTO_INCREMENT NOT NULL,
 CONSTRAINT fk_page FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE,  -- Clé étrangère vers la table pages
 CONSTRAINT fk_media FOREIGN KEY (media_id) REFERENCES medias(id) ON DELETE SET NULL  -- Clé étrangère vers la table medias
 );

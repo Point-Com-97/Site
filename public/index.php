@@ -1,24 +1,35 @@
-<!DOCTYPE html>
-<html lang="fr">
+<?php
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="/assets/image/main.jpeg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="../public/assets/scss/main.css">
-    <title>ASSOCIATION - POINT COM</title>
-</head>
+require_once __DIR__ . '/../src/php/Page.php';
+require_once __DIR__ . '/../src/php/Bloc.php';
 
-<body>
+$url = $_SERVER['REQUEST_URI'];
 
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-</body>
+$parse_url = parse_url($url, PHP_URL_PATH);
 
-</html>
+$final_url =  trim($parse_url, "/");
 
-<?php 
+if ($final_url == "") {
+    $final_url = "accueil";
+}
+
+$new_page = New Page($final_url);
+
+$current_page = $new_page->getBySlug();
+
+if ($current_page == "404") {
+     die("Page introuvable");
+} else {
+    echo $current_page['titre'];
+}
+
+$new_blocs = New Bloc($current_page['id']);
+
+$all_blocs = $new_blocs->getByPageId();
+
+foreach ($all_blocs as $value) {
+    echo $value['id'] . " " . $value['type'] . " " . $value['contenu'] . " " . $value['legende'] . " " . $value['ordre'] . "\n";
+}
+
+
 
