@@ -1,12 +1,13 @@
 <?php
 require_once __DIR__ . '/../../data/config/database.php';
 
-class Bloc {
+class Bloc
+{
     private $pdo;
 
-    public function __construct(protected int $page_id) 
+    public function __construct(protected int $page_id) // Injection direct de page_id via le constructeur
     {
-        $this->pdo = getConnexion();
+        $this->pdo = getConnexion(); // Connexion a la base de données
     }
 
     public function getByPageId()
@@ -16,10 +17,10 @@ class Bloc {
 
             $stmt->execute([$this->page_id]);
 
-            return $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log("Erreur de requête SQL : " . $e->getMessage());
+            return $stmt = [];
         }
     }
 }

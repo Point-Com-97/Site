@@ -1,13 +1,13 @@
 <?php
 require_once __DIR__ . '/../../data/config/database.php';
 
-class Page {
+class Page
+{
     private $pdo;
 
-    public function __construct(protected string $slug) 
+    public function __construct(protected string $slug) // Injection direct du slug via le constructeur
     {
-        $this->pdo = getConnexion();
-        $this->slug = $slug;
+        $this->pdo = getConnexion(); // Connexion a la base de données
     }
 
     public function getBySlug()
@@ -22,7 +22,6 @@ class Page {
             } else {
                 return $data;
             }
-
         } catch (PDOException $e) {
             error_log("Erreur de requête SQL : " . $e->getMessage());
             return "404";
