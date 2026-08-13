@@ -1,10 +1,36 @@
+// Structure du bloc Texte
 texte : {"contenu": "<p>Texte riche...</p>"}
+
+// Structure du bloc Image
 image : {"media_id": 4, "legende": "..."}
+
+// Structure du bloc Vidéo
 video : {"url": "https://.../embed/xxx", "legende": "..."}
-stats : {"items": [{
-  "type": "bar",
-  "labels": ["Taux de réussite", "Taux d'insertion", "Taux d'abandon"],
-  "datasets": [{"label": "Indicateurs 2025", "data": [95, 80, 5]}]
-}]}
+
+// Structure du bloc Stats via Charts.js
+stats : {
+    "type": "bar",
+    "data": {
+        "labels": [
+            "Taux de reussite",
+            "Taux d'insertion",
+            "Taux d'abandon"
+        ],
+        "datasets": [
+            {
+                "label": "Indicateurs 2025",
+                "data": [
+                    95,
+                    80,
+                    5
+                ]
+            }
+        ]
+    }
+}
+
+// Structure du bloc Cartes via Charts.js
 cartes : {"items": [{"titre": "...", "texte": "...", "media_id": 7, "lien": "/formations/nv4"}]}
+
+// Structure du bloc Tableau
 tableau : {"colonnes": ["Année", "Taux"], "lignes": [["2023", "90%"], ["2024", "95%"]]}

@@ -67,24 +67,25 @@ foreach ($all_blocs as $bloc) {
         case 'video':
 
             echo <<< HTML
-               <div class="ratio ratio-16x9">
+               <div class="w-100">
                     <iframe src="{$donnees['url']}" title="{$donnees['legende']}" ></iframe>
                 </div>
         HTML;
-        case 'carte':
-            print_r($donnees['items']);
+            break;
 
-            echo '<table class="table table-striped table-hover">';
-            foreach ($donnees['items'] as $item) {
-                echo <<<HTML
-                    <thead>
-                        <tr>
-                        <th scope="col"></th>
-                        </tr>
-                    </thead>
-        HTML;
-            }
-            echo '</table>';
+        case 'stats':
+            $canvas_id = 'chart-' . $bloc['id']; // identifiant unique par bloc
+
+            $json_donnees = json_encode($donnees);
+        
+            echo <<<HTML
+                    <div class="m-1">
+                        <canvas id="{$canvas_id}"></canvas>
+                    </div>
+                    <script>
+                       new Chart(document.getElementById('{$canvas_id}'), {$json_donnees});
+                    </script>
+                HTML;
             break;
 
         default:
