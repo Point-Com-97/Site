@@ -16,6 +16,7 @@ CREATE TABLE pages (
 id int PRIMARY KEY AUTO_INCREMENT,
 titre varchar(255) NOT NULL,
 slug varchar(255) NOT NULL,
+template varchar(255) NULL,
 CONSTRAINT unique_slug_pages UNIQUE (slug)
 );
 

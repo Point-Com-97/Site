@@ -1,4 +1,7 @@
 <?php
+
+try {
+
 require_once __DIR__ . '/../src/php/Page.php';
 require_once __DIR__ . '/../src/php/Bloc.php';
 require_once __DIR__ . '/../src/php/Menu.php';
@@ -44,7 +47,7 @@ foreach ($all_blocs as $bloc) {
     switch ($bloc['type']) {
         case 'texte':
             echo <<<HTML
-            <div class="card m-1" style="width: 18rem;">
+            <div class="card m-1 texte bloc" style="width: 18rem;">
                 <div class="card-body">
                     <p class="card-text">{$donnees['contenu']}</p>
                 </div>
@@ -57,7 +60,7 @@ foreach ($all_blocs as $bloc) {
             $url_media = $new_media->getById();
 
             echo <<<HTML
-                <div class="card m-1" style="width: 18rem;">
+                <div class="card m-1 image bloc" style="width: 18rem;">
                     <div class="card-body">
                         <img src="{$url_media['url']}" alt="{$donnees['legende']}" class="img-fluid object-fit-fill border rounded">
                     </div>
@@ -67,7 +70,7 @@ foreach ($all_blocs as $bloc) {
         case 'video':
 
             echo <<< HTML
-               <div class="w-100">
+               <div class="w-100 video bloc">
                     <iframe src="{$donnees['url']}" title="{$donnees['legende']}" ></iframe>
                 </div>
         HTML;
@@ -77,9 +80,9 @@ foreach ($all_blocs as $bloc) {
             $canvas_id = 'chart-' . $bloc['id']; // identifiant unique par bloc
 
             $json_donnees = json_encode($donnees);
-        
+
             echo <<<HTML
-                    <div class="m-1">
+                    <div class="stats bloc">
                         <canvas id="{$canvas_id}"></canvas>
                     </div>
                     <script>
@@ -88,9 +91,50 @@ foreach ($all_blocs as $bloc) {
                 HTML;
             break;
 
+        case 'tableau':
+
+            echo <<<HTML
+                    <table class="table table-hover bloc">
+                        <thead>
+                            <tr>
+                    HTML;
+
+            // Boucle forearch pour l'entête du tableau 
+            foreach ($donnees['colonnes'] as $col) {
+                echo "<th>" . htmlspecialchars($col) . "</th>";
+            }
+
+            echo <<<HTML
+                            </tr>
+                        </thead>
+                        <tbody>
+                    HTML;
+
+            // Boucle forearch pour les lignes du tableau 
+            foreach ($donnees['lignes'] as $ligne) {
+                echo "<tr>";
+                foreach ($ligne as $row) {
+                    echo "<td>" . htmlspecialchars($row) . "</td>";
+                }
+                echo "</tr>";
+            }
+
+            echo <<<HTML
+                        </tbody>
+                    </table>
+                    HTML;
+
+            break;
         default:
             echo "Contenu introuvable\n";
     }
 }
 
 require_once __DIR__ . '/../public/templates/footer.php';
+
+} catch (PDOException $e) {
+
+    error_log("Erreur base de données : " . $e->getMessage(),3, __DIR__ . "/../var/tmp/erreur.log");
+
+    die("<h1> Le site est temporairement indisponible, merci de réessayer plus tard.</h1>");
+}

@@ -1,0 +1,29 @@
+body {
+    background-color: #019cd41e;
+} 
+
+.btn {
+    font-size: 25px;
+    font-weight: bold;
+    padding: auto;
+}
+
+.btn:hover {
+    color: white;
+}
+
+.form_login { 
+width: 30%;
+margin-top: 20vh;
+background-color: rgb(166, 204, 227);
+border: 2px solid black;
+padding: 20px;
+border-radius: 15px;
+box-shadow: 8px 8px $tertiary;
+}
+
+.form-label {
+    color:black;
+    font-size: 30px;
+    font-weight: bold;
+}

@@ -8,6 +8,7 @@ class Page
     public function __construct(protected string $slug) // Injection direct du slug via le constructeur
     {
         $this->pdo = getConnexion(); // Connexion a la base de données
+
     }
 
     public function getBySlug()
@@ -23,7 +24,8 @@ class Page
                 return $data;
             }
         } catch (PDOException $e) {
-            error_log("Erreur de requête SQL : " . $e->getMessage());
+            error_log("Erreur de requête SQL : " . $e->getMessage(),3, __DIR__ . "../../var/tmp/erreur.log");
+
             return "404";
         }
     }

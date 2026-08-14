@@ -17,9 +17,10 @@ class Menu
             $stmt = $this->pdo->query("SELECT menu_items.id AS menu_id, menu_items.titre AS menu_titre, menu_items.ordre, pages.slug AS page_slug FROM menu_items INNER JOIN pages ON menu_items.page_id = pages.id ORDER BY menu_items.ordre");
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
         } catch (PDOException $e) {
 
-            error_log("Erreur de requête SQL : " . $e->getMessage());
+             error_log("Erreur de requête SQL : " . $e->getMessage(),3,__DIR__ . "../../var/tmp/erreur.log");
 
             return $stmt = [];
         }

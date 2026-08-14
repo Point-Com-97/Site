@@ -29,8 +29,5 @@ stats : {
     }
 }
 
-// Structure du bloc Cartes via Charts.js
-cartes : {"items": [{"titre": "...", "texte": "...", "media_id": 7, "lien": "/formations/nv4"}]}
-
 // Structure du bloc Tableau
 tableau : {"colonnes": ["Année", "Taux"], "lignes": [["2023", "90%"], ["2024", "95%"]]}
