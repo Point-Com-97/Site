@@ -2,3 +2,4 @@ node_modules
 data/config/database.php
 Test
 var
+data/sql/seed_admin.php

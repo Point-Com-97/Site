@@ -4,4 +4,3 @@ require __DIR__ . '/auth-check.php';
 
 ?>
 
-<p>Tableau de bord</p>

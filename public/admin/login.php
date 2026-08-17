@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['admin_id'] = $login['id'];
 
                 header('Location: /admin/dashboard.php');
+                exit;
             } else {
                 echo '<div class="alert alert-danger" role="alert">Identifiant ou mot de passe invalide</div>';
             }
