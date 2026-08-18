@@ -9,7 +9,8 @@ CREATE TABLE medias (
 id int PRIMARY KEY AUTO_INCREMENT,
 titre varchar(255) NOT NULL,
 type varchar(255) NOT NULL,
-url varchar(255) NOT NULL
+url varchar(255) NOT NULL,
+create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE pages (

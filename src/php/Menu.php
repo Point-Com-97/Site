@@ -20,7 +20,7 @@ class Menu
             
         } catch (PDOException $e) {
 
-             error_log("Erreur de requête SQL : " . $e->getMessage(),3,__DIR__ . "../../var/tmp/erreur.log");
+             error_log("Erreur de requête SQL : " . $e->getMessage(),3,__DIR__ . "/../../var/tmp/erreur.log");
 
             return $stmt = [];
         }
