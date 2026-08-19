@@ -55,9 +55,9 @@ foreach ($all_blocs as $bloc) {
         HTML;
             break;
         case 'image':
-            $new_media = new Media($donnees['media_id']);
+            $new_media = new Media();
 
-            $url_media = $new_media->getById();
+            $url_media = $new_media->getById($donnees['media_id']);
 
             echo <<<HTML
                 <div class="card m-1 image bloc" style="width: 18rem;">

@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 move_uploaded_file($target_file, "$target_dir/$new_name.$file_ext");
 
-                if(str_starts_with($file_mime_type, 'image/')) {
+                if (str_starts_with($file_mime_type, 'image/')) {
                     $file_type = "image";
                 } else {
                     $file_type = "pdf";
@@ -60,8 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     error_log("Erreur de requête SQL : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log"); // Message d'erreur pour le dévellopeur
                     die(" Une erreur est survenue, veuillez réessayer plus tard."); // Message d'erreur pour les visiteur
                 }
-
-                echo '<div class="alert alert-success" role="alert">Envoie réussi</div>';
+                header('Location: /admin/index.php');
+                exit;
             } else {
                 echo '<div class="alert alert-danger" role="alert">Seuls les fichiers JPEG, PNG et PDF sont autorisés.</div>';
             }
@@ -72,34 +72,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo '<div class="alert alert-danger" role="alert">Une erreur est survenue</div>';
     }
 }
-
-
-?>
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="../assets/image/ico.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="/assets/scss/main.css">
-</head>
-
-<body>
-    <form class="form_login container-fluid d-grid gap-2 col-6 mx-auto" method="post" action="upload.php" enctype="multipart/form-data">
-
-        <div class="mb-3">
-            <label for="media_id" class="form-label">Ajouter une image ou un fichier</label>
-            <input class="form-control form-control-lg" type="file" id="media_id" name="media">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Envoyer</button>
-    </form>
-</body>
-<?php require_once __DIR__ . '/../templates/footer.php'; ?>
-
-</html>
