@@ -1,15 +1,15 @@
 <?php
 
-require __DIR__ . '/auth-check.php';
+require __DIR__ . '/../auth-check.php';
 
 try {
-    require_once __DIR__ . '/../../src/php/Media.php';
+    require_once __DIR__ . '/../../../src/php/Media.php';
 
     $new_media = new Media();
 
     $all_medias = $new_media->getAll();
 
-    require_once __DIR__ . '/../templates/admin/header.php';
+    require_once __DIR__ . '/../../templates/admin/header.php';
 
     echo <<< HTML
             <div class="btn-toolbar m-1" role="toolbar" aria-label="Toolbar with button groups">
@@ -42,7 +42,7 @@ try {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                             <form class="container-fluid d-grid gap-2 mx-auto" method="post" action="/admin/upload.php" enctype="multipart/form-data">
+                             <form class="container-fluid d-grid gap-2 mx-auto" method="post" action="/admin/media/upload.php" enctype="multipart/form-data">
                                 <label for="media_id" class="form-label">Fichier.jpeg/png/webp/pdf</label>
                                 <input class="form-control form-control-lg" type="file" id="media_id" name="media">
                         </div>
@@ -56,7 +56,7 @@ try {
             </div>
         HTML;
 
-    echo '<div class="row row-cols-1 row-cols-md-4 g-4 m-2">';
+    echo '<div class="row row-cols-1 row-cols-md-4 g-4 m-2" id="media-grid">';
     foreach ($all_medias as $media) {
 
         $titre = htmlspecialchars($media["titre"]);
@@ -64,17 +64,16 @@ try {
         switch ($media['type']) {
             case 'image':
                 echo <<< HTML
-            <div class="col">
+            <div class="col" data-id="{$media['id']}">
                 <div class="card">
                     <img src="{$media['url']}" class="card-img-top img-thumbnail" alt="{$titre}">
                     <div class="card-body">
                         <h5 class="card-title">{$titre}</h5>
                         <p class="card-text">Date de création : {$media['created_at']}</p>
                     </div>
-                        <div class="btn-group">
-                            <a href="#" class="btn btn-danger" aria-current="page"><i class="bi bi-pencil-square"></i></a>
-                            <a href="#" class="btn btn-primary"><i class="bi bi-trash3-fill"></i></a>
-                        </div>
+                    <div class="btn-group">
+                        <button onclick="remove_media({$media['id']})" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button>
+                    </div>
                 </div>
             </div>
         HTML;
@@ -82,7 +81,7 @@ try {
 
             case 'pdf':
                 echo <<< HTML
-            <div class="col">
+            <div class="col" data-id="{$media['id']}">
                 <div class="card">
                     <img src="/assets/image/pdf.png" class="card-img-top" alt="{$titre}">
                     <div class="card-body">
@@ -90,8 +89,7 @@ try {
                         <p class="card-text">Date de création : {$media['created_at']}</p>
                     </div>
                         <div class="btn-group">
-                            <a href="#" class="btn btn-danger" aria-current="page"><i class="bi bi-pencil-square"></i></a>
-                            <a href="#" class="btn btn-primary"><i class="bi bi-trash3-fill"></i></a>
+                            <button onclick="remove_media({$media['id']})" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button>
                         </div>
                 </div>
             </div>
@@ -101,10 +99,10 @@ try {
     }
     echo '</div>';
 
-    require_once __DIR__ . '/../templates/footer.php';
+    require_once __DIR__ . '/../../templates/footer.php';
 } catch (PDOException $e) {
 
-    error_log("Erreur de connexion PDO : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log"); // Message d'erreur pour le dévellopeur
+    error_log("Erreur de connexion PDO : " . $e->getMessage(), 3, __DIR__ . "/../../../var/tmp/erreur.log"); // Message d'erreur pour le dévellopeur
 
     die(" Une erreur est survenue, veuillez réessayer plus tard."); // Message d'erreur pour les visiteurs
 }

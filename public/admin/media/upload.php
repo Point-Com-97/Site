@@ -1,10 +1,10 @@
 <?php
 
-require __DIR__ . '/auth-check.php';
-require_once __DIR__ . '/../../data/config/database.php';
+require __DIR__ . '/../auth-check.php';
+require_once __DIR__ . '/../../../data/config/database.php';
 
 // Chemin du dossier cible
-$target_dir = __DIR__ . "/../uploads";
+$target_dir = __DIR__ . "/../../uploads";
 
 // Taille limite 10Mo
 $size_max = 10 * 1024 * 1024;
@@ -12,7 +12,7 @@ $size_max = 10 * 1024 * 1024;
 try {
     $pdo = getConnexion();
 } catch (PDOException $e) {
-    error_log("Erreur de connexion PDO : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log"); // Message d'erreur pour le dévellopeur
+    error_log("Erreur de connexion PDO : " . $e->getMessage(), 3, __DIR__ . "/../../../var/tmp/erreur.log"); // Message d'erreur pour le dévellopeur
     die(" Une erreur est survenue, veuillez réessayer plus tard."); // Message d'erreur pour les visiteurs
 }
 
@@ -57,10 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt = $pdo->prepare("INSERT INTO medias (titre, type, url) VALUES (?,?,?)");
                     $stmt->execute([$name, $file_type, $url_file]);
                 } catch (PDOException $e) {
-                    error_log("Erreur de requête SQL : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log"); // Message d'erreur pour le dévellopeur
+                    error_log("Erreur de requête SQL : " . $e->getMessage(), 3, __DIR__ . "/../../../var/tmp/erreur.log"); // Message d'erreur pour le dévellopeur
                     die(" Une erreur est survenue, veuillez réessayer plus tard."); // Message d'erreur pour les visiteur
                 }
-                header('Location: /admin/index.php');
+                header('Location: /admin/media/index.php');
                 exit;
             } else {
                 echo '<div class="alert alert-danger" role="alert">Seuls les fichiers JPEG, PNG et PDF sont autorisés.</div>';

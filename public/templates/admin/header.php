@@ -34,7 +34,7 @@
                         <a class="nav-link" id="nav-item" aria-current="page" href="/admin/dashboard.php">Tableau de bord</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="nav-item" href="/admin/index.php">Médiathèque</a>
+                        <a class="nav-link" id="nav-item" href="/admin/media/index.php">Médiathèque</a>
                     </li>
                 </ul>
 
