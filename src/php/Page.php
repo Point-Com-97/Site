@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../data/config/database.php';
 
 class Page
 {
-    private $pdo;
+    private PDO $pdo;
 
     public function __construct(protected string $slug) // Injection direct du slug via le constructeur
     {

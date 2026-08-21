@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../data/config/database.php';
 
 class Menu
 {
-    private $pdo;
+    private PDO $pdo;
 
     public function __construct()
     {
@@ -52,7 +52,7 @@ class Menu
         }
     }
 
-    public function create($titre, $page_id)
+    public function create(string $titre, int $page_id)
     {
 
         try {
@@ -79,7 +79,20 @@ class Menu
         }
     }
 
-    public function update_ordre($id, $nouvelOrdre)
+        public function update(int $id, string $titre)
+    {
+        try {
+            $stmt = $this->pdo->prepare("UPDATE menu_items SET titre = ? WHERE id = ?");
+            $stmt->execute([$titre, $id]);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Erreur lors de la mise a jour : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
+            return false;
+        }
+    }
+
+
+    public function update_ordre(int $id, int $nouvelOrdre)
     {
         try {
             $stmt = $this->pdo->prepare("UPDATE menu_items SET ordre = ? WHERE id = ?");
@@ -91,7 +104,7 @@ class Menu
         }
     }
 
-    public function delete($id)
+    public function delete(int $id)
     {
         try {
             $stmt = $this->pdo->prepare("SELECT * FROM menu_items WHERE id = ?");

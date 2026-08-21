@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../data/config/database.php';
 
 class Bloc
 {
-    private $pdo;
+    private PDO $pdo;
 
     public function __construct(protected int $page_id) // Injection direct de page_id via le constructeur
     {
