@@ -29,6 +29,21 @@ class Page
             return "404";
         }
     }
+
+        public function getAll()
+    {
+        try {
+            // Requête SQL pour récupérer les éléments du menu avec les slugs des pages associées via une jointure et alias pour les colonnes
+            $stmt = $this->pdo->query("SELECT * FROM pages ORDER BY titre ");
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+
+            error_log("Erreur de requête SQL : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
+
+            return $stmt = [];
+        }
+    }
 }
 
 // $a = New Page('acceuil');

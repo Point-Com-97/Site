@@ -10,19 +10,106 @@ class Menu
         $this->pdo = getConnexion(); // Connexion a la base de données
     }
 
-    public function getAllMenu()
+
+    public function sort_menu(array $items): array
+    {
+        $main = [];
+        $child = [];
+
+        foreach ($items as $item) {
+            if ($item['parent_id'] === null) {
+                $main[] = $item;
+            } else {
+                $child[$item['parent_id']][] = $item;
+            }
+        }
+
+        foreach ($main as &$m) {
+            $m['enfants'] = $child[$m['menu_id']] ?? [];
+        }
+
+        return $main;
+    }
+
+
+    public function getAll()
     {
         try {
             // Requête SQL pour récupérer les éléments du menu avec les slugs des pages associées via une jointure et alias pour les colonnes
-            $stmt = $this->pdo->query("SELECT menu_items.id AS menu_id, menu_items.titre AS menu_titre, menu_items.ordre, pages.slug AS page_slug FROM menu_items INNER JOIN pages ON menu_items.page_id = pages.id ORDER BY menu_items.ordre");
+            $stmt = $this->pdo->query("SELECT menu_items.id AS menu_id, menu_items.titre AS menu_titre, menu_items.ordre, menu_items.parent_id, pages.slug AS page_slug FROM menu_items LEFT JOIN pages ON menu_items.page_id = pages.id ORDER BY menu_items.ordre");
 
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $result = $this->sort_menu($data);
+
+            return $result;
             
         } catch (PDOException $e) {
 
-             error_log("Erreur de requête SQL : " . $e->getMessage(),3,__DIR__ . "/../../var/tmp/erreur.log");
+            error_log("Erreur de requête SQL : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
 
             return $stmt = [];
+        }
+    }
+
+    public function create($titre, $page_id)
+    {
+
+        try {
+            if (!empty($titre) && !empty($page_id)) {
+
+                $menu_titre = trim($titre);
+                $slug = strtolower($menu_titre);
+
+                $stmt = $this->pdo->query("SELECT MAX(ordre) AS max_ordre FROM menu_items");
+
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                $ordre = ($result['max_ordre'] ?? 0) + 1;
+
+                $stmt = $this->pdo->prepare("INSERT INTO menu_items (titre, slug, ordre, page_id) VALUES (?, ?, ?, ?)");
+                $stmt->execute([$menu_titre, $slug, $ordre, $page_id]);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            error_log("Erreur lors de la creation " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
+            die(" Une erreur est survenue, veuillez réessayer plus tard.");
+        }
+    }
+
+    public function update_ordre($id, $nouvelOrdre)
+    {
+        try {
+            $stmt = $this->pdo->prepare("UPDATE menu_items SET ordre = ? WHERE id = ?");
+            $stmt->execute([$nouvelOrdre, $id]);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Erreur lors de la mise a jour : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
+            return false;
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            $stmt = $this->pdo->prepare("SELECT * FROM menu_items WHERE id = ?");
+
+            $stmt->execute([$id]);
+
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$data) {
+                return false;
+            }
+
+            $stmt = $this->pdo->prepare("DELETE FROM menu_items WHERE id = ?");
+            $stmt->execute([$id]);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Erreur lors de la suppression : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
+            return false;
         }
     }
 }

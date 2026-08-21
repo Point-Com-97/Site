@@ -17,7 +17,6 @@ CREATE TABLE pages (
 id int PRIMARY KEY AUTO_INCREMENT,
 titre varchar(255) NOT NULL,
 slug varchar(255) NOT NULL,
-template varchar(255) NULL,
 CONSTRAINT unique_slug_pages UNIQUE (slug)
 );
 
@@ -33,9 +32,9 @@ CONSTRAINT fk_page FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE 
 CREATE TABLE menu_items(
 id int PRIMARY KEY AUTO_INCREMENT,
 titre varchar(255) NOT NULL,
-slug varchar(255) NOT NULL,
 ordre int NOT NULL,
+parent_id INT NULL,
 page_id int,
 CONSTRAINT fk_menu_item FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE, -- Clé étrangère vers la table pages
-CONSTRAINT unique_slug_menu_items UNIQUE (slug) 
+CONSTRAINT fk_parent FOREIGN KEY (parent_id) REFERENCES menu_items(id) ON DELETE CASCADE
 );

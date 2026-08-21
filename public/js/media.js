@@ -80,6 +80,7 @@ function charger_medias(critere) {
         })
         .catch(error => {
             console.error('Erreur lors du tri :', error);
+            show_message('Erreur lors du tri :');
         });
 }
 
@@ -103,7 +104,7 @@ function remove_media(id) {
              const media = document.querySelector(`[data-id="${id}"]`);
                media.remove();
             } else {
-                alert('La suppression a échoué.');
+                show_message('La suppression a échoué.');
             }
         });
 }

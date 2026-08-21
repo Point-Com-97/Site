@@ -2,14 +2,15 @@
 
 require __DIR__ . '/../auth-check.php';
 
+require_once __DIR__ . '/../../templates/admin/header.php';
+
 try {
+
     require_once __DIR__ . '/../../../src/php/Media.php';
 
     $new_media = new Media();
 
     $all_medias = $new_media->getAll();
-
-    require_once __DIR__ . '/../../templates/admin/header.php';
 
     echo <<< HTML
             <div class="btn-toolbar m-1" role="toolbar" aria-label="Toolbar with button groups">

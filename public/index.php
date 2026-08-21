@@ -22,7 +22,7 @@ if ($final_url == "") {
 // Récupération de tous les éléments du menu
 $new_menu = new Menu();
 
-$all_menu = $new_menu->getAllMenu();
+$all_menu = $new_menu->getAll();
 
 // Récupération de la page actuelle en fonction du slug
 $new_page = new Page($final_url);

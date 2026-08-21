@@ -2,6 +2,7 @@
 
 require __DIR__ . '/../auth-check.php';
 require_once __DIR__ . '/../../../data/config/database.php';
+require_once __DIR__ . '/../../../src/php/Flash.php';
 
 // Chemin du dossier cible
 $target_dir = __DIR__ . "/../../uploads";
@@ -60,15 +61,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     error_log("Erreur de requête SQL : " . $e->getMessage(), 3, __DIR__ . "/../../../var/tmp/erreur.log"); // Message d'erreur pour le dévellopeur
                     die(" Une erreur est survenue, veuillez réessayer plus tard."); // Message d'erreur pour les visiteur
                 }
+                set_flash('Média ajouté avec succès.', 'success');
                 header('Location: /admin/media/index.php');
                 exit;
             } else {
-                echo '<div class="alert alert-danger" role="alert">Seuls les fichiers JPEG, PNG et PDF sont autorisés.</div>';
+                set_flash('Seuls les fichiers JPEG, PNG et PDF sont autorisés.', 'danger');
+                header('Location: /admin/media/index.php');
+                exit;
             }
         } else {
-            echo '<div class="alert alert-danger" role="alert">La taille de la pièce jointe dépasse la limite maximale de 10Mo</div>';
+            set_flash('La taille de la pièce jointe dépasse la limite maximale de 10Mo', 'danger');
+            header('Location: /admin/media/index.php');
+            exit;
         }
     } else {
-        echo '<div class="alert alert-danger" role="alert">Une erreur est survenue</div>';
+        set_flash('Une erreur est survenue', 'danger');
+        header('Location: /admin/media/index.php');
+        exit;
     }
 }

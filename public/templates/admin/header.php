@@ -27,7 +27,7 @@
                     <img src="/assets/image/logo.jpeg" alt="Logo" width="200" height="50" class="d-inline-block align-text-top">
                 </a>
                 <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                 <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" id="nav-item" aria-current="page" href="/accueil" target="_blank">Voir Site</a>
                     </li>
                     <li class="nav-item">
@@ -46,4 +46,5 @@
             </div>
         </div>
     </nav>
+    <div class="toast-container position-fixed top-0 end-0 p-3" id="toast-container"></div>
     <main>
