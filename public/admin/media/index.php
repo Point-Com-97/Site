@@ -43,7 +43,7 @@ try {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                             <form class="container-fluid d-grid gap-2 mx-auto" method="post" action="/admin/media/upload.php" enctype="multipart/form-data">
+                             <form class="container-fluid d-grid gap-2 mx-auto" method="post" enctype="multipart/form-data">
                                 <label for="media_id" class="form-label">Fichier.jpeg/png/webp/pdf</label>
                                 <input class="form-control form-control-lg" type="file" id="media_id" name="media">
                         </div>

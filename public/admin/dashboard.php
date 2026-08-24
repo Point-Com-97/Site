@@ -23,6 +23,7 @@ try {
 
     $titre = htmlspecialchars($main['menu_titre']);
 
+       // Modal de modification texte menu principale
         echo <<< HTML
             <div class="modal fade" id="editModal{$main['menu_id']}" tabindex="-1" aria-labelledby="editModalLabel{$main['menu_id']}" aria-hidden="true">
                 <div class="modal-dialog">
@@ -32,9 +33,9 @@ try {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                             <form class="container-fluid d-grid gap-2 mx-auto" method="post" action="/admin/endpoint/update.php">
-                                <label for="menu_id" class="form-label">Renommer le menu</label>
-                                <input class="form-control form-control-lg" type="texte" id="menu_id" name="menu" value="{$titre}">
+                             <form class="container-fluid d-grid gap-2 mx-auto edit_form" id="edit_form_{$main['menu_id']}" method="post">
+                                <input type="hidden" name="id" value="{$main['menu_id']}">
+                                <input class="form-control form-control-lg" type="texte" id="menu_titre_{$main['menu_id']}" name="menu_titre" value="{$titre}">
                         </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -48,10 +49,12 @@ try {
 
         echo "<div class=\"row align-items-start\" data-id=\"{$main['menu_id']}\">";
         echo '<div class="accordion accordion-flush col" id="accordionFlushExample">';
+
+        // Affichage liste des menus principale
         echo <<< HTML
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{$main['menu_id']}" aria-expanded="false" aria-controls="flush-collapseOne">
+                    <button data-id="{$main['menu_id']}" id="menu_label_{$main['menu_id']}"class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{$main['menu_id']}" aria-expanded="false" aria-controls="flush-collapseOne">
                         {$titre}
                     </button>
                     </h2>
@@ -64,6 +67,7 @@ try {
 
             $titre = htmlspecialchars($child['menu_titre']);
 
+            // Modal de modification texte sous-menu
                     echo <<< HTML
             <div class="modal fade" id="editModal{$child['menu_id']}" tabindex="-1" aria-labelledby="editModalLabel{$child['menu_id']}" aria-hidden="true">
                 <div class="modal-dialog">
@@ -73,24 +77,23 @@ try {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                             <form class="container-fluid d-grid gap-2 mx-auto" method="post" action="/admin/endpoint/update.php">
-                                <label for="menu_id" class="form-label">Renommer le menu</label>
-                                <input type="hidden" name="id" value="{$main['menu_id']}">
-                                <input class="form-control form-control-lg" type="texte" id="menu_id" name="menu" value="{$titre}">
+                             <form class="container-fluid d-grid gap-2 mx-auto edit_form" method="post" id="edit_form_{$child['menu_id']}">
+                                <input type="hidden" name="id" value="{$child['menu_id']}">
+                                <input class="form-control form-control-lg" type="texte" id="menu_titre_{$child['menu_id']}" name="menu_titre" value="{$titre}">
                         </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                                    <button type="submit" class="btn btn-primary btn_edit">Envoyer</button>
                                 </div>
                         </form>
                     </div>
                 </div>
             </div>
         HTML;
-
+            // Affichage liste des sous-menu
             echo <<< HTML
                     <div class="row align-items-start" data-id="{$child['menu_id']}">
-                        <div class="accordion-body col">
+                        <div class="accordion-body col" id="menu_label_{$child['menu_id']}">
                             {$titre}
                         </div>
                             <div class="btn-toolbar col" role="toolbar" aria-label="Toolbar with button groups">

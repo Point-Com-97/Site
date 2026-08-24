@@ -20,7 +20,7 @@ function show_message(message, type = 'danger') {
 
     container.appendChild(toast);
 
-    const bsToast = new bootstrap.Toast(toast, { delay: 4000 });
+    const bsToast = new bootstrap.Toast(toast, { delay: 5000 });
     bsToast.show();
 
     // nettoyage : retire le toast du DOM une fois complètement caché
