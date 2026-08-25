@@ -34,7 +34,7 @@ id int PRIMARY KEY AUTO_INCREMENT,
 titre varchar(255) NOT NULL,
 ordre int NOT NULL,
 parent_id INT NULL,
-page_id int,
+page_id int NULL,
 CONSTRAINT fk_menu_item FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE, -- Clé étrangère vers la table pages
 CONSTRAINT fk_parent FOREIGN KEY (parent_id) REFERENCES menu_items(id) ON DELETE CASCADE
 );

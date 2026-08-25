@@ -25,9 +25,9 @@ $new_menu = new Menu();
 $all_menu = $new_menu->getAll();
 
 // Récupération de la page actuelle en fonction du slug
-$new_page = new Page($final_url);
+$new_page = new Page();
 
-$current_page = $new_page->getBySlug();
+$current_page = $new_page->getBySlug($final_url);
 
 if ($current_page == "404") {
     die("Page introuvable");

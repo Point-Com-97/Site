@@ -35,7 +35,7 @@ class Menu
     public function getAll()
     {
         try {
-            // Requête SQL pour récupérer les éléments du menu avec les slugs des pages associées via une jointure et alias pour les colonnes
+            // Requête SQL pour récupérer les éléments du menu avec des pages associées via une jointure et alias pour les colonnes
             $stmt = $this->pdo->query("SELECT menu_items.id AS menu_id, menu_items.titre AS menu_titre, menu_items.ordre, menu_items.parent_id, pages.slug AS page_slug FROM menu_items LEFT JOIN pages ON menu_items.page_id = pages.id ORDER BY menu_items.ordre");
 
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -52,14 +52,13 @@ class Menu
         }
     }
 
-    public function create(string $titre, int $page_id)
+    public function create(string $titre, ?int $page_id = null, ?int $parent_id = null)
     {
 
         try {
-            if (!empty($titre) && !empty($page_id)) {
+            if (!empty($titre)) {
 
                 $menu_titre = trim($titre);
-                $slug = strtolower($menu_titre);
 
                 $stmt = $this->pdo->query("SELECT MAX(ordre) AS max_ordre FROM menu_items");
 
@@ -67,15 +66,16 @@ class Menu
 
                 $ordre = ($result['max_ordre'] ?? 0) + 1;
 
-                $stmt = $this->pdo->prepare("INSERT INTO menu_items (titre, slug, ordre, page_id) VALUES (?, ?, ?, ?)");
-                $stmt->execute([$menu_titre, $slug, $ordre, $page_id]);
-                return true;
+                $stmt = $this->pdo->prepare("INSERT INTO menu_items (titre, ordre, page_id, parent_id) VALUES (?, ?, ?, ?)");
+                $stmt->execute([$menu_titre, $ordre, $page_id, $parent_id]);
+
+                return $this->pdo->lastInsertId();
             } else {
                 return false;
             }
         } catch (PDOException $e) {
             error_log("Erreur lors de la creation " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
-            die(" Une erreur est survenue, veuillez réessayer plus tard.");
+            return false;
         }
     }
 

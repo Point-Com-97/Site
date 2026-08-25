@@ -5,17 +5,17 @@ class Page
 {
     private PDO $pdo;
 
-    public function __construct(protected string $slug) // Injection direct du slug via le constructeur
+    public function __construct() // Injection direct du slug via le constructeur
     {
         $this->pdo = getConnexion(); // Connexion a la base de données
 
     }
 
-    public function getBySlug()
+    public function getBySlug(string $slug)
     {
         try {
             $stmt = $this->pdo->prepare("SELECT * FROM pages WHERE slug = ?");
-            $stmt->execute([$this->slug]);
+            $stmt->execute([$slug]);
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($data == false) {

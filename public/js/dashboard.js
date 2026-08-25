@@ -43,6 +43,44 @@ document.querySelectorAll('.edit_form').forEach(function(form) {
     });
 });
 
+function add_menu(titre, page_id, parent_id) { 
+    fetch(`/admin/endpoint/create.php?titre=${titre}&page_id=${page_id}&parent_id=${parent_id}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                show_message('Menu ajouter', 'success');
+                if(!parent_id) {
+                    const body = document.querySelector('#menu-list');
+                    // Insert les bloc html pour la modal et le menu à la fin du body
+                    body.insertAdjacentHTML('beforeend', data.html); 
+
+                    const modalElement = document.querySelector(`#new_menu`);
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    modalInstance.hide();
+
+                } else {
+                    const parent = document.querySelector(`[data-id="${parent_id}"]`);
+                    // Insert les bloc html pour la modal et le menu à la fin du parent
+                    parent.insertAdjacentHTML('beforeend', data.html_complet);
+
+                    const modalElement = document.querySelector(`#new_menu`);
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    modalInstance.hide();
+                }
+            } else {
+                show_message('Echec de la ajout');
+            }
+        });
+}
+
+document.querySelectorAll('.add_form').forEach(function(form) {
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const data = new FormData(form);
+        add_menu(data.get('titre'), data.get('page_id'), data.get('parent_id'));
+    });
+});
+
 
 
 
