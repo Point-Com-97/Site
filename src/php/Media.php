@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../data/config/database.php';
 
 class Media
 {
-    private PDO $pdo;
+    private $pdo;
 
     public function __construct() // Injection direct de id via le constructeur
     {

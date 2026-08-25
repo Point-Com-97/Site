@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/../../auth-check.php';
 require_once __DIR__ . '/../../../../src/php/Media.php';
+require_once __DIR__ . '/../../../templates/admin/item/media.php';
 
 // Définir l'en-tête de réponse pour indiquer que le contenu est au format JSON
 header('Content-Type: application/json');
@@ -11,4 +12,9 @@ $tri = $_GET['tri'] ?? 'created_at';
 $new_media = new Media();
 $medias = $new_media->getAll($tri);
 
-echo json_encode($medias);
+$html = '';
+foreach ($medias as $media) {
+    $html .= render_media($media);
+}
+
+echo json_encode(['html' => $html]);
