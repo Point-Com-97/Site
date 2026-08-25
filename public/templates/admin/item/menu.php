@@ -36,9 +36,9 @@ function render_menu(array $item, bool $is_child = false): string
     if ($is_child) {
         // structure liste + boutons / sous-menu
         return <<<HTML
-                    <div class="container text-center" data-id="{$id}">
+                    <div class="container text-center" data-id="{$id}" draggable="true">
                          <div class="row align-items-start">
-                            <a class="list-group-item list-group-item-action col" href="#" id="menu_label_{$id}" data-id="{$id}">
+                            <a class="list-group-item list-group-item-action col" href="#" id="menu_label_{$id}">
                                     {$titre}
                             </a>  
 

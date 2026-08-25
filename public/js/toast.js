@@ -2,19 +2,19 @@ function show_message(message, type = 'danger') {
     const container = document.getElementById('toast-container');
 
     const toast = document.createElement('div');
-    toast.classList.add('toast', 'align-items-center', `text-bg-${type}`, 'border-0','position-fixed', 'bottom-0', 'end-0', 'p-1');
+    toast.classList.add('toast', 'align-items-center', `text-bg-${type}`, 'border-0','position-fixed', 'bottom-0', 'end-0', 'm-1');
     toast.setAttribute('role', 'alert');
     toast.setAttribute('aria-live', 'assertive');
     toast.setAttribute('aria-atomic', 'true');
 
     toast.innerHTML = `
-        <div class="d-flex">
+        <div class="d-inline-flex">
             <div class="toast-body fs-6"></div>
             <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
     `;
 
-    // le message est injecté via textContent, pas innerHTML — pourquoi, à ton avis,
+    // le message est injecté via textContent,
     // vu ce qu'on avait déjà appris avec sort.js ?
     toast.querySelector('.toast-body').textContent = message;
 

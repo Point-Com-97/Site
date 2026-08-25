@@ -73,11 +73,11 @@ try {
         HTML;
  echo "<div id='menu-list'>";
     foreach ($all_menus as $main) {
-        echo "<div class='list-group'>";
+        echo "<div class='list-group' draggable='true' data-id='{$main['menu_id']}'>";
         echo render_modal($main);
         echo render_menu($main, false);
 
-        echo "<div class='list-group'>";
+        echo "<div class='list-group child-group' data-parent-id='{$main['menu_id']}'>";
         foreach ($main['enfants'] as $child) {
             echo render_modal($child);
             echo render_menu($child, true);
