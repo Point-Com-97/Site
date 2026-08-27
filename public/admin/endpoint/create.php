@@ -27,10 +27,10 @@ if ($type == 'Menu') {
 } else {
     $new_page = new Page();
     $resultat = $new_page->create((string) $name, $menu);
-    $main = array('id' => $resultat, 'titre' => $name);
+    $main = array('id' => $resultat, 'titre' => $name, 'menu_id' => $menu, 'visible' => 1);
     $modal = render_modal_page($main);
     $page_html = render_page($main);
     $html_complet = "{$modal}{$page_html}";
 }
 
-echo json_encode(['success' =>  (bool) $resultat, 'html' => $html_complet]);
+echo json_encode(['success' => $resultat, 'html' => $html_complet]);

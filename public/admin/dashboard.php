@@ -43,15 +43,13 @@ try {
                         </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                                    <button type="submit" class="btn btn-primary">Valider</button>
                                 </div>
                         </form>
                     </div>
                 </div>
             </div>
         HTML;
-
-
 
     // Modal d'ajout pour les pages
         echo <<< HTML
@@ -90,7 +88,7 @@ try {
                             </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                                        <button type="submit" class="btn btn-primary">Valider</button>
                                     </div>
                             </form>
                         </div>
@@ -103,11 +101,11 @@ try {
     
     echo "<div id='menu-list'>";
         foreach ($all_menus as $m) {
-            echo "<div class='list-group' draggable='true' data-id='{$m['menu_id']}'>";
+            echo "<div class='list-group' draggable='true' id='Menu_{$m['menu_id']}'>";
             echo render_modal_menu($m);
             echo render_menu($m);
             $page_menu = $page_group[$m['menu_id']] ?? [];
-            echo "<div class='list-group child-group' data-parent-id='{$m['menu_id']}'>";
+            echo "<div class='list-group child-group'>";
                 foreach ($page_menu as $p) {
                     echo render_modal_page($p);
                     echo render_page($p);

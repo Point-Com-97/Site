@@ -122,7 +122,7 @@ function render_page(array $item): string
 
     // structure liste + boutons / page
     return <<<HTML
-                    <div class="container text-center" data-id="Page_{$id}" draggable="true">
+                    <div class="container text-center" id="Page_{$id}" draggable="true">
                          <div class="row align-items-start">
                             <a class="list-group-item list-group-item-action col" href="#" id="Page_label_{$id}">
                                     {$titre}

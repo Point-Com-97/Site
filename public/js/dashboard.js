@@ -8,7 +8,7 @@ function remove_items(id, type) {
             if (data.success) {
                 show_message('Suppression effectuée.', 'success');
 
-                    const menu = document.querySelector(`[data-id="${type}_${id}"]`);  // querySelector peut bloquer l'éxecution des fonctions
+                    const menu = document.getElementById(`${type}_${id}`);
                     menu.remove();
 
             } else {
@@ -60,8 +60,8 @@ function add(titre, type, menu_id) {
                     modalInstance.hide();
 
                 } else {
-                    const parent = document.querySelector(`[data-id="${menu_id}"]`);
-                    // Insert les bloc html pour la modal et la page à la fin du menu parent
+                    const parent = document.getElementById(`Menu_${menu_id}`);
+                    // Insert les bloc html pour la modal et le menu à la fin du parent
                     parent.insertAdjacentHTML('beforeend', data.html);
 
                     const modalElement = document.querySelector(`#new_page`);
@@ -113,7 +113,7 @@ function duplicate(id, menu_id) {
         .then(data => {
             if (data.success) {
                 show_message('Duplication réussie', 'success');
-                    const parent = document.querySelector(`[data-id="${menu_id}"]`);
+                    const parent = document.getElementById(`Menu_${menu_id}`);
                     // Insert les bloc html pour la modal et le menu à la fin du parent
                     parent.insertAdjacentHTML('beforeend', data.html);
             } else {
