@@ -45,7 +45,7 @@ class Page
         }
     }
 
-    public function create(string $titre)
+    public function create(string $titre, ?int $menu_id)
     {
 
         try {
@@ -55,9 +55,9 @@ class Page
 
                 $slug = strtolower(str_replace(' ', '-', $page_titre));
 
-                $stmt = $this->pdo->prepare("INSERT INTO pages (titre, slug) VALUES (?, ?)");
+                $stmt = $this->pdo->prepare("INSERT INTO pages (titre, slug, menu_id) VALUES (?, ?, ?)");
 
-                $stmt->execute([$page_titre, $slug]);
+                $stmt->execute([$page_titre, $slug, $menu_id]);
 
                 return $this->pdo->lastInsertId();
             } else {

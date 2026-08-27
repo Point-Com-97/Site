@@ -37,7 +37,8 @@ try {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                             <form class="container-fluid d-grid gap-2 mx-auto add_form" method="post">
+                             <form class="container-fluid d-grid gap-2 mx-auto add_form_menu" method="post">
+                                <input type="hidden" name="type" value="Menu">
                                 <input class="form-control" type="text" name="titre" id="titre" value="Nouveau menu" aria-label="Nouveau menu">
                         </div>
                                 <div class="modal-footer">
@@ -53,48 +54,49 @@ try {
 
 
     // Modal d'ajout pour les pages
-    echo <<< HTML
-            <div class="btn-toolbar m-1" role="toolbar" aria-label="Toolbar with button groups">
-                <div class="btn-group me-2" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new_page">
-                        Nouvelle Page
-                    </button>
-                </div>
-            </div>
-        HTML;
-
-    echo <<< HTML
-            <div class="modal fade" id="new_page" tabindex="-1" aria-labelledby="new_page_label" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="new_page_label">Page</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                             <form class="container-fluid d-grid gap-2 mx-auto add_form" method="post">
-                                <input class="form-control" type="text" name="titre" id="titre" value="Nouvelle Page" aria-label="Nouvelle Page">
-            HTML;
-                                echo "<select class='form-select' name='parent_id' aria-label='list_page'>";
-                                    echo '<option selected>Sélectionnez le menu</option>'; {
-                                        echo "<option value=''>...</option>";
-                                        foreach ($all_menus as $m) {
-                                            echo "<option value='{$m['menu_id']}'>{$m['menu_titre']}</option>";
-                                        }
-                                    }
-                                echo '</select>';
-
-    echo <<< HTML
-                        </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-primary">Envoyer</button>
-                                </div>
-                        </form>
+        echo <<< HTML
+                <div class="btn-toolbar m-1" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group me-2" role="group" aria-label="First group">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new_page">
+                            Nouvelle Page
+                        </button>
                     </div>
                 </div>
-            </div>
-        HTML;
+            HTML;
+
+        echo <<< HTML
+                <div class="modal fade" id="new_page" tabindex="-1" aria-labelledby="new_page_label" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="new_page_label">Page</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="container-fluid d-grid gap-2 mx-auto add_form_page" method="post">
+                                    <input type="hidden" name="type" value="Page">
+                                    <input class="form-control" type="text" name="titre" id="titre" value="Nouvelle Page" aria-label="Nouvelle Page">
+                HTML;
+                                    echo "<select class='form-select' name='menu_id' aria-label='list_page'>";
+                                        echo '<option selected>Sélectionnez le menu</option>'; {
+                                            echo "<option value=''>...</option>";
+                                            foreach ($all_menus as $m) {
+                                                echo "<option value='{$m['menu_id']}'>{$m['menu_titre']}</option>";
+                                            }
+                                        }
+                                    echo '</select>';
+
+        echo <<< HTML
+                            </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            HTML;
 
         
     

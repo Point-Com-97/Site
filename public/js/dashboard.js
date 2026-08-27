@@ -44,14 +44,14 @@ document.querySelectorAll('.edit_form').forEach(function (form) {
     });
 });
 
-function add_menu(titre, menu_id) {
-    fetch(`/admin/endpoint/create.php?titre=${titre}&menu_id=${menu_id}`)
+function add(titre, type, menu_id) {
+    fetch(`/admin/endpoint/create.php?titre=${titre}&type=${type}&menu_id=${menu_id}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                show_message('Menu ajouter', 'success');
-                if (!parent_id) {
-                    const body = document.querySelector('#menu-list');
+                show_message('Element ajouter', 'success');
+                if (type == 'Menu') {
+                    const body = document.querySelector(`#menu-list`);
                     // Insert les bloc html pour la modal et le menu à la fin du body
                     body.insertAdjacentHTML('beforeend', data.html);
 
@@ -60,11 +60,11 @@ function add_menu(titre, menu_id) {
                     modalInstance.hide();
 
                 } else {
-                    const parent = document.querySelector(`[data-id="${parent_id}"]`);
+                    const parent = document.querySelector(`[data-id="${menu_id}"]`);
                     // Insert les bloc html pour la modal et le menu à la fin du parent
-                    parent.insertAdjacentHTML('beforeend', data.html_complet);
+                    parent.insertAdjacentHTML('beforeend', data.html);
 
-                    const modalElement = document.querySelector(`#new_menu`);
+                    const modalElement = document.querySelector(`#new_page`);
                     const modalInstance = bootstrap.Modal.getInstance(modalElement);
                     modalInstance.hide();
                 }
@@ -74,11 +74,19 @@ function add_menu(titre, menu_id) {
         });
 }
 
-document.querySelectorAll('.add_form').forEach(function (form) {
+document.querySelectorAll('.add_form_menu').forEach(function (form) {
     form.addEventListener('submit', function (event) {
         event.preventDefault();
         const data = new FormData(form);
-        add_menu(data.get('titre'), data.get('page_id'), data.get('parent_id'));
+        add(data.get('titre'), data.get('type'));
+    });
+});
+
+document.querySelectorAll('.add_form_page').forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const data = new FormData(form);
+        add(data.get('titre'),data.get('type'), data.get('menu_id'));
     });
 });
 

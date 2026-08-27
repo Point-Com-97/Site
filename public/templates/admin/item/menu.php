@@ -52,7 +52,7 @@ function render_menu(array $item): string
    
         // structure liste + boutons / menu principal
         return <<<HTML
-                    <div class="container text-center" data-id="Menu_{$id}">
+                    <div class="container text-center" data-id="menu_{$id}">
                          <div class="row align-items-start">
                             <a class="list-group-item list-group-item-action active disabled col" aria-current="true" id="Menu_label_{$id}">
                                 {$titre}
