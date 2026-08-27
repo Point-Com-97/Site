@@ -27,7 +27,16 @@
                 <div class="navbar-nav">
                     <?php if (!empty($all_menu) && is_array($all_menu)): ?>
                         <?php foreach ($all_menu as $item): ?>
-                            <a class="nav-link" href="<?= htmlspecialchars($item['page_slug']) ?>"><?= htmlspecialchars($item['menu_titre']) ?></a>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <?= htmlspecialchars($item['menu_titre']) ?>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><button class="dropdown-item" type="button">Action</button></li>
+                                    <li><button class="dropdown-item" type="button">Another action</button></li>
+                                    <li><button class="dropdown-item" type="button">Something else here</button></li>
+                                </ul>
+                            </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>

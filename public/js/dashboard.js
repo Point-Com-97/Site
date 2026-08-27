@@ -90,6 +90,22 @@ document.querySelectorAll('.add_form_page').forEach(function (form) {
     });
 });
 
+function toggle_visible(id) {
+    fetch(`/admin/endpoint/toggle.php?id=${id}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const icone = document.getElementById(`visible${id}`);
+                const etait_visible = icone.classList.contains('text-success');
+
+                icone.classList.toggle('text-success');
+
+                show_message(etait_visible ? 'Page passée hors-ligne' : 'Page passée en ligne', 'success');
+            } else {
+                show_message('Echec de la tentative');
+            }
+        });
+}
 
 
 
