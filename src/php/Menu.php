@@ -11,39 +11,15 @@ class Menu
     }
 
 
-    public function sort_menu(array $items): array
-    {
-        $main = [];
-        $child = [];
-
-        foreach ($items as $item) {
-            if ($item['parent_id'] === null) {
-                $main[] = $item;
-            } else {
-                $child[$item['parent_id']][] = $item;
-            }
-        }
-
-        foreach ($main as &$m) {
-            $m['enfants'] = $child[$m['menu_id']] ?? [];
-        }
-
-        return $main;
-    }
-
-
     public function getAll()
     {
         try {
             // Requête SQL pour récupérer les éléments du menu avec des pages associées via une jointure et alias pour les colonnes
-            $stmt = $this->pdo->query("SELECT menu_items.id AS menu_id, menu_items.titre AS menu_titre, menu_items.ordre, menu_items.parent_id, pages.slug AS page_slug FROM menu_items LEFT JOIN pages ON menu_items.page_id = pages.id ORDER BY menu_items.ordre");
+            $stmt = $this->pdo->query("SELECT id AS menu_id, titre AS menu_titre, ordre FROM menu_items ORDER BY ordre");
 
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $result = $this->sort_menu($data);
-
-            return $result;
-            
+            return $data;
         } catch (PDOException $e) {
 
             error_log("Erreur de requête SQL : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
@@ -52,7 +28,7 @@ class Menu
         }
     }
 
-    public function create(string $titre, ?int $page_id = null, ?int $parent_id = null)
+    public function create(string $titre)
     {
 
         try {
@@ -66,8 +42,8 @@ class Menu
 
                 $ordre = ($result['max_ordre'] ?? 0) + 1;
 
-                $stmt = $this->pdo->prepare("INSERT INTO menu_items (titre, ordre, page_id, parent_id) VALUES (?, ?, ?, ?)");
-                $stmt->execute([$menu_titre, $ordre, $page_id, $parent_id]);
+                $stmt = $this->pdo->prepare("INSERT INTO menu_items (titre, ordre) VALUES (?, ?)");
+                $stmt->execute([$menu_titre, $ordre]);
 
                 return $this->pdo->lastInsertId();
             } else {
@@ -79,7 +55,7 @@ class Menu
         }
     }
 
-        public function update(int $id, string $titre)
+    public function update(int $id, string $titre)
     {
         try {
             $stmt = $this->pdo->prepare("UPDATE menu_items SET titre = ? WHERE id = ?");

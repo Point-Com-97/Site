@@ -31,10 +31,7 @@
                         <a class="nav-link" id="nav-item" aria-current="page" href="/accueil" target="_blank">Voir Site</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="nav-item" aria-current="page" href="/admin/dashboard.php">Menu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="nav-item" href="/admin/page/index.php">Page</a>
+                        <a class="nav-link" id="nav-item" aria-current="page" href="/admin/dashboard.php">Tableau de bord</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="nav-item" href="/admin/media/index.php">Médiathèque</a>

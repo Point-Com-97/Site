@@ -13,11 +13,21 @@ url varchar(255) NOT NULL,
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE menu_items(
+id int PRIMARY KEY AUTO_INCREMENT,
+titre varchar(255) NOT NULL,
+ordre int NOT NULL
+);
+
 CREATE TABLE pages (
 id int PRIMARY KEY AUTO_INCREMENT,
 titre varchar(255) NOT NULL,
 slug varchar(255) NOT NULL,
-CONSTRAINT unique_slug_pages UNIQUE (slug)
+menu_id int NULL,
+ordre int NOT NULL DEFAULT 0,
+visible TINYINT(1) NOT NULL DEFAULT 1,
+CONSTRAINT unique_slug_pages UNIQUE (slug),
+CONSTRAINT fk_menu FOREIGN KEY (menu_id) REFERENCES menu_items(id) ON DELETE SET NULL -- Clé étrangère vers la table menu_items
 );
 
 CREATE TABLE blocs (
@@ -29,12 +39,3 @@ ordre int NOT NULL,
 CONSTRAINT fk_page FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE  -- Clé étrangère vers la table pages
 );
 
-CREATE TABLE menu_items(
-id int PRIMARY KEY AUTO_INCREMENT,
-titre varchar(255) NOT NULL,
-ordre int NOT NULL,
-parent_id INT NULL,
-page_id int NULL,
-CONSTRAINT fk_menu_item FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE, -- Clé étrangère vers la table pages
-CONSTRAINT fk_parent FOREIGN KEY (parent_id) REFERENCES menu_items(id) ON DELETE CASCADE
-);
