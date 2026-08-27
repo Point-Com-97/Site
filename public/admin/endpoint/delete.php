@@ -22,6 +22,4 @@ if ($type == 'Menu') {
     $resultat = $new_page->delete((int) $id);
 }
 
-
-
 echo json_encode(['success' => $resultat]);

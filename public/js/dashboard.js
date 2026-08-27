@@ -7,13 +7,9 @@ function remove_items(id, type) {
         .then(data => {
             if (data.success) {
                 show_message('Suppression effectuée.', 'success');
-                if (type == 'Menu') {
-                    const menu = document.querySelector(`[data-id="menu_${id}"]`);  // querySelector peut bloquer l'éxecution des fonctions
+
+                    const menu = document.querySelector(`[data-id="${type}_${id}"]`);  // querySelector peut bloquer l'éxecution des fonctions
                     menu.remove();
-                } else {
-                    const menu = document.querySelector(`[data-id="page_${id}"]`);  // querySelector peut bloquer l'éxecution des fonctions
-                    menu.remove();
-                }
 
             } else {
                 show_message('La suppression a échoué.');
@@ -21,17 +17,17 @@ function remove_items(id, type) {
         });
 }
 
-function edit_menu(id, titre) {
-    fetch(`/admin/endpoint/update.php?id=${id}&menu=${titre}`)
+function edit_menu(id, type, titre) {
+    fetch(`/admin/endpoint/update.php?id=${id}&type=${type}&titre=${titre}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
                 show_message('Mise à jour réussie', 'success');
 
-                const title = document.querySelector(`#menu_label_${id}`);
+                const title = document.getElementById(`${type}_label_${id}`);
                 title.textContent = titre;
 
-                const modalElement = document.querySelector(`#editModal${id}`);
+                const modalElement = document.querySelector(`#editModal${type}${id}`);
                 const modalInstance = bootstrap.Modal.getInstance(modalElement);
                 modalInstance.hide();
             } else {
@@ -44,7 +40,7 @@ document.querySelectorAll('.edit_form').forEach(function (form) {
     form.addEventListener('submit', function (event) {
         event.preventDefault();
         const data = new FormData(form);
-        edit_menu(data.get('id'), data.get('titre'));
+        edit_menu(data.get('id'), data.get('type'), data.get('titre'));
     });
 });
 

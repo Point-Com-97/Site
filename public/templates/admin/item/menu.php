@@ -20,7 +20,7 @@ function render_modal_menu(array $item): string
     $titre = htmlspecialchars($item['menu_titre']);
 
     return <<<HTML
-                <div class="modal fade" id="editModal{$id}" tabindex="-1" aria-labelledby="editModalLabel{$id}" aria-hidden="true">
+                <div class="modal fade" id="editModalMenu{$id}" tabindex="-1" aria-labelledby="editModalLabel{$id}" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -30,7 +30,8 @@ function render_modal_menu(array $item): string
                              <form class="container-fluid d-grid gap-2 mx-auto edit_form" id="edit_form_{$id}" method="post">
                                 <div class="modal-body">
                                         <input type="hidden" name="id" value="{$id}">
-                                        <input class="form-control form-control-lg" type="texte" id="menu_titre_{$id}" name="titre" value="{$titre}">
+                                        <input type="hidden" name="type" value="Menu">
+                                        <input class="form-control form-control-lg" type="texte" id="Menu_titre_{$id}" name="titre" value="{$titre}">
                                 </div>
                                 <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -51,14 +52,14 @@ function render_menu(array $item): string
    
         // structure liste + boutons / menu principal
         return <<<HTML
-                    <div class="container text-center" data-id="menu_{$id}">
+                    <div class="container text-center" data-id="Menu_{$id}">
                          <div class="row align-items-start">
-                            <a class="list-group-item list-group-item-action active disabled col" aria-current="true" id="menu_label_{$id}">
+                            <a class="list-group-item list-group-item-action active disabled col" aria-current="true" id="Menu_label_{$id}">
                                 {$titre}
                             </a>
                             <div class="btn-toolbar col" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="btn-group me-2" role="group" aria-label="First group">
-                                    <button type="button"  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal{$id}">
+                                    <button type="button"  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModalMenu{$id}">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
                                 </div>
@@ -89,10 +90,11 @@ function render_modal_page(array $item): string
                                 <h5 class="modal-title" id="editModalLabelPage{$id}">Modification</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                             <form class="container-fluid d-grid gap-2 mx-auto edit_form" id="edit_form_page_{$id}" method="post">
+                             <form class="container-fluid d-grid gap-2 mx-auto edit_form" id="edit_form_Page_{$id}" method="post">
                                 <div class="modal-body">
                                         <input type="hidden" name="id" value="{$id}">
-                                        <input class="form-control form-control-lg" type="texte" id="page_titre_{$id}" name="titre" value="{$titre}">
+                                        <input type="hidden" name="type" value="Page">
+                                        <input class="form-control form-control-lg" type="texte" id="Page_titre_{$id}" name="titre" value="{$titre}">
                                 </div>
                                 <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -112,9 +114,9 @@ function render_page(array $item): string
 
         // structure liste + boutons / page
         return <<<HTML
-                    <div class="container text-center" data-id="page_{$id}" draggable="true">
+                    <div class="container text-center" data-id="Page_{$id}" draggable="true">
                          <div class="row align-items-start">
-                            <a class="list-group-item list-group-item-action col" href="#" id="menu_label_page_{$id}">
+                            <a class="list-group-item list-group-item-action col" href="#" id="Page_label_{$id}">
                                     {$titre}
                             </a>  
 
