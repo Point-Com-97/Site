@@ -110,8 +110,11 @@ function render_page(array $item): string
 {
     $id = $item['id'];
     $titre = htmlspecialchars($item['titre']);
+
     $visible =  $item['visible'];
-    if($visible == 1) {
+    $menu_id = $item['menu_id'];
+
+    if ($visible == 1) {
         $statue = 'bi bi-circle-fill text-success';
     } else {
         $statue = 'bi bi-circle-fill';
@@ -124,22 +127,31 @@ function render_page(array $item): string
                             <a class="list-group-item list-group-item-action col" href="#" id="Page_label_{$id}">
                                     {$titre}
                             </a>  
-                            
-
                             <div class="btn-toolbar col" role="toolbar" aria-label="Toolbar with button groups">
-                                <div class="btn-group me-1" role="group" aria-label="First group">
-                                    <button type="button" onclick="toggle_visible({$id},{$visible})" class="btn">
+                                <div class="btn-group me-1" role="group" aria-label="group 1">
+                                    <button type="button" onclick="toggle_visible({$id})" class="btn">
                                          <i class="{$statue}" id="visible{$id}"></i>
                                     </button>
                                 </div>
-                                <div class="btn-group me-2" role="group" aria-label="Second group">
+                                <div class="btn-group me-2" role="group" aria-label="group 2">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModalPage{$id}">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                </div>
+
+                                <div class="btn-group me-3" role="group" aria-label="group 3">
+                                    <a href="/admin/pages/edit.php?id={$id}" class="btn btn-warning">
+                                        <i class="bi bi-file-earmark-text"></i>
+                                    </a>
+                                </div>
+                                <div class="btn-group me-4" role="group" aria-label="group 4">
                                     <button type="button" onclick="remove_items({$id},'Page')" class="btn btn-danger">
                                          <i class="bi bi-trash3-fill"></i>
                                     </button>
                                 </div>
-                                <div class="btn-group me-3" role="group" aria-label="Third group">
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModalPage{$id}">
-                                        <i class="bi bi-pencil-square"></i>
+                                 <div class="btn-group me-5" role="group" aria-label="group 5">
+                                    <button type="button" onclick="duplicate({$id}, {$menu_id})" class="btn btn-info">
+                                         <i class="bi bi-copy"></i>
                                     </button>
                                 </div>
                             </div>

@@ -15,4 +15,4 @@ if (!$id) {
     $new_page = new Page();
     $resultat = $new_page->toggle_visible((int) $id);
 
-echo json_encode(['success' => $resultat]);
+echo json_encode(['success' => (bool) $resultat]);

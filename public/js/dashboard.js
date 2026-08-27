@@ -61,7 +61,7 @@ function add(titre, type, menu_id) {
 
                 } else {
                     const parent = document.querySelector(`[data-id="${menu_id}"]`);
-                    // Insert les bloc html pour la modal et le menu à la fin du parent
+                    // Insert les bloc html pour la modal et la page à la fin du menu parent
                     parent.insertAdjacentHTML('beforeend', data.html);
 
                     const modalElement = document.querySelector(`#new_page`);
@@ -98,7 +98,7 @@ function toggle_visible(id) {
                 const icone = document.getElementById(`visible${id}`);
                 const etait_visible = icone.classList.contains('text-success');
 
-                icone.classList.toggle('text-success');
+                icone.classList.toggle('text-success'); // ajoute la classe si elle est absente, ou la retire si elle est présente
 
                 show_message(etait_visible ? 'Page passée hors-ligne' : 'Page passée en ligne', 'success');
             } else {
@@ -107,5 +107,18 @@ function toggle_visible(id) {
         });
 }
 
-
+function duplicate(id, menu_id) {
+    fetch(`/admin/endpoint/duplicate.php?id=${id}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                show_message('Duplication réussie', 'success');
+                    const parent = document.querySelector(`[data-id="${menu_id}"]`);
+                    // Insert les bloc html pour la modal et le menu à la fin du parent
+                    parent.insertAdjacentHTML('beforeend', data.html);
+            } else {
+                show_message('Echec de la duplication');
+            }
+        });
+}
 

@@ -23,4 +23,4 @@ if ($type == 'Menu') {
     $resultat = $new_page->update((int) $id, (string) $name);
 }
 
-echo json_encode(['success' => $resultat]);
+echo json_encode(['success' => (bool) $resultat]);

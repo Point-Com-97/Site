@@ -36,9 +36,9 @@ if ($current_page == "404") {
 require_once __DIR__ . '/../public/templates/header.php';
 
 // Récupération des blocs associés à la page actuelle
-$new_blocs = new Bloc($current_page['id']);
+$new_blocs = new Bloc();
 
-$all_blocs = $new_blocs->getByPageId();
+$all_blocs = $new_blocs->getByPageId($current_page['id']);
 
 foreach ($all_blocs as $bloc) {
 

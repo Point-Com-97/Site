@@ -33,4 +33,4 @@ if ($type == 'Menu') {
     $html_complet = "{$modal}{$page_html}";
 }
 
-echo json_encode(['success' => $resultat, 'html' => $html_complet]);
+echo json_encode(['success' =>  (bool) $resultat, 'html' => $html_complet]);

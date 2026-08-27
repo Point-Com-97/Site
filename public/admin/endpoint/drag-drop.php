@@ -21,4 +21,4 @@ foreach ($donnees as $item) {
     }
 }
 
-echo json_encode(['success' => $resultat]);
+echo json_encode(['success' =>  (bool) $resultat]);
