@@ -1,5 +1,5 @@
 // Structure du bloc Texte
-texte : {"contenu": "<p>Texte riche...</p>"}
+texte : {"contenu": "Texte riche..."}
 
 // Structure du bloc Image
 image : {"media_id": 4, "legende": "..."}
