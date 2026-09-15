@@ -89,4 +89,17 @@ class Bloc
         return false;
     }
 }
+
+    public function update_ordre(int $id, int $nouvelOrdre)
+    {
+        try {
+            $stmt = $this->pdo->prepare("UPDATE blocs SET ordre = ? WHERE id = ?");
+            $stmt->execute([$nouvelOrdre, $id]);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Erreur lors de la mise a jour : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
+            return false;
+        }
+    }
+
 }

@@ -1,4 +1,4 @@
-function activer_drag_drop(conteneur, selecteur_items) {
+function activer_drag_drop(conteneur, selecteur_items, type) {
     let element_glisse = null;
     // Sélectionne tous les éléments enfants directs du conteneur correspondant au sélecteur fourni
     const items = conteneur.querySelectorAll(':scope > ' + selecteur_items);
@@ -19,18 +19,18 @@ function activer_drag_drop(conteneur, selecteur_items) {
             }
         // Déplace l'élément glissé avant l'élément sur lequel il est lâché
             conteneur.insertBefore(element_glisse, ligne);
-            envoyer_nouvel_ordre(conteneur, selecteur_items);
+            envoyer_nouvel_ordre(conteneur, selecteur_items, type);
         });
     });
 }
 
 // Envoie le nouvel ordre des éléments au serveur pour mise à jour
-function envoyer_nouvel_ordre(conteneur, selecteur_items) {
+function envoyer_nouvel_ordre(conteneur, selecteur_items, type) {
     const lignes = conteneur.querySelectorAll(':scope > ' + selecteur_items);
     const nouvel_ordre = [];
 // Construit un tableau avec l'id et le nouvel ordre de chaque élément
     lignes.forEach(function(ligne, index) {
-        nouvel_ordre.push({ id: ligne.dataset.id, ordre: index + 1 });
+        nouvel_ordre.push({ id: ligne.dataset.id, ordre: index + 1, type: type });
     });
 // Envoie le nouvel ordre au serveur via une requête POST
     fetch('/admin/endpoint/drag-drop.php', {
@@ -48,8 +48,8 @@ function envoyer_nouvel_ordre(conteneur, selecteur_items) {
         });
 }
 
-activer_drag_drop(document.getElementById('menu-list'), '.list-group[draggable="true"]');
+activer_drag_drop(document.getElementById('menu-list'), '.list-group[draggable="true"]', 'menu');
 
 document.querySelectorAll('.child-group').forEach(function(groupe) {
-    activer_drag_drop(groupe, '.container[draggable="true"]');
+    activer_drag_drop(groupe, '.container[draggable="true"]', 'page');
 });

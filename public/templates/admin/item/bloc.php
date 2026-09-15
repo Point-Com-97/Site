@@ -9,7 +9,7 @@ function render_bloc(array $item)
         case 'texte':
             $json = htmlspecialchars(json_encode($data), ENT_QUOTES, 'UTF-8');
             return <<< HTML
-                                <div class="container" id="Bloc_{$item['id']}" draggable="true">
+                                <div class="container" id="Bloc_{$item['id']}" data-id="{$item['id']}" draggable="true">
                                     <p>Bloc texte: {$data['contenu']}</p>
                                     <button type="button" class="btn btn-danger" onclick="remove_items({$item['id']})">
                                         <i class="bi bi-trash3-fill"></i></button>
@@ -23,7 +23,7 @@ function render_bloc(array $item)
         case 'image':
             $json = htmlspecialchars(json_encode($data), ENT_QUOTES, 'UTF-8');
             return <<< HTML
-                                <div class="container" id="Bloc_{$item['id']}" draggable="true">
+                                <div class="container" id="Bloc_{$item['id']}" data-id="{$item['id']}" draggable="true">
                                     <p>Bloc image: Media: {$data['media_id']} Legende :{$data['legende']}</p>
                                     <button type="button" class="btn btn-danger" onclick="remove_items({$item['id']})">
                                         <i class="bi bi-trash3-fill"></i></button>
@@ -37,7 +37,7 @@ function render_bloc(array $item)
         case 'video':
             $json = htmlspecialchars(json_encode($data), ENT_QUOTES, 'UTF-8');
             return <<< HTML
-                                <div class="container" id="Bloc_{$item['id']}" draggable="true">
+                                <div class="container" id="Bloc_{$item['id']}" data-id="{$item['id']}" draggable="true">
                                     <p>Bloc video: Url: {$data['url']} Legende :{$data['legende']}</p>
                                      <button type="button" class="btn btn-danger" onclick="remove_items({$item['id']})">
                                         <i class="bi bi-trash3-fill"></i></button>
@@ -52,7 +52,7 @@ function render_bloc(array $item)
             $json = htmlspecialchars(json_encode($data), ENT_QUOTES, 'UTF-8');
             $nb_items = count($data['labels'] ?? []);
             return <<< HTML
-                        <div class="container" id="Bloc_{$item['id']}" draggable="true">
+                        <div class="container" id="Bloc_{$item['id']}" data-id="{$item['id']}" draggable="true">
                             <p>Bloc stats: {$nb_items} indicateurs (type: {$data['type']})</p>
                             <button type="button" class="btn btn-danger" onclick="remove_items({$item['id']})">
                                 <i class="bi bi-trash3-fill"></i></button>
@@ -69,7 +69,7 @@ function render_bloc(array $item)
             $nb_colonnes = count($data['colonnes'] ?? []);
             $nb_lignes = count($data['lignes'] ?? []);
             return <<< HTML
-                        <div class="container" id="Bloc_{$item['id']}" draggable="true">
+                        <div class="container" id="Bloc_{$item['id']}" data-id="{$item['id']}" draggable="true">
                             <p>Bloc tableau: {$nb_colonnes} colonnes, {$nb_lignes} lignes</p>
                         <button type="button" class="btn btn-danger" onclick="remove_items({$item['id']})">
                             <i class="bi bi-trash3-fill"></i></button>

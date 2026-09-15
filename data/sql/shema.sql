@@ -39,3 +39,13 @@ ordre int NOT NULL,
 CONSTRAINT fk_page FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE  -- Clé étrangère vers la table pages
 );
 
+CREATE TABLE site_settings (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    couleur_primaire VARCHAR(7) NOT NULL DEFAULT '#019DD4',
+    couleur_secondaire VARCHAR(7) NOT NULL DEFAULT '#EF8B2B',
+    couleur_tertiaire VARCHAR(7) NOT NULL DEFAULT '#422774',
+    police_corps VARCHAR(100) NOT NULL DEFAULT 'Crimson Pro',
+    couleur_texte_bouton VARCHAR(7) NOT NULL DEFAULT '#FFFFFF',
+    couleur_lien VARCHAR(7) NOT NULL DEFAULT '#019DD4',
+    css_personnalise TEXT NULL
+);

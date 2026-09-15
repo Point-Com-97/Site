@@ -101,7 +101,7 @@ try {
     
     echo "<div id='menu-list'>";
         foreach ($all_menus as $m) {
-            echo "<div class='list-group' draggable='true' id='Menu_{$m['menu_id']}'>";
+            echo "<div class='list-group' draggable='true' id='Menu_{$m['menu_id']}' data-id='{$m['menu_id']}'>";
             echo render_modal_menu($m);
             echo render_menu($m);
             $page_menu = $page_group[$m['menu_id']] ?? [];

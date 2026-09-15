@@ -138,3 +138,5 @@ rowOutput.textContent = rowInput.value;
 rowInput.addEventListener('input', function () {
     rowOutput.textContent = this.value;
 });
+
+activer_drag_drop(document.getElementById('bloc-list'), '.container[draggable="true"]', 'bloc');
