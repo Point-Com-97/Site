@@ -43,7 +43,7 @@ document.querySelectorAll('.edit_form').forEach(function (form) {
         edit_menu(data.get('id'), data.get('type'), data.get('titre'));
     });
 });
-
+// Ajouter un menu ou une page via le formulaire et la methode GET
 function add(titre, type, menu_id) {
     fetch(`/admin/endpoint/create.php?titre=${titre}&type=${type}&menu_id=${menu_id}`)
         .then(response => response.json())

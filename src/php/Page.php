@@ -55,9 +55,16 @@ class Page
 
                 $slug = strtolower(str_replace(' ', '-', $page_titre));
 
-                $stmt = $this->pdo->prepare("INSERT INTO pages (titre, slug, menu_id) VALUES (?, ?, ?)");
+                $stmt = $this->pdo->prepare("SELECT MAX(ordre) as max_ordre FROM pages WHERE menu_id <=> ?");
+                $stmt->execute([$menu_id]);
 
-                $stmt->execute([$page_titre, $slug, $menu_id]);
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                $order = ($result['max_ordre'] ?? 0) + 1;
+
+                $stmt = $this->pdo->prepare("INSERT INTO pages (titre, slug, menu_id, ordre) VALUES (?, ?, ?, ?)");
+
+                $stmt->execute([$page_titre, $slug, $menu_id, $order]);
 
                 return $this->pdo->lastInsertId();
             } else {

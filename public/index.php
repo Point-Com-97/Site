@@ -2,86 +2,92 @@
 
 try {
 
-require_once __DIR__ . '/../src/php/Page.php';
-require_once __DIR__ . '/../src/php/Bloc.php';
-require_once __DIR__ . '/../src/php/Menu.php';
-require_once __DIR__ . '/../src/php/Media.php';
+    require_once __DIR__ . '/../src/php/Page.php';
+    require_once __DIR__ . '/../src/php/Bloc.php';
+    require_once __DIR__ . '/../src/php/Menu.php';
+    require_once __DIR__ . '/../src/php/Media.php';
 
 
-// Récupération de l'URL actuelle
-$url = $_SERVER['REQUEST_URI'];
+    // Récupération de l'URL actuelle
+    $url = $_SERVER['REQUEST_URI'];
 
-$parse_url = parse_url($url, PHP_URL_PATH);
+    $parse_url = parse_url($url, PHP_URL_PATH);
 
-$final_url =  trim($parse_url, "/");
+    $final_url =  trim($parse_url, "/");
 
-if ($final_url == "") {
-    $final_url = "accueil";
-}
+    if ($final_url == "") {
+        $final_url = "accueil";
+    }
 
-// Récupération de tous les éléments du menu
-$new_menu = new Menu();
+    // Récupération de tous les éléments du menu
+    $new_menu = new Menu();
 
-$all_menu = $new_menu->getAll();
+    $all_menu = $new_menu->getAll();
 
-// Récupération de la page actuelle en fonction du slug
-$new_page = new Page();
+    // Récupération de la page actuelle en fonction du slug
+    $new_page = new Page();
 
-$current_page = $new_page->getBySlug($final_url);
+    $current_page = $new_page->getBySlug($final_url);
 
-if ($current_page == "404") {
-    die("Page introuvable");
-}
+    if ($current_page == "404") {
+        die("Page introuvable");
+    }
 
-require_once __DIR__ . '/../public/templates/header.php';
+    require_once __DIR__ . '/../public/templates/header.php';
 
-// Récupération des blocs associés à la page actuelle
-$new_blocs = new Bloc();
+    // Récupération des blocs associés à la page actuelle
+    $new_blocs = new Bloc();
 
-$all_blocs = $new_blocs->getByPageId($current_page['id']);
+    $all_blocs = $new_blocs->getByPageId($current_page['id']);
 
-foreach ($all_blocs as $bloc) {
+    foreach ($all_blocs as $bloc) {
 
-    $donnees = json_decode($bloc['donnees'], true);
+        $donnees = json_decode($bloc['donnees'], true);
 
-    switch ($bloc['type']) {
-        case 'texte':
-            echo <<<HTML
+        switch ($bloc['type']) {
+            case 'texte':
+                echo <<<HTML
             <div class="card m-1 texte bloc" style="width: 18rem;">
                 <div class="card-body">
                     <p class="card-text">{$donnees['contenu']}</p>
                 </div>
             </div>
         HTML;
-            break;
-        case 'image':
-            $new_media = new Media();
+                break;
+            case 'image':
+                $new_media = new Media();
 
-            $url_media = $new_media->getById($donnees['media_id']);
+                $url_media = $new_media->getById($donnees['media_id']);
 
-            echo <<<HTML
+                if (empty($url_media)) {
+                    echo 'Image non trouvé';
+                } else {
+                    echo <<<HTML
                 <div class="card m-1 image bloc" style="width: 18rem;">
                     <div class="card-body">
                         <img src="{$url_media['url']}" alt="{$donnees['legende']}" class="img-fluid object-fit-fill border rounded">
                     </div>
                 </div>
         HTML;
-            break;
-        case 'video':
+                }
 
-            echo <<< HTML
+
+                break;
+            case 'video':
+
+                echo <<< HTML
                <div class="w-100 video bloc">
                     <iframe src="{$donnees['url']}" title="{$donnees['legende']}" ></iframe>
                 </div>
         HTML;
-            break;
+                break;
 
-        case 'stats':
-            $canvas_id = 'chart-' . $bloc['id']; // identifiant unique par bloc
+            case 'stats':
+                $canvas_id = 'chart-' . $bloc['id']; // identifiant unique par bloc
 
-            $json_donnees = json_encode($donnees);
+                $json_donnees = json_encode($donnees);
 
-            echo <<<HTML
+                echo <<<HTML
                     <div class="stats bloc">
                         <canvas id="{$canvas_id}"></canvas>
                     </div>
@@ -89,52 +95,51 @@ foreach ($all_blocs as $bloc) {
                        new Chart(document.getElementById('{$canvas_id}'), {$json_donnees});
                     </script>
                 HTML;
-            break;
+                break;
 
-        case 'tableau':
+            case 'tableau':
 
-            echo <<<HTML
+                echo <<<HTML
                     <table class="table table-hover bloc">
                         <thead>
                             <tr>
                     HTML;
 
-            // Boucle forearch pour l'entête du tableau 
-            foreach ($donnees['colonnes'] as $col) {
-                echo "<th>" . htmlspecialchars($col) . "</th>";
-            }
+                // Boucle forearch pour l'entête du tableau 
+                foreach ($donnees['colonnes'] as $col) {
+                    echo "<th>" . htmlspecialchars($col) . "</th>";
+                }
 
-            echo <<<HTML
+                echo <<<HTML
                             </tr>
                         </thead>
                         <tbody>
                     HTML;
 
-            // Boucle forearch pour les lignes du tableau 
-            foreach ($donnees['lignes'] as $ligne) {
-                echo "<tr>";
-                foreach ($ligne as $row) {
-                    echo "<td>" . htmlspecialchars($row) . "</td>";
+                // Boucle forearch pour les lignes du tableau 
+                foreach ($donnees['lignes'] as $ligne) {
+                    echo "<tr>";
+                    foreach ($ligne as $row) {
+                        echo "<td>" . htmlspecialchars($row) . "</td>";
+                    }
+                    echo "</tr>";
                 }
-                echo "</tr>";
-            }
 
-            echo <<<HTML
+                echo <<<HTML
                         </tbody>
                     </table>
                     HTML;
 
-            break;
-        default:
-            echo "Contenu introuvable\n";
+                break;
+            default:
+                echo "Contenu introuvable\n";
+        }
     }
-}
 
-require_once __DIR__ . '/../public/templates/footer.php';
-
+    require_once __DIR__ . '/../public/templates/footer.php';
 } catch (PDOException $e) {
 
-    error_log("Erreur base de données : " . $e->getMessage(),3, __DIR__ . "/../var/tmp/erreur.log");
+    error_log("Erreur base de données : " . $e->getMessage(), 3, __DIR__ . "/../var/tmp/erreur.log");
 
     die("<h1> Le site est temporairement indisponible, merci de réessayer plus tard.</h1>");
 }
