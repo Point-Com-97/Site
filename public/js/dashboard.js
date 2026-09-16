@@ -55,6 +55,13 @@ function add(titre, type, menu_id) {
                     // Insert les bloc html pour la modal et le menu à la fin du body
                     body.insertAdjacentHTML('beforeend', data.html);
 
+                    // Ajouter la nouvelle option au select de sélection de menu
+                    const select = document.querySelector('select[name="menu_id"]');
+                    const option = document.createElement('option');
+                    option.value = data.id;
+                    option.textContent = titre; 
+                    select.appendChild(option);
+
                     const modalElement = document.querySelector(`#new_menu`);
                     const modalInstance = bootstrap.Modal.getInstance(modalElement);
                     modalInstance.hide();

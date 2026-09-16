@@ -10,7 +10,7 @@ function charger_medias(critere) {
         });
 }
 
-document.querySelectorAll('.dropdown-item').forEach(function(lien) {
+document.querySelectorAll('.item-media').forEach(function(lien) {
     lien.addEventListener('click', function(event) {
         event.preventDefault();
         const critere = this.textContent.trim() === 'Date' ? 'created_at' : 'titre'; // critere = Date ou created_at si non par défaut = titre

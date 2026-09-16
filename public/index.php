@@ -6,6 +6,7 @@ try {
     require_once __DIR__ . '/../src/php/Bloc.php';
     require_once __DIR__ . '/../src/php/Menu.php';
     require_once __DIR__ . '/../src/php/Media.php';
+    require_once __DIR__ . '/templates/admin/item/menu.php';
 
 
     // Récupération de l'URL actuelle
@@ -26,6 +27,10 @@ try {
 
     // Récupération de la page actuelle en fonction du slug
     $new_page = new Page();
+
+    $all_page = $new_page->getByMenu();
+
+    $page_group = sort_pages($all_page);
 
     $current_page = $new_page->getBySlug($final_url);
 

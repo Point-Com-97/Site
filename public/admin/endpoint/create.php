@@ -23,7 +23,7 @@ if ($type == 'Menu') {
     $main = array('menu_id' => $resultat, 'menu_titre' => $name);
     $modal = render_modal_menu($main);
     $menu_html = render_menu($main);
-    $html_complet = "<div class='list-group'>{$modal}{$menu_html}<div class='list-group'></div></div>";
+    $html_complet = "<div class='list-group' draggable='true' id='Menu_{$resultat}' data-id='{$resultat}'>{$modal}{$menu_html}<div class='list-group'></div></div>";
 } else {
     $new_page = new Page();
     $resultat = $new_page->create((string) $name, $menu);
@@ -33,4 +33,4 @@ if ($type == 'Menu') {
     $html_complet = "{$modal}{$page_html}";
 }
 
-echo json_encode(['success' => $resultat, 'html' => $html_complet]);
+echo json_encode(['success' => (bool) $resultat, 'id' => $resultat, 'html' => $html_complet]);

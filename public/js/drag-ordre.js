@@ -48,7 +48,10 @@ function envoyer_nouvel_ordre(conteneur, selecteur_items, type) {
         });
 }
 
-activer_drag_drop(document.getElementById('menu-list'), '.list-group[draggable="true"]', 'menu');
+const menuList = document.getElementById('menu-list');
+if (menuList) {
+    activer_drag_drop(menuList, '.container[draggable="true"]', 'bloc');
+}
 
 document.querySelectorAll('.child-group').forEach(function(groupe) {
     activer_drag_drop(groupe, '.container[draggable="true"]', 'page');

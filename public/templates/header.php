@@ -1,4 +1,11 @@
-<? session_start(); ?>
+<?php session_start(); ?>
+
+<?php
+require_once __DIR__ . '/../../src/php/Settings.php';
+$new_settings = new Settings();
+$settings = $new_settings->get();
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -12,6 +19,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="/assets/scss/main.css">
+
+    <style>
+        :root {
+            --bs-primary: <?= $settings['couleur_primaire'] ?? '#019DD4' ?>;
+            --bs-link-color: <?= $settings['couleur_lien'] ?? '#007bff' ?>;
+            --bs-body-font-family: <?= $settings['police_corps'] ?? 'Arial, sans-serif' ?>;
+        }
+
+        .btn-primary {
+            --bs-btn-bg: <?= $settings['couleur_primaire'] ?? '#019DD4' ?>;
+            --bs-btn-border-color: <?= $settings['couleur_primaire'] ?? '#019DD4' ?>;
+            --bs-btn-color: <?= $settings['couleur_texte_bouton'] ?? '#ffffff' ?>;
+        }
+
+        .btn-secondary {
+            --bs-btn-bg: <?= $settings['couleur_secondaire'] ?? '#6c757d' ?>;
+            --bs-btn-border-color: <?= $settings['couleur_secondaire'] ?? '#6c757d' ?>;
+            --bs-btn-color: <?= $settings['couleur_texte_bouton'] ?? '#ffffff' ?>;
+        }
+
+        <?= str_replace('</style>', '', $settings['css_personnalise'] ?? '') ?>
+    </style>
 
     <title><?= htmlspecialchars($current_page['titre'] ?? 'Accueil') ?> - Point Com</title>
 </head>
@@ -32,9 +61,12 @@
                                     <?= htmlspecialchars($item['menu_titre']) ?>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><button class="dropdown-item" type="button">Action</button></li>
-                                    <li><button class="dropdown-item" type="button">Another action</button></li>
-                                    <li><button class="dropdown-item" type="button">Something else here</button></li>
+                                 <?php $page_menu = $page_group[$item['menu_id']] ?? [] ?>
+                                    <?php if (!empty($page_menu) && is_array($page_menu)): ?>
+                                        <?php foreach ($page_menu as $page): ?>
+                                            <li><a class="dropdown-item" href="<?= htmlspecialchars($page['slug']) ?>"><?= htmlspecialchars($page['titre']) ?></a></li>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </ul>
                             </div>
                         <?php endforeach; ?>

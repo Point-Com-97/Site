@@ -52,7 +52,7 @@ try {
         HTML;
 
     // Modal d'ajout pour les pages
-        echo <<< HTML
+    echo <<< HTML
                 <div class="btn-toolbar m-1" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group me-2" role="group" aria-label="First group">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new_page">
@@ -62,7 +62,7 @@ try {
                 </div>
             HTML;
 
-        echo <<< HTML
+    echo <<< HTML
                 <div class="modal fade" id="new_page" tabindex="-1" aria-labelledby="new_page_label" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -75,16 +75,16 @@ try {
                                     <input type="hidden" name="type" value="Page">
                                     <input class="form-control" type="text" name="titre" id="titre" value="Nouvelle Page" aria-label="Nouvelle Page">
                 HTML;
-                                    echo "<select class='form-select' name='menu_id' aria-label='list_page'>";
-                                        echo '<option selected>Sélectionnez le menu</option>'; {
-                                            echo "<option value=''>...</option>";
-                                            foreach ($all_menus as $m) {
-                                                echo "<option value='{$m['menu_id']}'>{$m['menu_titre']}</option>";
-                                            }
-                                        }
-                                    echo '</select>';
+    echo "<select class='form-select' name='menu_id' aria-label='list_page'>";
+    echo '<option selected>Sélectionnez le menu</option>'; {
+        echo "<option value=''>...</option>";
+        foreach ($all_menus as $m) {
+            echo "<option value='{$m['menu_id']}'>{$m['menu_titre']}</option>";
+        }
+    }
+    echo '</select>';
 
-        echo <<< HTML
+    echo <<< HTML
                             </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -96,24 +96,36 @@ try {
                 </div>
             HTML;
 
-        
-    
-    
+
+
+
     echo "<div id='menu-list'>";
-        foreach ($all_menus as $m) {
-            echo "<div class='list-group' draggable='true' id='Menu_{$m['menu_id']}' data-id='{$m['menu_id']}'>";
-            echo render_modal_menu($m);
-            echo render_menu($m);
-            $page_menu = $page_group[$m['menu_id']] ?? [];
-            echo "<div class='list-group child-group'>";
-                foreach ($page_menu as $p) {
-                    echo render_modal_page($p);
-                    echo render_page($p);
-                }
-            echo "</div>";
-            echo "</div>";
+    foreach ($all_menus as $m) {
+        echo "<div class='list-group' draggable='true' id='Menu_{$m['menu_id']}' data-id='{$m['menu_id']}'>";
+        echo render_modal_menu($m);
+        echo render_menu($m);
+        $page_menu = $page_group[$m['menu_id']] ?? [];
+        echo "<div class='list-group child-group'>";
+        foreach ($page_menu as $p) {
+            echo render_modal_page($p);
+            echo render_page($p);
         }
+        echo "</div>";
+        echo "</div>";
+    }
     echo "</div>";
+    // Pages sans menu associé
+    $pages_sans_menu = $page_group['sans_menu'] ?? [];
+    if (!empty($pages_sans_menu)) {
+        echo "<div class='list-group child-group'>";
+        echo "<h5>Pages sans menu</h5>";
+        foreach ($pages_sans_menu as $p) {
+            echo render_modal_page($p);
+            echo render_page($p);
+        }
+        echo "</div>";
+    }
+
 
     require_once __DIR__ . '/../templates/footer.php';
 } catch (PDOException $e) {

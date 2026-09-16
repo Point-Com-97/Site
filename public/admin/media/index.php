@@ -27,8 +27,8 @@ try {
                     </a>
 
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Date</a></li>
-                        <li><a class="dropdown-item" href="#">Nom</a></li>
+                        <li><a class="dropdown-item item-media" href="#">Date</a></li>
+                        <li><a class="dropdown-item item-media" href="#">Nom</a></li>
                     </ul>
                     </div>
                 </div>

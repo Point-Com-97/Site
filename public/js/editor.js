@@ -1,5 +1,5 @@
 // Supprimer un bloc via la méthode fetch et la méthode GET
-function remove_items(id) {
+function remove_items_bloc(id) {
     if (!confirm('Supprimer ce bloc définitivement ?')) {
         return;
     }
@@ -19,7 +19,7 @@ function remove_items(id) {
 }
 
 // Ajouter un bloc via le formulaire et la methode POST
-function add(form) {
+function add_bloc(form) {
     const data = new FormData(form);
     const mode = form.dataset.mode || 'create';
     const url = mode === 'update'
@@ -47,25 +47,30 @@ function add(form) {
 document.querySelectorAll('.add_form_bloc').forEach(function (form) {
     form.addEventListener('submit', function (event) {
         event.preventDefault();
-        add(form);
+        add_bloc(form);
     });
 });
 
 // Réinitialiser le formulaire lors de la fermeture de la modal
-document.getElementById('new_bloc').addEventListener('hidden.bs.modal', function() {
-    const form = document.querySelector('.add_form_bloc');
-    form.reset();
-    form.dataset.mode = 'create';
-    delete form.dataset.blocId;
-});
+const newBlocModal = document.getElementById('new_bloc');
+if (newBlocModal) {
+    newBlocModal.addEventListener('hidden.bs.modal', function() {
+        const form = document.querySelector('.add_form_bloc');
+        form.reset();
+        form.dataset.mode = 'create';
+        delete form.dataset.blocId;
+    });
+}
 
 // Masquer ou afficher les champs en fonction du type de bloc sélectionné
-document.getElementById('bloc_type').addEventListener('change', function () {
-    document.querySelectorAll('.champs-bloc').forEach(function (div) {
+const blocType = document.getElementById('bloc_type');
+if (blocType) {
+    blocType.addEventListener('change', function () {
+        document.querySelectorAll('.champs-bloc').forEach(function (div) {
         div.style.display = (div.dataset.type === this.value) ? 'block' : 'none';
     }.bind(this));
 });
-
+}
 // Pré-remplir le formulaire d'édition avec les données du bloc sélectionné
 function prefill_bloc(bouton) {
     const id = bouton.dataset.blocId;
@@ -115,28 +120,38 @@ function prefill_bloc(bouton) {
 const labelInput = document.getElementById('nb_label');
 const labelOutput = document.getElementById('label_value');
 
+if (labelInput && labelOutput) {
 labelOutput.textContent = labelInput.value;
 
 labelInput.addEventListener('input', function () {
     labelOutput.textContent = this.value;
 });
+}
 
 const colInput = document.getElementById('nb_col');
 const colOutput = document.getElementById('col_value');
 
+if (colInput && colOutput) {
 colOutput.textContent = colInput.value;
 
 colInput.addEventListener('input', function () {
     colOutput.textContent = this.value;
 });
+}
+
 
 const rowInput = document.getElementById('nb_row');
 const rowOutput = document.getElementById('row_value');
 
+if (rowInput && rowOutput) {
 rowOutput.textContent = rowInput.value;
 
 rowInput.addEventListener('input', function () {
     rowOutput.textContent = this.value;
 });
+}
 
-activer_drag_drop(document.getElementById('bloc-list'), '.container[draggable="true"]', 'bloc');
+const blocList = document.getElementById('bloc-list');
+if (blocList) {
+    activer_drag_drop(blocList, '.container[draggable="true"]', 'bloc');
+}
