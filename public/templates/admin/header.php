@@ -36,6 +36,9 @@
                     <li class="nav-item">
                         <a class="nav-link" id="nav-item" href="/admin/media/index.php">Médiathèque</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-item" href="/admin/settings/index.php">Style</a>
+                    </li>
                 </ul>
 
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 nav-underline">

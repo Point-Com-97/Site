@@ -23,22 +23,25 @@ $settings = $new_settings->get();
     <style>
         :root {
             --bs-primary: <?= $settings['couleur_primaire'] ?? '#019DD4' ?>;
+            --bs-primary-rgb: <?= hex_vers_rgb($settings['couleur_primaire'] ?? '#019DD4') ?>;
             --bs-link-color: <?= $settings['couleur_lien'] ?? '#007bff' ?>;
             --bs-body-font-family: <?= $settings['police_corps'] ?? 'Arial, sans-serif' ?>;
         }
 
         .btn-primary {
-            --bs-btn-bg: <?= $settings['couleur_primaire'] ?? '#019DD4' ?>;
-            --bs-btn-border-color: <?= $settings['couleur_primaire'] ?? '#019DD4' ?>;
-            --bs-btn-color: <?= $settings['couleur_texte_bouton'] ?? '#ffffff' ?>;
+            --bs-btn-bg: <?= $settings['couleur_primaire'] ?? '#019DD4' ?> !important;
+            --bs-btn-border-color: <?= $settings['couleur_primaire'] ?? '#019DD4' ?> !important;
+            --bs-btn-color: <?= $settings['couleur_texte_bouton'] ?? '#ffffff' ?> !important;
+              background-color: <?= $settings['couleur_primaire'] ?? '#019DD4' ?> !important;
         }
 
         .btn-secondary {
-            --bs-btn-bg: <?= $settings['couleur_secondaire'] ?? '#6c757d' ?>;
-            --bs-btn-border-color: <?= $settings['couleur_secondaire'] ?? '#6c757d' ?>;
-            --bs-btn-color: <?= $settings['couleur_texte_bouton'] ?? '#ffffff' ?>;
+            --bs-btn-bg: <?= $settings['couleur_secondaire'] ?? '#6c757d' ?> !important;
+            --bs-btn-border-color: <?= $settings['couleur_secondaire'] ?? '#6c757d' ?> !important;
+            --bs-btn-color: <?= $settings['couleur_texte_bouton'] ?? '#ffffff' ?> !important;
+            background-color: <?= $settings['couleur_secondaire'] ?? '#019DD4' ?> !important;
         }
-
+             
         <?= str_replace('</style>', '', $settings['css_personnalise'] ?? '') ?>
     </style>
 

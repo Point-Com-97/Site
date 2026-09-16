@@ -13,6 +13,7 @@ $flash = get_flash();
     <script src="/js/dashboard.js"></script>
     <script src="/js/drag-ordre.js"></script>
     <script src="/js/editor.js"></script>
+    <script src="/js/settings.js"></script>
 <?php endif; ?>
 
 <?php if ($flash): ?>
