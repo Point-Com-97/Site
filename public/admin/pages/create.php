@@ -77,7 +77,7 @@ $bloc = new Bloc();
 
 $new_bloc = $bloc->create($page_id, $type, $donnees);
 
-$main = array('type' => $type, 'donnees' => json_encode($donnees));
+$main = array('id' => $new_bloc, 'type' => $type, 'donnees' => json_encode($donnees));
 
 $bloc_html = render_bloc($main);
 

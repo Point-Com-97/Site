@@ -35,8 +35,7 @@ function add_bloc(form) {
         .then(response => {
             if (response.success) {
                 show_message(mode === 'update' ? 'Bloc modifié' : 'Bloc ajouté', 'success');
-                // pour l'instant, recharge simple pour voir le résultat mis à jour
-                location.reload();
+                setTimeout(() => location.reload(), 800);
             } else {
                 show_message('Échec');
             }

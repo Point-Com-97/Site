@@ -1,5 +1,4 @@
 <?php
-
 function sort_pages(array $pages): array
 {
     $groupes = [];
@@ -32,6 +31,7 @@ function render_modal_menu(array $item): string
                                         <input type="hidden" name="id" value="{$id}">
                                         <input type="hidden" name="type" value="Menu">
                                         <input class="form-control form-control-lg" type="texte" id="Menu_titre_{$id}" name="titre" value="{$titre}">
+                                        <input type="hidden" name="csrf_token" value="<?= generer_csrf_token() ?>"> 
                                 </div>
                                 <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -94,6 +94,7 @@ function render_modal_page(array $item): string
                                         <input type="hidden" name="id" value="{$id}">
                                         <input type="hidden" name="type" value="Page">
                                         <input class="form-control form-control-lg" type="texte" id="Page_titre_{$id}" name="titre" value="{$titre}">
+                                        <input type="hidden" name="csrf_token" value="<?= generer_csrf_token() ?>"> 
                                 </div>
                                 <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -108,11 +109,16 @@ function render_modal_page(array $item): string
 //Rendu des lignes pages
 function render_page(array $item): string
 {
+
+    $csrf = generer_csrf_token();
+
     $id = $item['id'];
     $titre = htmlspecialchars($item['titre']);
 
     $visible =  $item['visible'];
     $menu_id = $item['menu_id'];
+    
+    $menu_id_js = $menu_id ?? 'null';
 
     if ($visible == 1) {
         $statue = 'bi bi-circle-fill text-success';
@@ -129,7 +135,7 @@ function render_page(array $item): string
                             </a>  
                             <div class="btn-toolbar col" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="btn-group me-1" role="group" aria-label="group 1">
-                                    <button type="button" onclick="toggle_visible({$id})" class="btn">
+                                    <button type="button" onclick="toggle_visible({$id}, '{$csrf}')" class="btn">
                                          <i class="{$statue}" id="visible{$id}"></i>
                                     </button>
                                 </div>
@@ -150,7 +156,7 @@ function render_page(array $item): string
                                     </button>
                                 </div>
                                  <div class="btn-group me-5" role="group" aria-label="group 5">
-                                    <button type="button" onclick="duplicate({$id}, {$menu_id})" class="btn btn-info">
+                                    <button type="button" onclick="duplicate({$id}, {$menu_id_js}, '{$csrf}')" class="btn btn-info">
                                          <i class="bi bi-copy"></i>
                                     </button>
                                 </div>

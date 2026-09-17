@@ -4,6 +4,8 @@ require __DIR__ . '/auth-check.php';
 
 require_once __DIR__ . '/../templates/admin/header.php';
 require_once __DIR__ . '/../templates/admin/item/menu.php';
+require_once __DIR__ . '/../../src/php/Csrf.php';
+
 try {
 
     require_once __DIR__ . '/../../src/php/Menu.php';
@@ -16,6 +18,7 @@ try {
     $all_pages = $page->getAll();
     $page_by_menu = $page->getByMenu();
     $page_group = sort_pages($page_by_menu);
+    
 
     // Modal d'ajout pour les menus
     echo <<< HTML
@@ -40,6 +43,7 @@ try {
                              <form class="container-fluid d-grid gap-2 mx-auto add_form_menu" method="post">
                                 <input type="hidden" name="type" value="Menu">
                                 <input class="form-control" type="text" name="titre" id="titre" value="Nouveau menu" aria-label="Nouveau menu">
+                                <input type="hidden" name="csrf_token" value="<?= generer_csrf_token() ?>"> 
                         </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -85,6 +89,7 @@ try {
     echo '</select>';
 
     echo <<< HTML
+                            <input type="hidden" name="csrf_token" value="<?= generer_csrf_token() ?>"> 
                             </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -117,7 +122,7 @@ try {
     // Pages sans menu associé
     $pages_sans_menu = $page_group['sans_menu'] ?? [];
     if (!empty($pages_sans_menu)) {
-        echo "<div class='list-group child-group'>";
+        echo "<div class='list-group' id='Page_x'>";
         echo "<h5>Pages sans menu</h5>";
         foreach ($pages_sans_menu as $p) {
             echo render_modal_page($p);

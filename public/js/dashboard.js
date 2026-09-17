@@ -8,8 +8,8 @@ function remove_items(id, type) {
             if (data.success) {
                 show_message('Suppression effectuée.', 'success');
 
-                    const menu = document.getElementById(`${type}_${id}`);
-                    menu.remove();
+                const menu = document.getElementById(`${type}_${id}`);
+                menu.remove();
 
             } else {
                 show_message('La suppression a échoué.');
@@ -59,7 +59,7 @@ function add(titre, type, menu_id) {
                     const select = document.querySelector('select[name="menu_id"]');
                     const option = document.createElement('option');
                     option.value = data.id;
-                    option.textContent = titre; 
+                    option.textContent = titre;
                     select.appendChild(option);
 
                     const modalElement = document.querySelector(`#new_menu`);
@@ -93,12 +93,12 @@ document.querySelectorAll('.add_form_page').forEach(function (form) {
     form.addEventListener('submit', function (event) {
         event.preventDefault();
         const data = new FormData(form);
-        add(data.get('titre'),data.get('type'), data.get('menu_id'));
+        add(data.get('titre'), data.get('type'), data.get('menu_id'));
     });
 });
 
-function toggle_visible(id) {
-    fetch(`/admin/endpoint/toggle.php?id=${id}`)
+function toggle_visible(id, csrf) {
+    fetch(`/admin/endpoint/toggle.php?id=${id}&csrf_token=${csrf}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -114,15 +114,23 @@ function toggle_visible(id) {
         });
 }
 
-function duplicate(id, menu_id) {
-    fetch(`/admin/endpoint/duplicate.php?id=${id}`)
+function duplicate(id, menu_id, csrf) {
+    fetch(`/admin/endpoint/duplicate.php?id=${id}&csrf_token=${csrf}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
                 show_message('Duplication réussie', 'success');
+
+                if (menu_id == null) {
+                    const parent = document.getElementById(`Page_x`);
+                    // Insert les bloc html pour la modal et le menu à la fin du parent
+                    parent.insertAdjacentHTML('beforeend', data.html);
+                } else {
                     const parent = document.getElementById(`Menu_${menu_id}`);
                     // Insert les bloc html pour la modal et le menu à la fin du parent
                     parent.insertAdjacentHTML('beforeend', data.html);
+                }
+
             } else {
                 show_message('Echec de la duplication');
             }

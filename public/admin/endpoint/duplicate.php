@@ -1,9 +1,17 @@
 <?php
 require __DIR__ . '/../auth-check.php';
+require_once __DIR__ . '/../../../src/php/Csrf.php';
+
+if (!verifier_csrf_token($_POST['csrf_token'] ?? $_GET['csrf_token'] ?? null)) {
+    echo json_encode(['success' => false, 'message' => 'Requête invalide']);
+    exit;
+}
+
 require_once __DIR__ . '/../../../src/php/Page.php';
 require_once __DIR__ . '/../../../src/php/Bloc.php';
 require_once __DIR__ . '/../../templates/admin/item/menu.php';
 
+// Définir l'en-tête de réponse pour indiquer que le contenu est au format JSON
 header('Content-Type: application/json');
 
 $id = $_GET['id'] ?? null;
@@ -28,7 +36,7 @@ $titre =  ucfirst($new_slug);
 $menu = $original['menu_id'];
 
 
-$duplicate = $page->create((string) $titre, (int) $menu);
+$duplicate = $page->create((string) $titre, $menu);
 
 $bloc = new Bloc();
 $all_blocs = $bloc->getByPageId((int) $id);
