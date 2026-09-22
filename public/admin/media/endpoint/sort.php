@@ -1,5 +1,14 @@
 <?php
 require __DIR__ . '/../../auth-check.php';
+
+require_once __DIR__ . '/../../../../src/php/Csrf.php';
+
+if (!verifier_csrf_token($_POST['csrf_token'] ?? $_GET['csrf_token'] ?? null)) {
+    echo json_encode(['success' => false, 'message' => 'Requête invalide']);
+    exit;
+}
+
+
 require_once __DIR__ . '/../../../../src/php/Media.php';
 require_once __DIR__ . '/../../../templates/admin/item/media.php';
 

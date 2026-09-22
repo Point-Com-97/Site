@@ -2,6 +2,7 @@
 
 require __DIR__ . '/../auth-check.php';
 
+require_once __DIR__ . '/../../../src/php/Csrf.php';
 require_once __DIR__ . '/../../templates/admin/header.php';
 
 try {
@@ -10,8 +11,8 @@ try {
     
 
     $new_media = new Media();
-
     $all_medias = $new_media->getAll();
+    $csrf = generer_csrf_token();
 
     echo <<< HTML
             <div class="btn-toolbar m-1" role="toolbar" aria-label="Toolbar with button groups">
@@ -27,8 +28,8 @@ try {
                     </a>
 
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item item-media" href="#">Date</a></li>
-                        <li><a class="dropdown-item item-media" href="#">Nom</a></li>
+                        <li><a class="dropdown-item item-media" data-csrf="{$csrf}" href="#">Date</a></li>
+                        <li><a class="dropdown-item item-media" data-csrf="{$csrf}" href="#">Nom</a></li>
                     </ul>
                     </div>
                 </div>
@@ -47,6 +48,7 @@ try {
                              <form class="container-fluid d-grid gap-2 mx-auto" action="/admin/media/upload.php" method="post" enctype="multipart/form-data">
                                 <label for="media_id" class="form-label">Fichier.jpeg/png/webp/pdf</label>
                                 <input class="form-control form-control-lg" type="file" id="media_id" name="media">
+                                <input type="hidden" name="csrf_token" value="$csrf"> 
                         </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>

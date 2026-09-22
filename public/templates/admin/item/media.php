@@ -2,6 +2,7 @@
 
 function render_media(array $media)
 {
+    $csrf = generer_csrf_token();
     $titre = htmlspecialchars($media['titre']);
 
     switch ($media['type']) {
@@ -15,7 +16,7 @@ function render_media(array $media)
                         <p class="card-text">Date de création : {$media['created_at']}</p>
                     </div>
                     <div class="btn-group">
-                        <button onclick="remove_media({$media['id']})" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button>
+                        <button onclick="remove_media({$media['id']}, '{$csrf}')" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button>
                     </div>
                 </div>
             </div>
@@ -31,7 +32,7 @@ function render_media(array $media)
                         <p class="card-text">Date de création : {$media['created_at']}</p>
                     </div>
                         <div class="btn-group">
-                            <button onclick="remove_media({$media['id']})" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button>
+                            <button onclick="remove_media({$media['id']}, '{$csrf}')" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button>
                         </div>
                 </div>
             </div>

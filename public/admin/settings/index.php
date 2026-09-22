@@ -4,11 +4,17 @@ require_once __DIR__ . '/../../templates/admin/header.php';
 
 require_once __DIR__ . '/../../../src/php/Settings.php';
 
+require_once __DIR__ . '/../../../src/php/Csrf.php';
+
 $new_settings = new Settings();
 $settings = $new_settings->get();
+$csrf_token = generer_csrf_token();
 ?>
 
 <form method="post" class="settings_form" id="settings_form">
+    
+    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>"> 
+
     <label>Couleur primaire</label>
     <input type="color" name="couleur_primaire" value="<?= htmlspecialchars($settings['couleur_primaire'] ?? '#019DD4') ?>">
 

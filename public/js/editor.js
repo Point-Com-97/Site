@@ -1,9 +1,9 @@
 // Supprimer un bloc via la méthode fetch et la méthode GET
-function remove_items_bloc(id) {
+function remove_items_bloc(id, csrf) {
     if (!confirm('Supprimer ce bloc définitivement ?')) {
         return;
     }
-    fetch(`/admin/pages/delete.php?id=${id}`)
+    fetch(`/admin/pages/delete.php?id=${id}&csrf_token=${csrf}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {

@@ -2,6 +2,13 @@
 require __DIR__ . '/../auth-check.php';
 require_once __DIR__ . '/../../../src/php/Settings.php';
 
+require_once __DIR__ . '/../../../src/php/Csrf.php';
+
+if (!verifier_csrf_token($_POST['csrf_token'] ?? $_GET['csrf_token'] ?? null)) {
+    echo json_encode(['success' => false, 'message' => 'Requête invalide']);
+    exit;
+}
+
 header('Content-Type: application/json');
 
 $donnees = [

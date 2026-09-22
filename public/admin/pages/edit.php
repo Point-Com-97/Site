@@ -7,6 +7,8 @@ try {
     require_once __DIR__ . '/../../../src/php/Page.php';
     require_once __DIR__ . '/../../../src/php/Bloc.php';
     require_once __DIR__ . '/../../../src/php/Media.php';
+    require_once __DIR__ . '/../../../src/php/Csrf.php';
+
 
     $id = $_GET['id'];
 
@@ -17,12 +19,13 @@ try {
     $page_info = $page->getById($id);
     $bloc_info = $bloc->getByPageId($id);
     $all_medias = $media->getAll();
+    $csrf = generer_csrf_token();
 
     $media_options = '';
     foreach ($all_medias as $m) {
         $media_options .= '<option value="' . htmlspecialchars($m['id'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($m['titre'], ENT_QUOTES, 'UTF-8') . '</option>';
     }
-
+    
     echo <<< HTML
             <div class="btn-toolbar m-1" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="btn-group me-2" role="group" aria-label="First group">
@@ -53,6 +56,7 @@ try {
                                 </select>  
 
                                 <input type="hidden" name="page_id" value="{$id}">
+                                <input type="hidden" name="csrf_token" value="$csrf"> 
                                 
                                 <div class="champs-bloc" data-type="texte">
                                     <textarea name="contenu" class="form-control"></textarea>

@@ -19,7 +19,7 @@ try {
     $page_by_menu = $page->getByMenu();
     $page_group = sort_pages($page_by_menu);
     $csrf = generer_csrf_token();
-    
+
 
     // Modal d'ajout pour les menus
     echo <<< HTML
@@ -105,13 +105,14 @@ try {
 
 
 
-    echo "<div id='menu-list'>";
+    echo "<div id='menu-list' data-csrf_token='{$csrf}'>";
     foreach ($all_menus as $m) {
-        echo "<div class='list-group' draggable='true' id='Menu_{$m['menu_id']}' data-id='{$m['menu_id']}'>";
+        echo "<div class='list-group' draggable='true' id='Menu_{$m['menu_id']}' data-id='{$m['menu_id']}' data-csrf_token='{$csrf}'>";
         echo render_modal_menu($m);
         echo render_menu($m);
+
         $page_menu = $page_group[$m['menu_id']] ?? [];
-        echo "<div class='list-group child-group'>";
+        echo "<div class='list-group child-group' data-csrf_token='{$csrf}'>";
         foreach ($page_menu as $p) {
             echo render_modal_page($p);
             echo render_page($p);
@@ -123,7 +124,7 @@ try {
     // Pages sans menu associé
     $pages_sans_menu = $page_group['sans_menu'] ?? [];
     if (!empty($pages_sans_menu)) {
-        echo "<div class='list-group' id='Page_x'>";
+        echo "<div class='list-group child-group' id='Page_x' data-csrf_token='{$csrf}'>";
         echo "<h5>Pages sans menu</h5>";
         foreach ($pages_sans_menu as $p) {
             echo render_modal_page($p);
@@ -140,3 +141,4 @@ try {
 
     die(" Une erreur est survenue, veuillez réessayer plus tard."); // Message d'erreur pour les visiteurs
 }
+

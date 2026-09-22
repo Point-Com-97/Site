@@ -1,8 +1,17 @@
 <?php
 
 require __DIR__ . '/../auth-check.php';
+
 require_once __DIR__ . '/../../../data/config/database.php';
 require_once __DIR__ . '/../../../src/php/Flash.php';
+
+require_once __DIR__ . '/../../../src/php/Csrf.php';
+
+if (!verifier_csrf_token($_POST['csrf_token'] ?? null)) {
+    set_flash('Requête invalide, veuillez réessayer.', 'danger');
+    header('Location: /admin/media/index.php');
+    exit;
+}
 
 // Chemin du dossier cible
 $target_dir = __DIR__ . "/../../uploads";
@@ -13,8 +22,10 @@ $size_max = 10 * 1024 * 1024;
 try {
     $pdo = getConnexion();
 } catch (PDOException $e) {
-    error_log("Erreur de connexion PDO : " . $e->getMessage(), 3, __DIR__ . "/../../../var/tmp/erreur.log"); // Message d'erreur pour le dévellopeur
-    die(" Une erreur est survenue, veuillez réessayer plus tard."); // Message d'erreur pour les visiteurs
+    error_log("Erreur de requête SQL : " . $e->getMessage(), 3, __DIR__ . "/../../../var/tmp/erreur.log");
+    set_flash('Une erreur est survenue, veuillez réessayer plus tard.', 'danger');
+    header('Location: /admin/media/index.php');
+    exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

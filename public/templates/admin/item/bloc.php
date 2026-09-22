@@ -4,6 +4,7 @@ function render_bloc(array $item)
 {
     $type = $item['type'];
     $data = json_decode($item['donnees'], true);
+    $csrf = generer_csrf_token();
 
     switch ($type) {
         case 'texte':
@@ -11,7 +12,7 @@ function render_bloc(array $item)
             return <<< HTML
                                 <div class="container" id="Bloc_{$item['id']}" data-id="{$item['id']}" draggable="true">
                                     <p>Bloc texte: {$data['contenu']}</p>
-                                    <button type="button" class="btn btn-danger" onclick="remove_items_bloc({$item['id']})">
+                                    <button type="button" class="btn btn-danger" onclick="remove_items_bloc({$item['id']},'{$csrf}')">
                                         <i class="bi bi-trash3-fill"></i></button>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new_bloc"
                                             data-bloc-id="{$item['id']}" data-bloc-type="texte" data-bloc-donnees="{$json}"
@@ -25,7 +26,7 @@ function render_bloc(array $item)
             return <<< HTML
                                 <div class="container" id="Bloc_{$item['id']}" data-id="{$item['id']}" draggable="true">
                                     <p>Bloc image: Media: {$data['media_id']} Legende :{$data['legende']}</p>
-                                    <button type="button" class="btn btn-danger" onclick="remove_items_bloc({$item['id']})">
+                                    <button type="button" class="btn btn-danger" onclick="remove_items_bloc({$item['id']},'{$csrf}')">
                                         <i class="bi bi-trash3-fill"></i></button>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new_bloc"
                                             data-bloc-id="{$item['id']}" data-bloc-type="image" data-bloc-donnees="{$json}"
@@ -39,7 +40,7 @@ function render_bloc(array $item)
             return <<< HTML
                                 <div class="container" id="Bloc_{$item['id']}" data-id="{$item['id']}" draggable="true">
                                     <p>Bloc video: Url: {$data['url']} Legende :{$data['legende']}</p>
-                                     <button type="button" class="btn btn-danger" onclick="remove_items_bloc({$item['id']})">
+                                     <button type="button" class="btn btn-danger" onclick="remove_items_bloc({$item['id']},'{$csrf}')">
                                         <i class="bi bi-trash3-fill"></i></button>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new_bloc"
                                             data-bloc-id="{$item['id']}" data-bloc-type="video" data-bloc-donnees="{$json}"
@@ -54,7 +55,7 @@ function render_bloc(array $item)
             return <<< HTML
                         <div class="container" id="Bloc_{$item['id']}" data-id="{$item['id']}" draggable="true">
                             <p>Bloc stats: {$nb_items} indicateurs (type: {$data['type']})</p>
-                            <button type="button" class="btn btn-danger" onclick="remove_items_bloc({$item['id']})">
+                            <button type="button" class="btn btn-danger" onclick="remove_items_bloc({$item['id']},'{$csrf}')">
                                 <i class="bi bi-trash3-fill"></i></button>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new_bloc"
                                     data-bloc-id="{$item['id']}" data-bloc-type="stats" data-bloc-donnees="{$json}"
@@ -71,7 +72,7 @@ function render_bloc(array $item)
             return <<< HTML
                         <div class="container" id="Bloc_{$item['id']}" data-id="{$item['id']}" draggable="true">
                             <p>Bloc tableau: {$nb_colonnes} colonnes, {$nb_lignes} lignes</p>
-                        <button type="button" class="btn btn-danger" onclick="remove_items_bloc({$item['id']})">
+                        <button type="button" class="btn btn-danger" onclick="remove_items_bloc({$item['id']},'{$csrf}')">
                             <i class="bi bi-trash3-fill"></i></button>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new_bloc"
                                 data-bloc-id="{$item['id']}" data-bloc-type="tableau" data-bloc-donnees="{$json}"
