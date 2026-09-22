@@ -18,6 +18,7 @@ try {
     $all_pages = $page->getAll();
     $page_by_menu = $page->getByMenu();
     $page_group = sort_pages($page_by_menu);
+    $csrf = generer_csrf_token();
     
 
     // Modal d'ajout pour les menus
@@ -43,7 +44,7 @@ try {
                              <form class="container-fluid d-grid gap-2 mx-auto add_form_menu" method="post">
                                 <input type="hidden" name="type" value="Menu">
                                 <input class="form-control" type="text" name="titre" id="titre" value="Nouveau menu" aria-label="Nouveau menu">
-                                <input type="hidden" name="csrf_token" value="<?= generer_csrf_token() ?>"> 
+                                <input type="hidden" name="csrf_token" value="$csrf"> 
                         </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -89,7 +90,7 @@ try {
     echo '</select>';
 
     echo <<< HTML
-                            <input type="hidden" name="csrf_token" value="<?= generer_csrf_token() ?>"> 
+                            <input type="hidden" name="csrf_token" value="$csrf"> 
                             </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>

@@ -17,6 +17,7 @@ function render_modal_menu(array $item): string
 {
     $id = $item['menu_id'];
     $titre = htmlspecialchars($item['menu_titre']);
+    $csrf = generer_csrf_token();
 
     return <<<HTML
                 <div class="modal fade" id="editModalMenu{$id}" tabindex="-1" aria-labelledby="editModalLabel{$id}" aria-hidden="true">
@@ -31,7 +32,7 @@ function render_modal_menu(array $item): string
                                         <input type="hidden" name="id" value="{$id}">
                                         <input type="hidden" name="type" value="Menu">
                                         <input class="form-control form-control-lg" type="texte" id="Menu_titre_{$id}" name="titre" value="{$titre}">
-                                        <input type="hidden" name="csrf_token" value="<?= generer_csrf_token() ?>"> 
+                                        <input type="hidden" name="csrf_token" value="$csrf"> 
                                 </div>
                                 <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -49,6 +50,7 @@ function render_menu(array $item): string
 {
     $id = $item['menu_id'];
     $titre = htmlspecialchars($item['menu_titre']);
+    $csrf = generer_csrf_token();
 
     // structure liste + boutons / menu principal
     return <<<HTML
@@ -64,7 +66,7 @@ function render_menu(array $item): string
                                     </button>
                                 </div>
                                  <div class="btn-group me-2" role="group" aria-label="Second group">
-                                    <button type="button" onclick="remove_items({$id},'Menu')" class="btn btn-danger">
+                                    <button type="button" onclick="remove_items({$id},'Menu', '{$csrf}')" class="btn btn-danger">
                                         <i class="bi bi-trash3-fill"></i>
                                     </button>
                                 </div>
@@ -80,6 +82,7 @@ function render_modal_page(array $item): string
 {
     $id = $item['id'];
     $titre = htmlspecialchars($item['titre']);
+    $csrf = generer_csrf_token();
 
     return <<<HTML
                 <div class="modal fade" id="editModalPage{$id}" tabindex="-1" aria-labelledby="editModalLabelPage{$id}" aria-hidden="true">
@@ -94,7 +97,7 @@ function render_modal_page(array $item): string
                                         <input type="hidden" name="id" value="{$id}">
                                         <input type="hidden" name="type" value="Page">
                                         <input class="form-control form-control-lg" type="texte" id="Page_titre_{$id}" name="titre" value="{$titre}">
-                                        <input type="hidden" name="csrf_token" value="<?= generer_csrf_token() ?>"> 
+                                        <input type="hidden" name="csrf_token" value="$csrf"> 
                                 </div>
                                 <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -151,7 +154,7 @@ function render_page(array $item): string
                                     </a>
                                 </div>
                                 <div class="btn-group me-4" role="group" aria-label="group 4">
-                                    <button type="button" onclick="remove_items({$id},'Page')" class="btn btn-danger">
+                                    <button type="button" onclick="remove_items({$id},'Page', '{$csrf}')" class="btn btn-danger">
                                          <i class="bi bi-trash3-fill"></i>
                                     </button>
                                 </div>

@@ -1,8 +1,9 @@
-function remove_items(id, type) {
+// Supprimer un menu ou une page via le formulaire et la methode GET
+function remove_items(id, type, csrf) {
     if (!confirm('Supprimer ce menu définitivement ?')) {
         return;
     }
-    fetch(`/admin/endpoint/delete.php?id=${id}&type=${type}`)
+    fetch(`/admin/endpoint/delete.php?id=${id}&type=${type}&csrf_token=${csrf}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -17,86 +18,7 @@ function remove_items(id, type) {
         });
 }
 
-function edit_menu(id, type, titre) {
-    fetch(`/admin/endpoint/update.php?id=${id}&type=${type}&titre=${titre}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                show_message('Mise à jour réussie', 'success');
-
-                const title = document.getElementById(`${type}_label_${id}`);
-                title.textContent = titre;
-
-                const modalElement = document.querySelector(`#editModal${type}${id}`);
-                const modalInstance = bootstrap.Modal.getInstance(modalElement);
-                modalInstance.hide();
-            } else {
-                show_message('Echec de la modification');
-            }
-        });
-}
-
-document.querySelectorAll('.edit_form').forEach(function (form) {
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const data = new FormData(form);
-        edit_menu(data.get('id'), data.get('type'), data.get('titre'));
-    });
-});
-// Ajouter un menu ou une page via le formulaire et la methode GET
-function add(titre, type, menu_id) {
-    fetch(`/admin/endpoint/create.php?titre=${titre}&type=${type}&menu_id=${menu_id}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                show_message('Element ajouter', 'success');
-                if (type == 'Menu') {
-                    const body = document.querySelector(`#menu-list`);
-                    // Insert les bloc html pour la modal et le menu à la fin du body
-                    body.insertAdjacentHTML('beforeend', data.html);
-
-                    // Ajouter la nouvelle option au select de sélection de menu
-                    const select = document.querySelector('select[name="menu_id"]');
-                    const option = document.createElement('option');
-                    option.value = data.id;
-                    option.textContent = titre;
-                    select.appendChild(option);
-
-                    const modalElement = document.querySelector(`#new_menu`);
-                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
-                    modalInstance.hide();
-
-                } else {
-                    const parent = document.getElementById(`Menu_${menu_id}`);
-                    // Insert les bloc html pour la modal et le menu à la fin du parent
-                    parent.insertAdjacentHTML('beforeend', data.html);
-
-                    const modalElement = document.querySelector(`#new_page`);
-                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
-                    modalInstance.hide();
-                }
-            } else {
-                show_message('Echec de la ajout');
-            }
-        });
-}
-
-document.querySelectorAll('.add_form_menu').forEach(function (form) {
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const data = new FormData(form);
-        add(data.get('titre'), data.get('type'));
-    });
-});
-
-document.querySelectorAll('.add_form_page').forEach(function (form) {
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const data = new FormData(form);
-        add(data.get('titre'), data.get('type'), data.get('menu_id'));
-    });
-});
-
+// Toggle la visibilité d'une page via le formulaire et la methode GET
 function toggle_visible(id, csrf) {
     fetch(`/admin/endpoint/toggle.php?id=${id}&csrf_token=${csrf}`)
         .then(response => response.json())
@@ -114,6 +36,7 @@ function toggle_visible(id, csrf) {
         });
 }
 
+// Duplication d'un menu ou d'une page via le formulaire et la methode GET
 function duplicate(id, menu_id, csrf) {
     fetch(`/admin/endpoint/duplicate.php?id=${id}&csrf_token=${csrf}`)
         .then(response => response.json())
@@ -137,3 +60,80 @@ function duplicate(id, menu_id, csrf) {
         });
 }
 
+// Modifier un menu ou une page via le formulaire et la methode GET
+function edit_menu(id, type, titre, csrf) {
+    fetch(`/admin/endpoint/update.php?id=${id}&type=${type}&titre=${titre}&csrf_token=${csrf}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                show_message('Mise à jour réussie', 'success');
+
+                const title = document.getElementById(`${type}_label_${id}`);
+                title.textContent = titre;
+
+                const modalElement = document.querySelector(`#editModal${type}${id}`);
+                const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                modalInstance.hide();
+            } else {
+                show_message('Echec de la modification');
+            }
+        });
+}
+
+// Ajouter un menu ou une page via le formulaire et la methode GET
+function add(titre, type, menu_id, csrf) {
+    fetch(`/admin/endpoint/create.php?titre=${titre}&type=${type}&menu_id=${menu_id}&csrf_token=${csrf}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                show_message('Element ajouter', 'success');
+                if (type == 'Menu') {
+                    const body = document.querySelector(`#menu-list`);
+                    // Insert les bloc html pour la modal et le menu à la fin du body
+                    body.insertAdjacentHTML('beforeend', data.html);
+
+                    // Ajouter la nouvelle option au select de sélection de menu
+                    const select = document.querySelector('select[name="menu_id"]');
+                    const option = document.createElement('option');
+                    option.value = data.id;
+                    option.textContent = titre;
+                    select.appendChild(option);
+
+                    const modalElement = document.querySelector(`#new_menu`);
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    modalInstance.hide();
+
+                } else {
+                    setTimeout(() => location.reload(), 800);
+                }
+            } else {
+                show_message('Echec de la ajout');
+            }
+        });
+}
+
+// QuerySelector Gestion des formulaires d'édition et d'ajout
+
+document.querySelectorAll('.edit_form').forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const data = new FormData(form);
+        edit_menu(data.get('id'), data.get('type'), data.get('titre'), data.get('csrf_token'));
+    });
+});
+
+document.querySelectorAll('.add_form_menu').forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const data = new FormData(form);
+        add(data.get('titre'), data.get('type'), data.get('menu_id'), data.get('csrf_token'));
+    });
+});
+
+document.querySelectorAll('.add_form_page').forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const data = new FormData(form);
+        add(data.get('titre'), data.get('type'), data.get('menu_id'), data.get('csrf_token'));
+    });
+});
