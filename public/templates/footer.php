@@ -9,6 +9,7 @@ $flash = get_flash();
 
 <?php if (!empty($_SESSION['admin_id'])) : ?>
     <script src="/js/toast.js"></script>
+    <script src="/assets/vendor/quill/quill.js"></script>
     <script src="/js/media.js"></script>
     <script src="/js/dashboard.js"></script>
     <script src="/js/drag-ordre.js"></script>

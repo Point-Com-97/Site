@@ -48,15 +48,14 @@ try {
     foreach ($all_blocs as $bloc) {
 
         $donnees = json_decode($bloc['donnees'], true);
+        $classes = $donnees['classes'] ?? '';
 
         switch ($bloc['type']) {
             case 'texte':
                 echo <<<HTML
-            <div class="card m-1 texte bloc" style="width: 18rem;">
-                <div class="card-body">
+                <div class="card-body {$classes} texte bloc">
                     <p class="card-text">{$donnees['contenu']}</p>
                 </div>
-            </div>
         HTML;
                 break;
             case 'image':
@@ -68,11 +67,9 @@ try {
                     echo 'Image non trouvé';
                 } else {
                     echo <<<HTML
-                <div class="card m-1 image bloc" style="width: 18rem;">
-                    <div class="card-body">
+                    <div class="card-body {$classes} image bloc">
                         <img src="{$url_media['url']}" alt="{$donnees['legende']}" class="img-fluid object-fit-fill border rounded">
                     </div>
-                </div>
         HTML;
                 }
 
@@ -81,7 +78,7 @@ try {
             case 'video':
 
                 echo <<< HTML
-               <div class="w-100 video bloc">
+               <div class="{$classes} video bloc">
                     <iframe src="{$donnees['url']}" title="{$donnees['legende']}" ></iframe>
                 </div>
         HTML;
@@ -93,7 +90,7 @@ try {
                 $json_donnees = json_encode($donnees);
 
                 echo <<<HTML
-                    <div class="stats bloc">
+                    <div class=" {$classes} stats bloc">
                         <canvas id="{$canvas_id}"></canvas>
                     </div>
                     <script>
@@ -105,7 +102,7 @@ try {
             case 'tableau':
 
                 echo <<<HTML
-                    <table class="table table-hover bloc">
+                    <table class="table table-hover bloc {$classes}">
                         <thead>
                             <tr>
                     HTML;

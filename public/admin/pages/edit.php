@@ -25,7 +25,7 @@ try {
     foreach ($all_medias as $m) {
         $media_options .= '<option value="' . htmlspecialchars($m['id'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($m['titre'], ENT_QUOTES, 'UTF-8') . '</option>';
     }
-    
+
     echo <<< HTML
             <div class="btn-toolbar m-1" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="btn-group me-2" role="group" aria-label="First group">
@@ -57,9 +57,12 @@ try {
 
                                 <input type="hidden" name="page_id" value="{$id}">
                                 <input type="hidden" name="csrf_token" value="$csrf"> 
+
+                                <input type="text" name="classes_css" value="" id="css_class" class="form-control" placeholder="Exemple: text-center, bg-dark, text-light, ...">
                                 
                                 <div class="champs-bloc" data-type="texte">
-                                    <textarea name="contenu" class="form-control"></textarea>
+                                    <div id="quill-editor" style="height: 300px;"></div>
+                                    <input type="hidden" name="contenu" id="hidden-contenu">
                                 </div>
 
                                 <div class="champs-bloc" data-type="video" style="display:none;">

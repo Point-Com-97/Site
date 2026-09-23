@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="/assets/scss/main.css">
+    <link href="/assets/vendor/quill/quill.snow.css" rel="stylesheet">
 
     <title><?= htmlspecialchars($current_page['titre'] ?? 'Accueil') ?> - Point Com</title>
 </head>

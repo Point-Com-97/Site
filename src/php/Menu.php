@@ -36,6 +36,8 @@ class Menu
 
                 $menu_titre = trim($titre);
 
+                $menu_titre = str_replace(['<', '>'], '', $menu_titre);
+
                 $stmt = $this->pdo->query("SELECT MAX(ordre) AS max_ordre FROM menu_items");
 
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);

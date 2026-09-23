@@ -15,23 +15,27 @@ header('Content-Type: application/json');
 
 $id = $_POST['id'] ?? null;
 $type = $_POST['type'] ?? null;
+$classes = htmlspecialchars($_POST['classes_css'] ?? '', ENT_QUOTES, 'UTF-8');
 
 switch ($type) {
     case 'texte':
         $donnees = [
-            'contenu' => $_POST['contenu']
+            'contenu' => $_POST['contenu'],
+            'classes' => $classes
         ];
         break;
     case 'video':
         $donnees = [
             'url' => $_POST['url'],
-            'legende' => $_POST['legende']
+            'legende' => $_POST['legende'],
+            'classes' => $classes
         ];
         break;
     case 'image':
         $donnees = [
             'media_id' => (int) $_POST['media_id'],
-            'legende' => $_POST['legende']
+            'legende' => $_POST['legende'],
+            'classes' => $classes
         ];
         break;
     case 'stats':
@@ -56,7 +60,8 @@ switch ($type) {
                         "data" => $all_data
                     ]
                 ]
-            ]
+            ],
+            "classes" => $classes
         ];
 
         break;
@@ -73,7 +78,8 @@ switch ($type) {
 
         $donnees = [
             "colonnes" => $all_col,
-            "lignes" => [$all_row]
+            "lignes" => [$all_row],
+            "classes" => $classes
         ];
         break;
     default:
