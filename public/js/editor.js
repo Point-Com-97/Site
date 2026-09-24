@@ -127,11 +127,27 @@ function prefill_bloc(bouton) {
             });
             break;
         case 'tableau':
-            donnees.colonnes.forEach(function (col, colIndex) {
-                document.querySelector(`[name="col_${colIndex + 1}"]`).value = col;
+            const nbColonnes = donnees.colonnes.length;
+            const nbLignes = donnees.lignes.length;
+
+            document.getElementById('nb_col').value = nbColonnes;
+            document.getElementById('col_value').textContent = nbColonnes;
+            document.getElementById('nb_row').value = nbLignes;
+            document.getElementById('row_value').textContent = nbLignes;
+
+            regenerer_champs('tableau-col-fields', nbColonnes, (i) => `
+        <input type="text" name="col_${i}" class="form-control" placeholder="col_n°${i}">
+    `);
+            generer_lignes(nbLignes, nbColonnes);
+
+            donnees.colonnes.forEach(function (col, index) {
+                document.querySelector(`[name="col_${index + 1}"]`).value = col;
             });
-            donnees.lignes.forEach(function (row, rowIndex) {
-                document.querySelector(`[name="row_${rowIndex + 1}"]`).value = row;
+
+            donnees.lignes.forEach(function (ligne, ligneIndex) {
+                ligne.forEach(function (cellule, colIndex) {
+                    document.querySelector(`[name="cell_${ligneIndex + 1}_${colIndex + 1}"]`).value = cellule;
+                });
             });
             break;
     }
@@ -150,17 +166,7 @@ document.querySelectorAll('.add_form_bloc').forEach(function (form) {
     });
 });
 
-// Réinitialiser le formulaire lors de la fermeture de la modal
-const newBlocModal = document.getElementById('new_bloc');
-if (newBlocModal) {
-    newBlocModal.addEventListener('hidden.bs.modal', function () {
-        const form = document.querySelector('.add_form_bloc');
-        form.reset();
-        form.dataset.mode = 'create';
-        quill.setText('');
-        delete form.dataset.blocId;
-    });
-}
+
 
 // Masquer ou afficher les champs en fonction du type de bloc sélectionné
 const blocType = document.getElementById('bloc_type');
@@ -172,7 +178,29 @@ if (blocType) {
     });
 }
 
-// Mettre à jour les valeurs affichées pour le nombre de labels, colonnes et lignes
+// Fonction pour régénérer dynamiquement les champs en fonction du nombre spécifié
+function regenerer_champs(conteneurId, nombre, generateurHtml) {
+    const conteneur = document.getElementById(conteneurId);
+    let html = '';
+    for (let i = 1; i <= nombre; i++) {
+        html += generateurHtml(i);
+    }
+    conteneur.innerHTML = html;
+}
+
+function generer_lignes(nbLignes, nbColonnes) {
+    let html = '';
+    for (let i = 1; i <= nbLignes; i++) {
+        html += `<div class="input-group mb-1">`;
+        for (let j = 1; j <= nbColonnes; j++) {
+            html += `<input type="text" name="cell_${i}_${j}" class="form-control" placeholder="L${i}C${j}">`;
+        }
+        html += `</div>`;
+    }
+    document.getElementById('tableau-row-fields').innerHTML = html;
+}
+
+// Mettre à jour le nombre de labels pour le graphique stats et générer dynamiquement les champs correspondants
 const labelInput = document.getElementById('nb_label');
 const labelOutput = document.getElementById('label_value');
 
@@ -184,28 +212,73 @@ if (labelInput && labelOutput) {
     });
 }
 
+labelInput.addEventListener('input', function () {
+    labelOutput.textContent = this.value;
+    regenerer_champs('stats-fields', this.value, (i) => `
+        <div class="input-group">
+            <span class="input-group-text">Données</span>
+            <input type="text" name="labels_${i}" class="form-control" placeholder="Nom du champs">
+            <input type="text" name="data_${i}" class="form-control" placeholder="Valeur">
+        </div>
+    `);
+});
+
+// Mettre à jour le nombre de colonnes et lignes pour le tableau et générer dynamiquement les champs correspondants
 const colInput = document.getElementById('nb_col');
 const colOutput = document.getElementById('col_value');
-
-if (colInput && colOutput) {
-    colOutput.textContent = colInput.value;
-
-    colInput.addEventListener('input', function () {
-        colOutput.textContent = this.value;
-    });
-}
-
-
 const rowInput = document.getElementById('nb_row');
 const rowOutput = document.getElementById('row_value');
 
-if (rowInput && rowOutput) {
-    rowOutput.textContent = rowInput.value;
+function mettre_a_jour_colonnes() {
+    colOutput.textContent = colInput.value;
+    regenerer_champs('tableau-col-fields', colInput.value, (i) => `
+        <input type="text" name="col_${i}" class="form-control" placeholder="col_n°${i}">
+    `);
+}
 
-    rowInput.addEventListener('input', function () {
-        rowOutput.textContent = this.value;
+function mettre_a_jour_lignes() {
+    rowOutput.textContent = rowInput.value;
+    generer_lignes(parseInt(rowInput.value), parseInt(colInput.value));
+}
+
+if (colInput && rowInput) {
+    colInput.addEventListener('input', function () {
+        mettre_a_jour_colonnes();
+        mettre_a_jour_lignes(); // le nombre de colonnes a changé, les lignes doivent suivre
+    });
+
+    rowInput.addEventListener('input', mettre_a_jour_lignes);
+
+    mettre_a_jour_colonnes();
+    mettre_a_jour_lignes();
+}
+
+
+// Réinitialiser le formulaire lors de la fermeture de la modal
+const newBlocModal = document.getElementById('new_bloc');
+if (newBlocModal) {
+    newBlocModal.addEventListener('hidden.bs.modal', function () {
+        const form = document.querySelector('.add_form_bloc');
+        form.reset();
+        document.getElementById('bloc_type').dispatchEvent(new Event('change'));
+        form.dataset.mode = 'create';
+        quill.setText('');
+        delete form.dataset.blocId;
+
+        labelInput.value = 3;
+        mettre_a_jour_colonnes();
+        mettre_a_jour_lignes();
+        regenerer_champs('stats-fields', 3, (i) => `
+        <div class="input-group">
+            <span class="input-group-text">Données</span>
+            <input type="text" name="labels_${i}" class="form-control" placeholder="Nom du champs">
+            <input type="text" name="data_${i}" class="form-control" placeholder="Valeur">
+        </div>
+    `);
+
     });
 }
+
 
 const blocList = document.getElementById('bloc-list');
 if (blocList) {

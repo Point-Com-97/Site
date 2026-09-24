@@ -67,20 +67,25 @@ switch ($type) {
         break;
     case 'tableau':
         $all_col = [];
-        $all_row = [];
         $count = 1;
-
-        while (!empty($_POST["col_{$count}"]) && !empty($_POST["row_{$count}"])) {
+        while (!empty($_POST["col_{$count}"])) {
             $all_col[] = $_POST["col_{$count}"];
-            $all_row[] = $_POST["row_{$count}"];
             $count++;
         }
+        $nb_colonnes = count($all_col);
 
-        $donnees = [
-            "colonnes" => $all_col,
-            "lignes" => [$all_row],
-            "classes" => $classes
-        ];
+        $all_lignes = [];
+        $ligne_count = 1;
+        while (isset($_POST["cell_{$ligne_count}_1"]) && $_POST["cell_{$ligne_count}_1"] !== '') {
+            $ligne = [];
+            for ($col_index = 1; $col_index <= $nb_colonnes; $col_index++) {
+                $ligne[] = $_POST["cell_{$ligne_count}_{$col_index}"] ?? '';
+            }
+            $all_lignes[] = $ligne;
+            $ligne_count++;
+        }
+
+        $donnees = ["colonnes" => $all_col, "lignes" => $all_lignes, "classes" => $classes];
         break;
     default:
         echo json_encode(['success' => false, 'message' => 'Type invalide']);

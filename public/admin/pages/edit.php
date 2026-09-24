@@ -90,50 +90,45 @@ try {
                                         <input type="text" aria-label="datasets-label" name="dataset_label" class="form-control" placeholder="Nom du graphique">
 
                                         <label for="nb_label" class="form-label">Nombre de champs</label>
-                                        <input type="range" class="form-range" min="2" max="10" id="nb_label">
+                                        <input type="range" class="form-range" min="2" max="10" value="2" id="nb_label">
                                         <output for="nb_label" id="label_value" aria-hidden="true" class="text"></output>
 
-                                        <div class="input-group">
-                                            <span class="input-group-text">Champs / Valeur</span>
-                                            <input type="text" name="labels_1" class="form-control" placeholder="Champs">
-                                            <input type="text" name="data_1" class="form-control" placeholder="Valeur">
+                                        <div id="stats-fields">
+                                            <div class="input-group">
+                                                <span class="input-group-text">Données</span>
+                                                <input type="text" name="labels_1" class="form-control" placeholder="Nom du champs">
+                                                <input type="text" name="data_1" class="form-control" placeholder="Valeur">
+                                            </div>
+                                            <div class="input-group">
+                                                <span class="input-group-text">Données</span>
+                                                <input type="text" name="labels_2" class="form-control" placeholder="Nom du champs">
+                                                <input type="text" name="data_2" class="form-control" placeholder="Valeur">
+                                            </div>
                                         </div>
-
-                                        <div class="input-group">
-                                            <span class="input-group-text">Champs / Valeur</span>
-                                            <input type="text" name="labels_2" class="form-control" placeholder="Champs">
-                                            <input type="text" name="data_2" class="form-control" placeholder="Valeur">
-                                        </div>
-
-                                        <div class="input-group">
-                                            <span class="input-group-text">Champs / Valeur</span>
-                                            <input type="text" name="labels_3" class="form-control" placeholder="Champs">
-                                            <input type="text" name="data_3" class="form-control" placeholder="Valeur">
-                                        </div>
-
                                 </div>
 
                                 <div class="champs-bloc" data-type="tableau" style="display:none;">
                                         <label for="nb_col" class="form-label">Nombre de colonnes</label>
-                                        <input type="range" class="form-range" min="2" max="10" id="nb_col">
+                                        <input type="range" class="form-range" min="2" max="6" value="2" id="nb_col">
                                         <output for="nb_col" id="col_value" aria-hidden="true" class="text"></output></br>
 
                                         <label for="nb_row" class="form-label">Nombre de lignes</label>
-                                        <input type="range" class="form-range" min="1" max="20" value="10" id="nb_row">
+                                        <input type="range" class="form-range" min="1" max="20" value="1" id="nb_row">
                                         <output for="nb_row" id="row_value" aria-hidden="true" class="text"></output>
 
-
-                                        <div class="input-group">
-                                            <span class="input-group-text">Colonnes</span>
-                                            <input type="text" name="col_1" class="form-control" placeholder="colonne">
-                                            <input type="text" name="col_2" class="form-control" placeholder="colonne">
-                                        </div>
-
-                                        <div class="input-group">
-                                            <span class="input-group-text">Lignes</span>
-                                            <input type="text" name="row_1" class="form-control" placeholder="ligne">
-                                            <input type="text" name="row_2" class="form-control" placeholder="ligne">
-                                        </div>
+                                        <span class="input-group-text">Colonnes</span>
+                                            <div class="input-group" id="tableau-col-fields" >
+                                                <input type="text" name="col_1" class="form-control" placeholder="col_n°1">
+                                                <input type="text" name="col_2" class="form-control" placeholder="col_n°2">
+                                            </div>
+                                        
+                                        <span class="input-group-text">Lignes</span>
+                                            <div id="row-fields">
+                                                <div class="input-group" id="tableau-row-fields">
+                                                    <input type="text" name="cell_1_1" class="form-control" placeholder="row_n°1">
+                                                    <input type="text" name="cell_2_1" class="form-control" placeholder="row_n°2">
+                                                </div>
+                                            </div>
                                 </div>
                         </div>
                                 <div class="modal-footer">
