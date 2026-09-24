@@ -121,12 +121,14 @@ function prefill_bloc(bouton) {
             document.querySelector('[name="legende"]').value = donnees.legende;
             break;
         case 'stats':
+            document.querySelector('[name="dataset_label"]').value = donnees.data.datasets[0].label;
             donnees.data.labels.forEach(function (label, index) {
                 document.querySelector(`[name="labels_${index + 1}"]`).value = label;
                 document.querySelector(`[name="data_${index + 1}"]`).value = donnees.data.datasets[0].data[index];
             });
             break;
         case 'tableau':
+            document.querySelector('[name="name_tab"]').value = donnees.name_tab;
             const nbColonnes = donnees.colonnes.length;
             const nbLignes = donnees.lignes.length;
 

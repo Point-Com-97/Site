@@ -27,3 +27,12 @@ box-shadow: 8px 8px $tertiary;
     font-size: 30px;
     font-weight: bold;
 }
+
+a {
+  color: rgb(0, 13, 255);
+  text-decoration: underline;
+}
+a:hover {
+    color: rgb(85, 0, 255);
+    text-decoration: none;
+    }

@@ -108,6 +108,9 @@ try {
                                 </div>
 
                                 <div class="champs-bloc" data-type="tableau" style="display:none;">
+
+                                    <input type="text" aria-label="datasets-label" name="name_tab" class="form-control" placeholder="Nom du tableau">
+
                                         <label for="nb_col" class="form-label">Nombre de colonnes</label>
                                         <input type="range" class="form-range" min="2" max="6" value="2" id="nb_col">
                                         <output for="nb_col" id="col_value" aria-hidden="true" class="text"></output></br>

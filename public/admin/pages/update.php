@@ -66,6 +66,7 @@ switch ($type) {
 
         break;
     case 'tableau':
+        $name_tab = htmlspecialchars($_POST['name_tab'] ?? '', ENT_QUOTES, 'UTF-8');
         $all_col = [];
         $count = 1;
         while (!empty($_POST["col_{$count}"])) {
@@ -85,7 +86,7 @@ switch ($type) {
             $ligne_count++;
         }
 
-        $donnees = ["colonnes" => $all_col, "lignes" => $all_lignes, "classes" => $classes];
+        $donnees = ["nom" => $name_tab, "colonnes" => $all_col, "lignes" => $all_lignes, "classes" => $classes];
         break;
     default:
         echo json_encode(['success' => false, 'message' => 'Type invalide']);

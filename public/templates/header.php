@@ -24,7 +24,7 @@ $settings = $new_settings->get();
         :root {
             --bs-primary: <?= $settings['couleur_primaire'] ?? '#019DD4' ?>;
             --bs-primary-rgb: <?= hex_vers_rgb($settings['couleur_primaire'] ?? '#019DD4') ?>;
-            --bs-link-color: <?= $settings['couleur_lien'] ?? '#007bff' ?>;
+            --bs-link-color: <?= $settings['couleur_lien'] ?? '#0022ff' ?>;
             --bs-body-font-family: <?= $settings['police_corps'] ?? 'Arial, sans-serif' ?>;
         }
 

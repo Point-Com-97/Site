@@ -103,6 +103,7 @@ try {
 
                 echo <<<HTML
                     <table class="table table-hover bloc {$classes}">
+                        <div class="card-header">{$donnees['nom']}</div>
                         <thead>
                             <tr>
                     HTML;
