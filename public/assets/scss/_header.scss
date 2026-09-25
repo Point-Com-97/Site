@@ -1,0 +1,59 @@
+.logo {
+    display: block;
+    max-width: 200px;
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .logo {
+        max-width: 150px;
+        margin-top: 25px;
+        margin-bottom: -25px;
+    }
+}
+
+#navbar {
+    background: linear-gradient(45deg, #432e7d, #3295c3, #432e7d);
+    background-size: 200% 200%;
+    padding: 10px;
+    margin: 0px;
+}
+
+.navbar-animate {
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: navbarIn 1.5s ease-out forwards, navbarFlow 8s ease-in-out infinite;
+}
+
+@keyframes navbarIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+@keyframes navbarFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.nav-link {
+    margin-right: 15px;
+    font-weight: bold;
+    color: #fff;
+    font-size: 18px;
+}
+
+.nav-link:hover {
+    color: #000000;
+}

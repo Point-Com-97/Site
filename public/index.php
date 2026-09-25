@@ -40,11 +40,49 @@ try {
 
     require_once __DIR__ . '/../public/templates/header.php';
 
+    echo "<div class='menu col-2 view'> <h1 class='card-header'>Pages</h1>";
+    if (!empty($all_menu) && is_array($all_menu)) {
+        foreach ($all_menu as $item) {
+
+            $array = [];
+            $page_menu = $page_group[$item['menu_id']] ?? [];
+
+            if (!empty($page_menu) && is_array($page_menu)) {
+                foreach ($page_menu as $page) {
+                    $array[] = "#page_{$page['id']}";
+                }
+            }
+
+            $target = implode(',', $array);
+            $aria = implode(' ', array_map(fn($p) => "page_{$p['id']}", $page_menu));
+
+            echo "<div class='card-body'>";
+            echo <<<HTML
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="{$target}" aria-expanded="false" aria-controls="{$aria}">
+            {$item['menu_titre']}
+        </button>
+    HTML;
+
+            if (!empty($page_menu) && is_array($page_menu)) {
+                foreach ($page_menu as $page) {
+                    echo "<div class='collapse' id='page_{$page['id']}'><a href='" . htmlspecialchars($page['slug']) . "'>" . htmlspecialchars($page['titre']) . "</a></div>";
+                }
+            } else {
+                echo "<div class='card-body'>Aucune page disponible</div>";
+            }
+            echo "</div>";
+        }
+    }
+
+    echo "</div>";
+
+
     // Récupération des blocs associés à la page actuelle
     $new_blocs = new Bloc();
 
     $all_blocs = $new_blocs->getByPageId($current_page['id']);
 
+    echo '<div class="page col-9 view">';
     foreach ($all_blocs as $bloc) {
 
         $donnees = json_decode($bloc['donnees'], true);
@@ -138,6 +176,7 @@ try {
                 echo "Contenu introuvable\n";
         }
     }
+    echo '</div>';
 
     require_once __DIR__ . '/../public/templates/footer.php';
 } catch (PDOException $e) {

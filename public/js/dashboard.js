@@ -102,6 +102,7 @@ function add(titre, type, menu_id, csrf) {
                     const modalElement = document.querySelector(`#new_menu`);
                     const modalInstance = bootstrap.Modal.getInstance(modalElement);
                     modalInstance.hide();
+                    setTimeout(() => location.reload(), 800);
 
                 } else {
                     setTimeout(() => location.reload(), 800);

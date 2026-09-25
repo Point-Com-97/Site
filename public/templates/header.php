@@ -32,7 +32,7 @@ $settings = $new_settings->get();
             --bs-btn-bg: <?= $settings['couleur_primaire'] ?? '#019DD4' ?> !important;
             --bs-btn-border-color: <?= $settings['couleur_primaire'] ?? '#019DD4' ?> !important;
             --bs-btn-color: <?= $settings['couleur_texte_bouton'] ?? '#ffffff' ?> !important;
-              background-color: <?= $settings['couleur_primaire'] ?? '#019DD4' ?> !important;
+            background-color: <?= $settings['couleur_primaire'] ?? '#019DD4' ?> !important;
         }
 
         .btn-secondary {
@@ -41,7 +41,7 @@ $settings = $new_settings->get();
             --bs-btn-color: <?= $settings['couleur_texte_bouton'] ?? '#ffffff' ?> !important;
             background-color: <?= $settings['couleur_secondaire'] ?? '#019DD4' ?> !important;
         }
-             
+
         <?= str_replace('</style>', '', $settings['css_personnalise'] ?? '') ?>
     </style>
 
@@ -50,33 +50,26 @@ $settings = $new_settings->get();
 
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-primary">
+    <nav class="navbar navbar-expand-lg bg-primary navbar-animate" id="navbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
-                <img src="/assets/image/logo.jpeg" alt="Logo" width="200" height="50" class="d-inline-block align-text-top">
+                <img src="/assets/image/logo.jpeg" alt="Logo" class="logo">
             </a>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <?php if (!empty($all_menu) && is_array($all_menu)): ?>
-                        <?php foreach ($all_menu as $item): ?>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <?= htmlspecialchars($item['menu_titre']) ?>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                 <?php $page_menu = $page_group[$item['menu_id']] ?? [] ?>
-                                    <?php if (!empty($page_menu) && is_array($page_menu)): ?>
-                                        <?php foreach ($page_menu as $page): ?>
-                                            <li><a class="dropdown-item" href="<?= htmlspecialchars($page['slug']) ?>"><?= htmlspecialchars($page['titre']) ?></a></li>
-                                        <?php endforeach; ?>
-                                    <?php endif; ?>
-                                </ul>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
+                    <ul class="navbar-nav me-auto nav-underline">
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://canva.link/8vn2d5u0lnkz6p4">CATALOGUE DE FORMATION</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://point-com-97.github.io/Portail/#link-hygiene-espace-vert">PORTAIL D'INSCRIPTION</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://location-salle-pcom.my.canva.site/">LOCATION DE SALLE</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </nav>
-    <div class="toast-container position-fixed top-0 end-0 p-3" id="toast-container"></div>
-    <main>
+    <main class="container-fluid text-center board-container">
