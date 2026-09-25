@@ -16,9 +16,10 @@ require_once __DIR__ . '/../../templates/admin/item/menu.php';
 // Définir l'en-tête de réponse pour indiquer que le contenu est au format JSON
 header('Content-Type: application/json');
 
-$name = $_GET['titre'];
+$name = mb_strtoupper($_GET['titre']);
 $type = $_GET['type'];
 $menu = (!empty($_GET['menu_id'])) ? (int) $_GET['menu_id'] : null;
+
 
 if (!$name) {
     echo json_encode(['success' => false, 'message' => 'Champs titre vide']);

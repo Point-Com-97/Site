@@ -59,6 +59,9 @@ $settings = $new_settings->get();
                 <div class="navbar-nav">
                     <ul class="navbar-nav me-auto nav-underline">
                         <li class="nav-item">
+                            <a class="nav-link" href="/">ACCUEIL</a>
+                            </li>
+                            <li class="nav-item">
                             <a class="nav-link" href="https://canva.link/8vn2d5u0lnkz6p4">CATALOGUE DE FORMATION</a>
                         </li>
                         <li class="nav-item">

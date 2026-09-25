@@ -28,12 +28,12 @@ $flash = get_flash();
                     <p class="footer-text mb-1">Lundi : 08:30 - 12:00</p>
                     <p class="footer-text mb-1">Mardi - Vendredi</p>
                     <p class="footer-text mb-1"> Matin : 08:30 - 12:00</p>
-                    <p class="footer-text mb-1"> Après-midi :13:30 - 16:00</p><br>
+                    <p class="footer-text mb-1"> Après-midi : 13:30 - 16:00</p><br>
                     <h5 class="footer-title"><i class="bi bi-share-fill"></i> Reseaux sociaux</h5>
                     <div class="social-links">
                         <a href="https://www.facebook.com/association.pointcom" target="_blank"
-                            rel="noopener noreferrer"><i class="bi bi-facebook"></i> Facebook</a>
-                        <a href="https://www.instagram.com/point_com_/" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram"></i> Instagram</a>
+                            rel="noopener noreferrer"><i class="bi bi-facebook"></i> FACEBOOK</a>
+                        <a href="https://www.instagram.com/point_com_/" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram"></i> INSTAGRAM</a>
                     </div>
                 </div>
             </div>

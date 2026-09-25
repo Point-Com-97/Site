@@ -40,41 +40,40 @@ try {
 
     require_once __DIR__ . '/../public/templates/header.php';
 
-    echo "<div class='menu col-2 view'> <h1 class='card-header'>Pages</h1>";
+    echo "<div class='menu col-3'><h1 class='menu-title view'>Menu</h1>";
+    echo "<div class='accordion' id='accordion-menu'>";
+
     if (!empty($all_menu) && is_array($all_menu)) {
         foreach ($all_menu as $item) {
-
-            $array = [];
             $page_menu = $page_group[$item['menu_id']] ?? [];
+            $collapse_id = "collapse-{$item['menu_id']}";
 
-            if (!empty($page_menu) && is_array($page_menu)) {
-                foreach ($page_menu as $page) {
-                    $array[] = "#page_{$page['id']}";
-                }
-            }
-
-            $target = implode(',', $array);
-            $aria = implode(' ', array_map(fn($p) => "page_{$p['id']}", $page_menu));
-
-            echo "<div class='card-body'>";
+            echo "<div class='accordion-item'>";
             echo <<<HTML
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="{$target}" aria-expanded="false" aria-controls="{$aria}">
-            {$item['menu_titre']}
-        </button>
-    HTML;
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed view" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#{$collapse_id}" aria-expanded="false" aria-controls="{$collapse_id}">
+                    {$item['menu_titre']}
+                </button>
+            </h2>
+            HTML;
+
+            echo "<div id='{$collapse_id}' class='accordion-collapse collapse' data-bs-parent='#accordion-menu'>";
+            echo "<div class='accordion-body'>";
 
             if (!empty($page_menu) && is_array($page_menu)) {
                 foreach ($page_menu as $page) {
-                    echo "<div class='collapse' id='page_{$page['id']}'><a href='" . htmlspecialchars($page['slug']) . "'>" . htmlspecialchars($page['titre']) . "</a></div>";
+                    echo "<a href='/" . htmlspecialchars($page['slug']) . "' class='d-block mb-1 menu-item'>" . htmlspecialchars($page['titre']) . "</a>";
                 }
             } else {
-                echo "<div class='card-body'>Aucune page disponible</div>";
+                echo "Aucune page disponible";
             }
-            echo "</div>";
+
+            echo "</div></div></div>";
         }
     }
 
-    echo "</div>";
+    echo "</div></div>";
 
 
     // Récupération des blocs associés à la page actuelle
@@ -82,98 +81,104 @@ try {
 
     $all_blocs = $new_blocs->getByPageId($current_page['id']);
 
-    echo '<div class="page col-9 view">';
-    foreach ($all_blocs as $bloc) {
+    echo '<div class="page col-8 view">';
 
-        $donnees = json_decode($bloc['donnees'], true);
-        $classes = $donnees['classes'] ?? '';
+    if (empty($all_blocs)) {
+        echo '<p class="text-muted p-4">Cette page ne contient pas encore de contenu.</p>';
+    } else {
+        foreach ($all_blocs as $bloc) {
 
-        switch ($bloc['type']) {
-            case 'texte':
-                echo <<<HTML
-                <div class="card-body {$classes} texte bloc">
-                    <p class="card-text">{$donnees['contenu']}</p>
-                </div>
-        HTML;
-                break;
-            case 'image':
-                $new_media = new Media();
+            $donnees = json_decode($bloc['donnees'], true);
+            $classes = $donnees['classes'] ?? '';
 
-                $url_media = $new_media->getById($donnees['media_id']);
-
-                if (empty($url_media)) {
-                    echo 'Image non trouvé';
-                } else {
+            switch ($bloc['type']) {
+                case 'texte':
                     echo <<<HTML
-                    <div class="card-body {$classes} image bloc">
-                        <img src="{$url_media['url']}" alt="{$donnees['legende']}" class="img-fluid object-fit-fill border rounded">
+                    <div class="card-body {$classes} texte bloc">
+                        <p class="card-text">{$donnees['contenu']}</p>
                     </div>
-        HTML;
-                }
+            HTML;
+                    break;
+                case 'image':
+                    $new_media = new Media();
 
+                    $url_media = $new_media->getById($donnees['media_id']);
 
-                break;
-            case 'video':
-
-                echo <<< HTML
-               <div class="{$classes} video bloc">
-                    <iframe src="{$donnees['url']}" title="{$donnees['legende']}" ></iframe>
-                </div>
-        HTML;
-                break;
-
-            case 'stats':
-                $canvas_id = 'chart-' . $bloc['id']; // identifiant unique par bloc
-
-                $json_donnees = json_encode($donnees);
-
-                echo <<<HTML
-                    <div class=" {$classes} stats bloc">
-                        <canvas id="{$canvas_id}"></canvas>
-                    </div>
-                    <script>
-                       new Chart(document.getElementById('{$canvas_id}'), {$json_donnees});
-                    </script>
-                HTML;
-                break;
-
-            case 'tableau':
-
-                echo <<<HTML
-                    <table class="table table-hover bloc {$classes}">
-                        <div class="card-header">{$donnees['nom']}</div>
-                        <thead>
-                            <tr>
-                    HTML;
-
-                // Boucle forearch pour l'entête du tableau 
-                foreach ($donnees['colonnes'] as $col) {
-                    echo "<th>" . htmlspecialchars($col) . "</th>";
-                }
-
-                echo <<<HTML
-                            </tr>
-                        </thead>
-                        <tbody>
-                    HTML;
-
-                // Boucle forearch pour les lignes du tableau 
-                foreach ($donnees['lignes'] as $ligne) {
-                    echo "<tr>";
-                    foreach ($ligne as $row) {
-                        echo "<td>" . htmlspecialchars($row) . "</td>";
+                    if (empty($url_media)) {
+                        echo 'Image non trouvé';
+                    } else {
+                        echo <<<HTML
+                        <div class="card-body {$classes} image bloc">
+                            <img src="{$url_media['url']}" alt="{$donnees['legende']}" class="img-fluid object-fit-fill border rounded">
+                        </div>
+            HTML;
                     }
-                    echo "</tr>";
-                }
 
-                echo <<<HTML
-                        </tbody>
-                    </table>
+
+                    break;
+                case 'video':
+
+                    echo <<< HTML
+                <div class="{$classes} video bloc">
+                        <iframe src="{$donnees['url']}" title="{$donnees['legende']}" ></iframe>
+                    </div>
+            HTML;
+                    break;
+
+                case 'stats':
+                    $canvas_id = 'chart-' . $bloc['id']; // identifiant unique par bloc
+
+                    $json_donnees = json_encode($donnees);
+
+                    echo <<<HTML
+                        <div class=" {$classes} stats bloc">
+                            <canvas id="{$canvas_id}"></canvas>
+                        </div>
+                        <script>
+                        new Chart(document.getElementById('{$canvas_id}'), {$json_donnees});
+                        </script>
                     HTML;
+                    break;
 
-                break;
-            default:
-                echo "Contenu introuvable\n";
+                case 'tableau':
+
+                    echo <<<HTML
+                        <table class="table table-hover bloc {$classes}">
+                            <div class="card-header">{$donnees['nom']}</div>
+                            <thead>
+                                <tr>
+                        HTML;
+
+                    // Boucle forearch pour l'entête du tableau 
+                    foreach ($donnees['colonnes'] as $col) {
+                        echo "<th>" . htmlspecialchars($col) . "</th>";
+                    }
+
+                    echo <<<HTML
+                                </tr>
+                            </thead>
+                            <tbody>
+                        HTML;
+
+                    // Boucle forearch pour les lignes du tableau 
+                    foreach ($donnees['lignes'] as $ligne) {
+                        echo "<tr>";
+                        foreach ($ligne as $row) {
+                            echo "<td>" . htmlspecialchars($row) . "</td>";
+                        }
+                        echo "</tr>";
+                    }
+
+                    echo <<<HTML
+                            </tbody>
+                        </table>
+                        HTML;
+
+                    break;
+                default:
+                    echo "Contenu introuvable\n";
+
+            }
         }
     }
     echo '</div>';

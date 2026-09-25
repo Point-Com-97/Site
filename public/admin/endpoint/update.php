@@ -15,7 +15,7 @@ require_once __DIR__ . '/../../../src/php/Page.php';
 header('Content-Type: application/json');
 
 $id = $_GET['id'] ?? null;
-$name = $_GET['titre'] ?? 'Menu';
+$name = mb_strtoupper($_GET['titre']) ?? 'MENU';
 $type = $_GET['type'];
 
 if (!$id || !$name) {

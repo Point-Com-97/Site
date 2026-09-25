@@ -17,7 +17,7 @@
 
 
 <body>
-    <nav class="navbar sticky-top navbar-expand-lg bg-primary" id="navbar">
+    <nav class="navbar sticky-top navbar-expand-lg bg-primary navbar-animate" id="navbar">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
                 aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarToggler">
                 <a class="navbar-brand" href="/admin/dashboard.php">
-                    <img src="/assets/image/logo.jpeg" alt="Logo" width="200" height="50" class="d-inline-block align-text-top">
+                    <img src="/assets/image/logo.jpeg" alt="Logo" class="logo">
                 </a>
                 <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                     <li class="nav-item">

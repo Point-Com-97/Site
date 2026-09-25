@@ -1,6 +1,5 @@
 body {
-    background-color: #bfe7fc;
-
+    background-color: #E1E5E7;
 }
 
 .board-container {
@@ -9,20 +8,56 @@ body {
 }
 
 .view {
-    border-radius: 10px;
-    box-shadow: inset 0 0 10px #000000;
+    background-color: #e7e3e1;
+}
+
+.accordion-item {
+    box-shadow: 1px 3px 2px black;
     border: 2px solid black;
 }
 
-.page {
-    background-color: rgb(51, 255, 0);
-    width: 80vw;
-    
+.accordion-button {
+    background-color: $primary;
+    color : white;
+    font-size: 16px;
+}
+
+.menu-title {
+    margin-bottom: 10px;
+    color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    box-shadow: 1px 3px 2px black;
+    background-color: $tertiary;
 }
 
 .menu {
-    background-color: rgb(251, 255, 0);
-    margin-right: 15px;
+    width: 30vw;
+    margin-right: 10px;
+}
+
+.menu-item {
+    border-radius: 10px;
+    border: 2px solid black;
+    background-color: $primary;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.menu-item:hover {
+    border: 3px solid $secondary;
+    color: black;
+}
+
+.page {
+    border-radius: 10px;
+    box-shadow: 1px 3px 2px $tertiary;
+    border: 2px solid $tertiary;
+    width: 67vw;
+    margin-right: 10px;
 }
 
 .btn {
