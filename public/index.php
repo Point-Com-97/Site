@@ -34,7 +34,9 @@ try {
 
     $current_page = $new_page->getBySlug($final_url);
 
-    if ($current_page == "404") {
+    
+    if ($current_page === "404") {
+        http_response_code(404);
         die("Page introuvable");
     }
 
@@ -75,9 +77,9 @@ try {
 
     echo "</div>";
     echo <<< HTML
-                    <div class="col-12 col-md-6 col-lg-3">
-                        <div class="footer-block">
-                            <h5 class="footer-title"><i class="bi bi-buildings-fill"></i>Nos Partenaires</h5>
+                    <div class="mb-2">
+                        <div class="menu-block">
+                            <h2 class="menu-title">Nos Partenaires</h2>
                             <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
@@ -126,12 +128,13 @@ try {
                     </div>
             HTML;
     echo <<< HTML
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="footer-block">
-                    <h5 class="footer-title fs-4"><i class="bi bi-patch-check-fill"></i>Certification Qualiopi</h5>
-                    <a class="footer-text"
-                        href="https://certifopac.fr/qualiopi/certification/verification/?siren=440640456"
-                        target="_blank" rel="noopener noreferrer"><img src="/assets/image/qualiopi.png" class="img-fluid"></a>
+            <div class="mb-2">
+                <div class="menu-block">
+                    <h2 class="menu-title">Nos réseaux sociaux</h2>
+                    <p class="text-reseaux">Vous êtes sur Instagram et Facebook ? Ça tombe bien, nous aussi.</p>
+                    <p class="fs-5">Suivez notre actu formation !</p>
+                        <a href="https://www.facebook.com/association.pointcom" class="btn link-reseau"><i class="bi bi-facebook"></i> FACEBOOK</a>
+                        <a href="https://www.instagram.com/point_com_/" class="btn link-reseau"><i class="bi bi-instagram"></i> INSTAGRAM</a>
                 </div>
             </div>
             HTML;
@@ -168,7 +171,7 @@ try {
                     $url_media = $new_media->getById($donnees['media_id']);
 
                     if (empty($url_media)) {
-                        echo 'Image non trouvé';
+                        echo 'Image non trouvée';
                     } else {
                         echo <<<HTML
                         <div class="card-body {$classes} bloc">
@@ -191,7 +194,7 @@ try {
                 case 'stats':
                     $canvas_id = 'chart-' . $bloc['id']; // identifiant unique par bloc
 
-                    $json_donnees = json_encode($donnees);
+                    $json_donnees = json_encode($donnees, JSON_HEX_TAG);
 
                     echo <<<HTML
                         <div class=" {$classes} bloc">

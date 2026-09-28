@@ -12003,6 +12003,15 @@ body {
   font-size: 16px;
 }
 
+.menu-block {
+  height: auto;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 1px 3px 2px black;
+}
+
 .menu-title {
   margin-bottom: 10px;
   color: white;
@@ -12017,12 +12026,6 @@ body {
   margin-right: 0;
 }
 
-@media (min-width: 992px) {
-  .menu,
-  .page {
-    margin-right: 10px;
-  }
-}
 .menu-item {
   border-radius: 10px;
   border: 2px solid black;
@@ -12048,28 +12051,14 @@ body {
 .btn {
   font-size: 25px;
   font-weight: bold;
-  padding: auto;
 }
 
-@media (max-width: 768px) {
-  .menu-item {
-    font-size: 15px;
-  }
-  .table-name {
-    font-size: 18px;
-  }
-  .btn {
-    font-size: 18px;
-  }
+.form-label {
+  color: black;
+  font-size: 30px;
+  font-weight: bold;
 }
-@media (max-width: 768px) {
-  .btn {
-    font-size: 18px;
-  }
-  .form-label {
-    font-size: 20px;
-  }
-}
+
 .btn:hover {
   color: white;
 }
@@ -12084,24 +12073,67 @@ body {
   box-shadow: 8px 8px #412872;
 }
 
-.form-label {
-  color: black;
-  font-size: 30px;
-  font-weight: bold;
-}
-
-@media (max-width: 768px) {
-  .form_login {
-    width: 90%;
-    margin-top: 10vh;
-  }
-}
 .carousel {
   padding: 5px;
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
 }
 
+.carousel .carousel-item {
+  height: 150px;
+}
+
+.carousel .carousel-item img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.text-reseaux {
+  font-size: 0.98rem;
+}
+
+.link-reseau:hover {
+  color: #ED8E33;
+}
+
+@media (min-width: 992px) {
+  .menu,
+  .page {
+    margin-right: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .menu-item {
+    font-size: 15px;
+  }
+  .table-name {
+    font-size: 18px;
+  }
+  .btn {
+    font-size: 18px;
+  }
+}
+@media (max-width: 768px) {
+  .form_login {
+    width: 90%;
+    margin-top: 10vh;
+  }
+}
+@media (max-width: 768px) {
+  .btn {
+    font-size: 18px;
+  }
+  .form-label {
+    font-size: 20px;
+  }
+}
+@media (max-width: 768px) {
+  .carousel .carousel-item {
+    height: 120px;
+  }
+}
 .logo {
   display: block;
   max-width: 200px;
@@ -12175,7 +12207,7 @@ body {
 }
 
 .footer-title {
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 12px;
 }
@@ -12189,13 +12221,13 @@ body {
   margin: 0;
 }
 
-a {
+.footer a {
   font-size: 0.9rem;
   color: #ffffff;
   text-decoration: none;
 }
 
-a:hover {
+.footer a:hover {
   color: #ED8E33;
   text-decoration: underline;
 }

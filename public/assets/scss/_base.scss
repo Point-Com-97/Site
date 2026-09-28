@@ -21,6 +21,16 @@ body {
     font-size: 16px;
 }
 
+.menu-block {
+    height: auto;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 1px 3px 2px black;
+}
+
+
 .menu-title {
     margin-bottom: 10px;
     color: white;
@@ -34,14 +44,6 @@ body {
 .page {
     margin-right: 0;
 }
-
-@media (min-width: 992px) {
-    .menu,
-    .page {
-        margin-right: 10px;
-    }
-}
-
 .menu-item {
     border-radius: 10px;
     border: 2px solid black;
@@ -67,7 +69,58 @@ body {
 .btn {
     font-size: 25px;
     font-weight: bold;
-    padding: auto;
+}
+
+.form-label {
+    color: black;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.btn:hover {
+    color: white;
+}
+
+.form_login {
+    width: 30%;
+    margin-top: 20vh;
+    background-color: rgb(166, 204, 227);
+    border: 2px solid black;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 8px 8px $tertiary;
+}
+
+.carousel {
+    padding: 5px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+}
+
+.carousel .carousel-item {
+    height: 150px;
+}
+
+.carousel .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.text-reseaux {
+    font-size: 0.98rem;
+}
+
+.link-reseau:hover {
+    color: $secondary;
+}
+
+@media (min-width: 992px) {
+
+    .menu,
+    .page {
+        margin-right: 10px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -85,6 +138,13 @@ body {
 }
 
 @media (max-width: 768px) {
+    .form_login {
+        width: 90%;
+        margin-top: 10vh;
+    }
+}
+
+@media (max-width: 768px) {
     .btn {
         font-size: 18px;
     }
@@ -94,37 +154,8 @@ body {
     }
 }
 
-
-.btn:hover {
-    color: white;
-}
-
-.form_login {
-    width: 30%;
-    margin-top: 20vh;
-    background-color: rgb(166, 204, 227);
-    border: 2px solid black;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 8px 8px $tertiary;
-}
-
-.form-label {
-    color: black;
-    font-size: 30px;
-    font-weight: bold;
-}
-
 @media (max-width: 768px) {
-    .form_login {
-        width: 90%;
-        margin-top: 10vh;
+    .carousel .carousel-item {
+        height: 120px;
     }
 }
-.carousel {
-    padding: 5px;
-    background-color: rgb(255, 255, 255);
-    border-radius: 10px;
-}
-
-
