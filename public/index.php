@@ -39,9 +39,9 @@ try {
     }
 
     require_once __DIR__ . '/../public/templates/header.php';
-
-    echo "<div class='menu col-3'><h1 class='menu-title view'>Menu</h1>";
-    echo "<div class='accordion' id='accordion-menu'>";
+    echo "<div class='row'>";
+    echo "<div class='menu col-12 col-lg-4'><h1 class='menu-title view'>Menu</h1>";
+    echo "<div class='accordion mb-2' id='accordion-menu'>";
 
     if (!empty($all_menu) && is_array($all_menu)) {
         foreach ($all_menu as $item) {
@@ -73,7 +73,70 @@ try {
         }
     }
 
-    echo "</div></div>";
+    echo "</div>";
+    echo <<< HTML
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="footer-block">
+                            <h5 class="footer-title"><i class="bi bi-buildings-fill"></i>Nos Partenaires</h5>
+                            <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="/assets/image/AKTO.png" class="d-block w-100" alt="AKTO">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/assets/image/FT.png" class="d-block w-100" alt="FRANCE TRAVAIL">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/assets/image/EPNAK.png" class="d-block w-100" alt="EPNAK">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/assets/image/CTG.png" class="d-block w-100" alt="CTG">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/assets/image/OCAPIAT.png" class="d-block w-100" alt="OCAPIAT">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/assets/image/MLG.png" class="d-block w-100" alt="MISSION LOCALE">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/assets/image/QV2.png" class="d-block w-100" alt="QUALIOPI">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/assets/image/OPCO.png" class="d-block w-100" alt="OPCO">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/assets/image/HANDI.png" class="d-block w-100" alt="HANDI BIENVEILLANT">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/assets/image/LES.jpg" class="d-block w-100" alt="LES ENTREPRISES S'ENGAGENT">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/assets/image/ISF.jpg" class="d-block w-100" alt="IMMERSION FACILITÉE">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/assets/image/CR.jpg" class="d-block w-100" alt="CROIX ROUGE FRANÇAISE">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/assets/image/DREETS.jpg" class="d-block w-100" alt="DREETS">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+            HTML;
+    echo <<< HTML
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="footer-block">
+                    <h5 class="footer-title fs-4"><i class="bi bi-patch-check-fill"></i>Certification Qualiopi</h5>
+                    <a class="footer-text"
+                        href="https://certifopac.fr/qualiopi/certification/verification/?siren=440640456"
+                        target="_blank" rel="noopener noreferrer"><img src="/assets/image/qualiopi.png" class="img-fluid"></a>
+                </div>
+            </div>
+            HTML;
+    echo "</div>";
+
 
 
     // Récupération des blocs associés à la page actuelle
@@ -81,7 +144,7 @@ try {
 
     $all_blocs = $new_blocs->getByPageId($current_page['id']);
 
-    echo '<div class="page col-8 view">';
+    echo '<div class="page col-12 col-lg-7 view">';
 
     if (empty($all_blocs)) {
         echo '<p class="text-muted p-4">Cette page ne contient pas encore de contenu.</p>';
@@ -94,8 +157,8 @@ try {
             switch ($bloc['type']) {
                 case 'texte':
                     echo <<<HTML
-                    <div class="card-body {$classes} texte bloc">
-                        <p class="card-text">{$donnees['contenu']}</p>
+                    <div class="card-body {$classes} bloc">
+                        {$donnees['contenu']}
                     </div>
             HTML;
                     break;
@@ -108,8 +171,8 @@ try {
                         echo 'Image non trouvé';
                     } else {
                         echo <<<HTML
-                        <div class="card-body {$classes} image bloc">
-                            <img src="{$url_media['url']}" alt="{$donnees['legende']}" class="img-fluid object-fit-fill border rounded">
+                        <div class="card-body {$classes} bloc">
+                            <img src="{$url_media['url']}" alt="{$donnees['legende']}" class="bloc-image img-fluid object-fit-fill border rounded d-block mx-auto">
                         </div>
             HTML;
                     }
@@ -119,9 +182,9 @@ try {
                 case 'video':
 
                     echo <<< HTML
-                <div class="{$classes} video bloc">
-                        <iframe src="{$donnees['url']}" title="{$donnees['legende']}" ></iframe>
-                    </div>
+                            <div class="{$classes} bloc ratio ratio-16x9">
+                                <iframe src="{$donnees['url']}" title="{$donnees['legende']}" allowfullscreen></iframe>
+                            </div>
             HTML;
                     break;
 
@@ -131,7 +194,7 @@ try {
                     $json_donnees = json_encode($donnees);
 
                     echo <<<HTML
-                        <div class=" {$classes} stats bloc">
+                        <div class=" {$classes} bloc">
                             <canvas id="{$canvas_id}"></canvas>
                         </div>
                         <script>
@@ -143,10 +206,11 @@ try {
                 case 'tableau':
 
                     echo <<<HTML
-                        <table class="table table-hover bloc {$classes}">
-                            <div class="card-header">{$donnees['nom']}</div>
-                            <thead>
-                                <tr>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped table-light caption-top {$classes}">
+                                <caption class="table-name">{$donnees['nom']}</caption>
+                                <thead>
+                                    <tr>
                         HTML;
 
                     // Boucle forearch pour l'entête du tableau 
@@ -170,18 +234,18 @@ try {
                     }
 
                     echo <<<HTML
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                         HTML;
 
                     break;
                 default:
                     echo "Contenu introuvable\n";
-
             }
         }
     }
-    echo '</div>';
+    echo '</div></div>';
 
     require_once __DIR__ . '/../public/templates/footer.php';
 } catch (PDOException $e) {

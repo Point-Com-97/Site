@@ -11985,7 +11985,6 @@ body {
 }
 
 .board-container {
-  display: flex;
   margin-top: 10px;
 }
 
@@ -12013,18 +12012,24 @@ body {
   background-color: #412872;
 }
 
-.menu {
-  width: 30vw;
-  margin-right: 10px;
+.menu,
+.page {
+  margin-right: 0;
 }
 
+@media (min-width: 992px) {
+  .menu,
+  .page {
+    margin-right: 10px;
+  }
+}
 .menu-item {
   border-radius: 10px;
   border: 2px solid black;
   background-color: #299ECD;
   color: white;
   text-align: center;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: bold;
   text-decoration: none;
 }
@@ -12038,8 +12043,6 @@ body {
   border-radius: 10px;
   box-shadow: 1px 3px 2px #412872;
   border: 2px solid #412872;
-  width: 67vw;
-  margin-right: 10px;
 }
 
 .btn {
@@ -12048,6 +12051,25 @@ body {
   padding: auto;
 }
 
+@media (max-width: 768px) {
+  .menu-item {
+    font-size: 15px;
+  }
+  .table-name {
+    font-size: 18px;
+  }
+  .btn {
+    font-size: 18px;
+  }
+}
+@media (max-width: 768px) {
+  .btn {
+    font-size: 18px;
+  }
+  .form-label {
+    font-size: 20px;
+  }
+}
 .btn:hover {
   color: white;
 }
@@ -12068,6 +12090,18 @@ body {
   font-weight: bold;
 }
 
+@media (max-width: 768px) {
+  .form_login {
+    width: 90%;
+    margin-top: 10vh;
+  }
+}
+.carousel {
+  padding: 5px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+}
+
 .logo {
   display: block;
   max-width: 200px;
@@ -12078,7 +12112,7 @@ body {
   .logo {
     max-width: 150px;
     margin-top: 25px;
-    margin-bottom: -25px;
+    margin-bottom: 5px;
   }
 }
 #navbar {
@@ -12155,14 +12189,14 @@ body {
   margin: 0;
 }
 
-.footer-text a,
-.social-links a {
+a {
+  font-size: 0.9rem;
   color: #ffffff;
   text-decoration: none;
 }
 
-.footer-text a:hover,
-.social-links a:hover {
+a:hover {
+  color: #ED8E33;
   text-decoration: underline;
 }
 
@@ -12172,12 +12206,6 @@ body {
   gap: 8px;
 }
 
-.carousel {
-  padding: 5px;
-  background-color: rgb(255, 255, 255);
-  border-radius: 10px;
-}
-
 @media (max-width: 768px) {
   .footer {
     margin-top: 24px;
@@ -12185,4 +12213,17 @@ body {
   .footer-block {
     padding: 14px;
   }
+}
+.bloc {
+  text-align: justify;
+  margin: 5px;
+}
+
+.bloc-image {
+  width: 75%;
+}
+
+.table-name {
+  font-size: 25px;
+  font-weight: bold;
 }/*# sourceMappingURL=main.css.map */

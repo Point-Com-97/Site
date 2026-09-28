@@ -50,12 +50,15 @@ $settings = $new_settings->get();
 
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-primary navbar-animate" id="navbar">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">
-                <img src="/assets/image/logo.jpeg" alt="Logo" class="logo">
-            </a>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+<nav class="navbar navbar-expand-lg bg-primary navbar-animate" id="navbar">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/"><img src="/assets/image/logo.jpeg" alt="Logo" class="logo"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <ul class="navbar-nav me-auto nav-underline">
                         <li class="nav-item">

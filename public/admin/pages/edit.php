@@ -146,7 +146,7 @@ try {
 
     echo "<h1>" . htmlspecialchars($page_info['titre']) . "</h1>";
     echo "<p>Slug : " . htmlspecialchars($page_info['slug']) . "</p>";
-    echo "<p>bloc : " . htmlspecialchars($page_info['menu_id']) . "</p>";
+    echo "<p>Menu parent : " . htmlspecialchars($page_info['menu_id']) . "</p>";
     echo "<p>Ordre: " . htmlspecialchars($page_info['ordre']) . "</p>";
     echo "<p>Visible : " . htmlspecialchars($page_info['visible']) . "</p>";
 

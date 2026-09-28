@@ -41,49 +41,18 @@ $flash = get_flash();
             <div class="col-12 col-md-6 col-lg-3">
                 <div class="footer-block">
                     <h5 class="footer-title"><i class="bi bi-buildings-fill"></i>Nos Partenaires</h5>
-                    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="/assets/image/AKTO.png" class="d-block w-100" alt="AKTO">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="/assets/image/FT.png" class="d-block w-100" alt="FRANCE TRAVAIL">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="/assets/image/EPNAK.png" class="d-block w-100" alt="EPNAK">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="/assets/image/CTG.png" class="d-block w-100" alt="CTG">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="/assets/image/OCAPIAT.png" class="d-block w-100" alt="OCAPIAT">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="/assets/image/MLG.png" class="d-block w-100" alt="MISSION LOCALE">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="/assets/image/QV2.png" class="d-block w-100" alt="QUALIOPI">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="/assets/image/OPCO.png" class="d-block w-100" alt="OPCO">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="/assets/image/HANDI.png" class="d-block w-100" alt="HANDI BIENVEILLANT">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="/assets/image/LES.jpg" class="d-block w-100" alt="LES ENTREPRISES S'ENGAGENT">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="/assets/image/ISF.jpg" class="d-block w-100" alt="IMMERSION FACILITÉE">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="/assets/image/CR.jpg" class="d-block w-100" alt="CROIX ROUGE FRANÇAISE">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="/assets/image/DREETS.jpg" class="d-block w-100" alt="DREETS">
-                            </div>
-                        </div>
-
+                    <div class="list-group">
+                        <a href="https://www.ctguyane.fr/" class="link">COLLECTIVITE TERRITORIALE DE LA GUYANE</a>
+                        <a href="https://www.akto.fr/" class="link">AKTO</a>
+                        <a href="https://www.francetravail.fr/accueil/" class="link">FRANCE TRAVAIL</a>
+                        <a href="https://www.ocapiat.fr/" class="link">OCAPIAT</a>
+                        <a href="https://missionlocaleguyane.fr/" class="link">MISSION LOCALE GUYANE</a>
+                        <a href="https://travail-emploi.gouv.fr/formation-professionnelle/acteurs-cadre-et-qualite-de-la-formation-professionnelle/article/qualiopi-marque-de-certification-qualite-des-prestataires-de-formation" class="link">QUALIOPI</a>
+                        <a href="https://www.opcoep.fr/" class="link">OPCO</a>
+                        <a href="https://lesentreprises-sengagent.gouv.fr/" class="link">LES ENTREPRISES S'ENGAGENT</a>
+                        <a href="https://immersion-facile.beta.gouv.fr/" class="link">IMMERSION FACILITÉE</a>
+                        <a href="https://www.croix-rouge.fr/" class="link">CROIX ROUGE FRANÇAISE</a>
+                        <a href="https://dreets.gouv.fr/" class="link">DREETS</a>
                     </div>
                 </div>
             </div>
