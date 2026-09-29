@@ -12049,7 +12049,7 @@ body {
 }
 
 .btn {
-  font-size: 25px;
+  font-size: 18px;
   font-weight: bold;
 }
 
@@ -12096,6 +12096,22 @@ body {
 
 .link-reseau:hover {
   color: #ED8E33;
+}
+
+.settings_form .form-label,
+.modal .form-label {
+  font-size: 1.1rem;
+}
+
+#tableau-col-fields .form-control,
+#tableau-row-fields .form-control {
+  min-width: 90px;
+}
+
+#media-grid .card-img-top {
+  height: 180px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 @media (min-width: 992px) {

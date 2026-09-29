@@ -1,3 +1,5 @@
+
+<title>Médiathèque</title>
 <?php
 
 require __DIR__ . '/../auth-check.php';
@@ -8,7 +10,7 @@ require_once __DIR__ . '/../../templates/admin/header.php';
 try {
     require_once __DIR__ . '/../../templates/admin/item/media.php';
     require_once __DIR__ . '/../../../src/php/Media.php';
-    
+
 
     $new_media = new Media();
     $all_medias = $new_media->getAll();
@@ -44,25 +46,25 @@ try {
                             <h5 class="modal-title" id="uploadModalLabel">Ajouter un média</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                             <form class="container-fluid d-grid gap-2 mx-auto" action="/admin/media/upload.php" method="post" enctype="multipart/form-data">
+                        <form class="container-fluid d-grid gap-2 mx-auto" action="/admin/media/upload.php" method="post" enctype="multipart/form-data">
+                            <div class="modal-body">
                                 <label for="media_id" class="form-label">Fichier.jpeg/png/webp/pdf</label>
-                                <input class="form-control form-control-lg" type="file" id="media_id" name="media">
+                                <input class="form-control form-control-lg" type="file" id="media_id" name="media" accept="image/jpeg,image/png,image/webp,application/pdf">
                                 <input type="hidden" name="csrf_token" value="$csrf"> 
-                        </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-primary">Envoyer</button>
-                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary">Envoyer</button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         HTML;
 
-    echo '<div class="row row-cols-1 row-cols-md-4 g-4 m-2" id="media-grid">';
+    echo '<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4 m-2" id="media-grid">';
     foreach ($all_medias as $media) {
-     echo render_media($media);
+        echo render_media($media);
     }
     echo '</div>';
 

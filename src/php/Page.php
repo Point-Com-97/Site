@@ -45,6 +45,38 @@ class Page
         }
     }
 
+        private function slugify(string $texte): string
+    {
+        $texte = trim($texte);
+
+        // Accents : é -> e, à -> a, etc. (extension intl)
+        if (function_exists('transliterator_transliterate')) {
+            $texte = transliterator_transliterate('Any-Latin; Latin-ASCII; Lower()', $texte);
+        } else {
+            $texte = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $texte));
+        }
+
+        // Tout ce qui n'est pas une lettre ou un chiffre devient un tiret
+        $texte = preg_replace('/[^a-z0-9]+/', '-', $texte);
+
+        return trim($texte, '-') ?: 'page';
+    }
+
+    private function uniqueSlug(string $base): string
+    {
+        $slug = $base;
+        $i = 2;
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM pages WHERE slug = ?");
+
+        while (true) {
+            $stmt->execute([$slug]);
+            if ((int) $stmt->fetchColumn() === 0) {
+                return $slug;
+            }
+            $slug = $base . '-' . $i++;
+        }
+    }
+
     public function create(string $titre, ?int $menu_id)
     {
 
@@ -53,7 +85,7 @@ class Page
 
                 $page_titre = trim($titre);
 
-                $slug = strtolower(str_replace(' ', '-', $page_titre));
+                $slug = $this->uniqueSlug($this->slugify($page_titre));
 
                 $stmt = $this->pdo->prepare("SELECT MAX(ordre) as max_ordre FROM pages WHERE menu_id <=> ?");
                 $stmt->execute([$menu_id]);
@@ -88,7 +120,7 @@ class Page
         }
     }
 
-        public function update_ordre(int $id, int $nouvelOrdre)
+    public function update_ordre(int $id, int $nouvelOrdre)
     {
         try {
             $stmt = $this->pdo->prepare("UPDATE pages SET ordre = ? WHERE id = ?");
@@ -133,6 +165,18 @@ class Page
         }
     }
 
+        public function getByMenuOn()
+    {
+        try {
+            $stmt = $this->pdo->query("SELECT * FROM pages WHERE visible = 1 ORDER BY menu_id, ordre");
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Erreur de requête SQL : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
+            return [];
+        }
+    }
+
+
     public function toggle_visible(int $id)
 
     {
@@ -148,7 +192,7 @@ class Page
     }
 
 
-        public function getById(int $id)
+    public function getById(int $id)
     {
         try {
             $stmt = $this->pdo->prepare("SELECT * FROM pages WHERE id = ?");
@@ -166,6 +210,7 @@ class Page
             return "404";
         }
     }
+
 
 }
 

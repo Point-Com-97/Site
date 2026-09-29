@@ -1,3 +1,4 @@
+<title>Administration</title>
 <?php
 
 require __DIR__ . '/auth-check.php';
@@ -75,8 +76,8 @@ try {
                                 <h5 class="modal-title" id="new_page_label">Page</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
-                                <form class="container-fluid d-grid gap-2 mx-auto add_form_page" method="post">
+                            <form class="container-fluid d-grid gap-2 mx-auto add_form_page" method="post">
+                                <div class="modal-body">   
                                     <input type="hidden" name="type" value="Page">
                                     <input class="form-control" type="text" name="titre" id="titre" value="Nouvelle Page" aria-label="Nouvelle Page">
                 HTML;
@@ -141,4 +142,3 @@ try {
 
     die(" Une erreur est survenue, veuillez réessayer plus tard."); // Message d'erreur pour les visiteurs
 }
-

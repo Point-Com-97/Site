@@ -14,11 +14,13 @@ try {
 
     $parse_url = parse_url($url, PHP_URL_PATH);
 
-    $final_url =  trim($parse_url, "/");
+    $final_url = trim(rawurldecode($parse_url), "/");
 
     if ($final_url == "") {
         $final_url = "accueil";
     }
+
+    $is_admin = !empty($_SESSION['admin_id']);
 
     // Récupération de tous les éléments du menu
     $new_menu = new Menu();
@@ -28,14 +30,14 @@ try {
     // Récupération de la page actuelle en fonction du slug
     $new_page = new Page();
 
-    $all_page = $new_page->getByMenu();
+    $all_page = $new_page->getByMenuOn();
 
     $page_group = sort_pages($all_page);
 
     $current_page = $new_page->getBySlug($final_url);
 
-    
-    if ($current_page === "404") {
+
+    if ($current_page === "404" || ((int) $current_page['visible'] === 0 && !$is_admin)) {
         http_response_code(404);
         die("Page introuvable");
     }
@@ -48,6 +50,9 @@ try {
     if (!empty($all_menu) && is_array($all_menu)) {
         foreach ($all_menu as $item) {
             $page_menu = $page_group[$item['menu_id']] ?? [];
+            if (empty($page_menu)) {
+                continue;
+            }
             $collapse_id = "collapse-{$item['menu_id']}";
 
             echo "<div class='accordion-item'>";

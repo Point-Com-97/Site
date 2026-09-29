@@ -11,8 +11,6 @@
         rel="stylesheet">
     <link rel="stylesheet" href="/assets/scss/main.css">
     <link href="/assets/vendor/quill/quill.snow.css" rel="stylesheet">
-
-    <title><?= htmlspecialchars($current_page['titre'] ?? 'Accueil') ?> - Point Com</title>
 </head>
 
 
@@ -35,10 +33,10 @@
                         <a class="nav-link" id="nav-item" aria-current="page" href="/admin/dashboard.php">Tableau de bord</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="nav-item" href="/admin/media/index.php">Médiathèque</a>
+                        <a class="nav-link" id="nav-item" href="/admin/media/media-index.php">Médiathèque</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="nav-item" href="/admin/settings/index.php">Style</a>
+                        <a class="nav-link" id="nav-item" href="/admin/settings/settings-index.php">Style CSS</a>
                     </li>
                 </ul>
 
@@ -51,4 +49,4 @@
         </div>
     </nav>
     <div class="toast-container position-fixed top-0 end-0 p-3" id="toast-container"></div>
-    <main>
+    <main class="container-fluid py-2">

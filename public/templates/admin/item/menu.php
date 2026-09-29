@@ -16,7 +16,7 @@ function sort_pages(array $pages): array
 function render_modal_menu(array $item): string
 {
     $id = $item['menu_id'];
-    $titre = htmlspecialchars($item['menu_titre']);
+    $titre = htmlspecialchars($item['menu_titre'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     $csrf = generer_csrf_token();
 
     return <<<HTML
@@ -31,7 +31,7 @@ function render_modal_menu(array $item): string
                                 <div class="modal-body">
                                         <input type="hidden" name="id" value="{$id}">
                                         <input type="hidden" name="type" value="Menu">
-                                        <input class="form-control form-control-lg" type="texte" id="Menu_titre_{$id}" name="titre" value="{$titre}">
+                                        <input class="form-control form-control-lg" type="text" id="Menu_titre_{$id}" name="titre" value="{$titre}">
                                         <input type="hidden" name="csrf_token" value="$csrf"> 
                                 </div>
                                 <div class="modal-footer">
@@ -49,23 +49,23 @@ function render_modal_menu(array $item): string
 function render_menu(array $item): string
 {
     $id = $item['menu_id'];
-    $titre = htmlspecialchars($item['menu_titre']);
+    $titre = htmlspecialchars($item['menu_titre'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     $csrf = generer_csrf_token();
 
     // structure liste + boutons / menu principal
     return <<<HTML
                     <div class="container text-center" data-id="Menu_{$id}">
-                         <div class="row align-items-start">
-                            <a class="list-group-item list-group-item-action active disabled col" aria-current="true" id="Menu_label_{$id}">
+                         <div class="row align-items-center">
+                            <a class="list-group-item list-group-item-action col-12 col-md" aria-current="true" id="Menu_label_{$id}">
                                 {$titre}
                             </a>
-                            <div class="btn-toolbar col" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-toolbar col-12 col-md-auto justify-content-center gap-1" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="btn-group me-2" role="group" aria-label="First group">
                                     <button type="button"  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModalMenu{$id}">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
                                 </div>
-                                 <div class="btn-group me-2" role="group" aria-label="Second group">
+                                 <div class="btn-toolbar col-12 col-md-auto justify-content-center gap-1" role="group" aria-label="Second group">
                                     <button type="button" onclick="remove_items({$id},'Menu', '{$csrf}')" class="btn btn-danger">
                                         <i class="bi bi-trash3-fill"></i>
                                     </button>
@@ -81,7 +81,7 @@ function render_menu(array $item): string
 function render_modal_page(array $item): string
 {
     $id = $item['id'];
-    $titre = htmlspecialchars($item['titre']);
+    $titre = htmlspecialchars($item['titre'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     $csrf = generer_csrf_token();
 
     return <<<HTML
@@ -96,7 +96,7 @@ function render_modal_page(array $item): string
                                 <div class="modal-body">
                                         <input type="hidden" name="id" value="{$id}">
                                         <input type="hidden" name="type" value="Page">
-                                        <input class="form-control form-control-lg" type="texte" id="Page_titre_{$id}" name="titre" value="{$titre}">
+                                        <input class="form-control form-control-lg" type="text" id="Page_titre_{$id}" name="titre" value="{$titre}">
                                         <input type="hidden" name="csrf_token" value="$csrf"> 
                                 </div>
                                 <div class="modal-footer">
@@ -116,7 +116,7 @@ function render_page(array $item): string
     $csrf = generer_csrf_token();
 
     $id = $item['id'];
-    $titre = htmlspecialchars($item['titre']);
+    $titre = htmlspecialchars($item['titre'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
     $visible =  $item['visible'];
     $menu_id = $item['menu_id'];
@@ -132,33 +132,33 @@ function render_page(array $item): string
     // structure liste + boutons / page
     return <<<HTML
                     <div class="container text-center" id="Page_{$id}" draggable="true" data-id='{$id}'>
-                         <div class="row align-items-start">
-                            <a class="list-group-item list-group-item-action col" href="#" id="Page_label_{$id}">
+                         <div class="row align-items-center">
+                            <a class="list-group-item list-group-item-action col-12 col-md" href="#" id="Page_label_{$id}">
                                     {$titre}
                             </a>  
-                            <div class="btn-toolbar col" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-toolbar col-12 col-md-auto justify-content-center gap-1" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="btn-group me-1" role="group" aria-label="group 1">
                                     <button type="button" onclick="toggle_visible({$id}, '{$csrf}')" class="btn">
                                          <i class="{$statue}" id="visible{$id}"></i>
                                     </button>
                                 </div>
-                                <div class="btn-group me-2" role="group" aria-label="group 2">
+                                <div class="btn-toolbar col-12 col-md-auto justify-content-center gap-1" role="group" aria-label="group 2">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModalPage{$id}">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
                                 </div>
 
-                                <div class="btn-group me-3" role="group" aria-label="group 3">
+                                <div class="btn-toolbar col-12 col-md-auto justify-content-center gap-1" role="group" aria-label="group 3">
                                     <a href="/admin/pages/edit.php?id={$id}" class="btn btn-warning">
                                         <i class="bi bi-file-earmark-text"></i>
                                     </a>
                                 </div>
-                                <div class="btn-group me-4" role="group" aria-label="group 4">
+                                <div class="btn-toolbar col-12 col-md-auto justify-content-center gap-1" role="group" aria-label="group 4">
                                     <button type="button" onclick="remove_items({$id},'Page', '{$csrf}')" class="btn btn-danger">
                                          <i class="bi bi-trash3-fill"></i>
                                     </button>
                                 </div>
-                                 <div class="btn-group me-5" role="group" aria-label="group 5">
+                                 <div class="btn-toolbar col-12 col-md-auto justify-content-center gap-1" role="group" aria-label="group 5">
                                     <button type="button" onclick="duplicate({$id}, {$menu_id_js}, '{$csrf}')" class="btn btn-info">
                                          <i class="bi bi-copy"></i>
                                     </button>
