@@ -144,17 +144,45 @@ try {
             </div>
         HTML;
 
-    echo "<h1>" . htmlspecialchars($page_info['titre']) . "</h1>";
-    echo "<p>Slug : " . htmlspecialchars($page_info['slug']) . "</p>";
-    echo "<p>Menu parent : " . htmlspecialchars($page_info['menu_id']) . "</p>";
-    echo "<p>Ordre: " . htmlspecialchars($page_info['ordre']) . "</p>";
-    echo "<p>Visible : " . htmlspecialchars($page_info['visible']) . "</p>";
+    $nom_menu = 'Aucun';
+    if (!empty($page_info['menu_id'])) {
+        require_once __DIR__ . '/../../../src/php/Menu.php';
+        $menu_lookup = new Menu();
+        foreach ($menu_lookup->getAll() as $m) {
+            if ($m['menu_id'] == $page_info['menu_id']) {
+                $nom_menu = $m['menu_titre'];
+                break;
+            }
+        }
+    }
+    $badge_visible = $page_info['visible']
+        ? '<span class="badge bg-success">En ligne</span>'
+        : '<span class="badge bg-secondary">Hors ligne</span>';
+
+    echo <<< HTML
+    <div class="container-fluid">
+        <a href="/admin/dashboard.php" class="btn btn-link ps-0 mb-2"><i class="bi bi-arrow-left"></i> Retour</a>
+            <a href="/{$page_info['slug']}" target="_blank" class="btn btn-outline-primary mb-2">
+        <i class="bi bi-eye"></i> Voir le rendu
+    </a>
+        <div class="card mb-3 page-header-card">
+            <div class="card-body d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div>
+                    <h1 class="h3 mb-1">{$page_info['titre']}</h1>
+                    <span class="text-muted">/{$page_info['slug']} · Menu : {$nom_menu}</span>
+                </div>
+                <div>{$badge_visible}</div>
+            </div>
+        </div>
+    </div>
+HTML;
 
     echo "<div id='bloc-list'>";
     foreach ($bloc_info as $b) {
         echo render_bloc($b);
     }
     echo "</div>";
+
 
 
 

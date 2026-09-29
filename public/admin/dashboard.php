@@ -42,16 +42,16 @@ try {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                             <form class="container-fluid d-grid gap-2 mx-auto add_form_menu" method="post">
+                            <form class="container-fluid d-grid gap-2 mx-auto add_form_menu" method="post">
                                 <input type="hidden" name="type" value="Menu">
                                 <input class="form-control" type="text" name="titre" id="titre" value="Nouveau menu" aria-label="Nouveau menu">
-                                <input type="hidden" name="csrf_token" value="$csrf"> 
-                        </div>
+                                <input type="hidden" name="csrf_token" value="$csrf">
+                            </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                                     <button type="submit" class="btn btn-primary">Valider</button>
                                 </div>
-                        </form>
+                            </form>
                     </div>
                 </div>
             </div>

@@ -130,6 +130,35 @@ body {
     object-fit: cover;
 }
 
+.page-header-card {
+    background-color: $primary;
+    color: white;
+    border-radius: 10px;
+    border: none;
+}
+
+.page-header-card .text-muted {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+#bloc-list > .container,
+#menu-list .list-group,
+.child-group {
+    margin-bottom: 8px;
+}
+
+.champs-bloc .form-label {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+#stats-fields .input-group,
+#tableau-col-fields,
+#tableau-row-fields {
+    margin-bottom: 8px;
+}
+
+
 @media (min-width: 992px) {
 
     .menu,

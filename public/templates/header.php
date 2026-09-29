@@ -1,6 +1,9 @@
-<?php session_start(); ?>
-
 <?php
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once __DIR__ . '/../../src/php/Settings.php';
 $new_settings = new Settings();
 $settings = $new_settings->get();
