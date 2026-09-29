@@ -55,23 +55,23 @@ function render_menu(array $item): string
     // structure liste + boutons / menu principal
     return <<<HTML
                     <div class="container text-center" data-id="Menu_{$id}">
-                         <div class="row align-items-center">
-                            <a class="list-group-item list-group-item-action col-12 col-md" aria-current="true" id="Menu_label_{$id}">
-                                {$titre}
+                        <div class="d-flex align-items-center justify-content-between flex-nowrap">
+                            <a class="list-group-item list-group-item-action active disabled flex-grow-1 text-truncate" aria-current="true" id="Menu_label_{$id}">
+                                <i class="bi bi-arrows-move"></i> {$titre}
                             </a>
-                            <div class="btn-toolbar col-12 col-md-auto justify-content-center gap-1" role="toolbar" aria-label="Toolbar with button groups">
-                                <div class="btn-group me-2" role="group" aria-label="First group">
-                                    <button type="button"  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModalMenu{$id}">
+                            <div class="btn-toolbar flex-shrink-0 gap-1 ms-2" role="toolbar" aria-label="Toolbar with button groups">
+                                <div class="btn-group" role="group" aria-label="First group">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModalMenu{$id}">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
                                 </div>
-                                 <div class="btn-toolbar col-12 col-md-auto justify-content-center gap-1" role="group" aria-label="Second group">
+                                <div class="btn-group" role="group" aria-label="Second group">
                                     <button type="button" onclick="remove_items({$id},'Menu', '{$csrf}')" class="btn btn-danger">
                                         <i class="bi bi-trash3-fill"></i>
                                     </button>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                     </div> 
                 HTML;
 }
@@ -132,35 +132,29 @@ function render_page(array $item): string
     // structure liste + boutons / page
     return <<<HTML
                     <div class="container text-center" id="Page_{$id}" draggable="true" data-id='{$id}'>
-                         <div class="row align-items-center">
-                            <a class="list-group-item list-group-item-action col-12 col-md" href="#" id="Page_label_{$id}">
-                                    {$titre}
-                            </a>  
-                            <div class="btn-toolbar col-12 col-md-auto justify-content-center gap-1" role="toolbar" aria-label="Toolbar with button groups">
-                                <div class="btn-group me-1" role="group" aria-label="group 1">
+                        <div class="d-flex align-items-center justify-content-between flex-nowrap">
+                            <a class="list-group-item list-group-item-action flex-grow-1 text-truncate" aria-current="true" id="Page_label_{$id}">
+                                <i class="bi bi-arrows-move"></i> {$titre}
+                            </a>
+                            <div class="btn-toolbar flex-shrink-0 gap-1 ms-2" role="toolbar" aria-label="Toolbar with button groups">
+                                <div class="btn-group" role="group" aria-label="group 2">
                                     <button type="button" onclick="toggle_visible({$id}, '{$csrf}')" class="btn">
-                                         <i class="{$statue}" id="visible{$id}"></i>
+                                        <i class="{$statue}" id="visible{$id}"></i>
                                     </button>
                                 </div>
-                                <div class="btn-toolbar col-12 col-md-auto justify-content-center gap-1" role="group" aria-label="group 2">
+                                <div class="btn-group" role="group" aria-label="group 2">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModalPage{$id}">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
                                 </div>
-
-                                <div class="btn-toolbar col-12 col-md-auto justify-content-center gap-1" role="group" aria-label="group 3">
+                                <div class="btn-group" role="group" aria-label="group 3">
                                     <a href="/admin/pages/edit.php?id={$id}" class="btn btn-warning">
                                         <i class="bi bi-file-earmark-text"></i>
                                     </a>
                                 </div>
-                                <div class="btn-toolbar col-12 col-md-auto justify-content-center gap-1" role="group" aria-label="group 4">
+                                <div class="btn-group" role="group" aria-label="group 4">
                                     <button type="button" onclick="remove_items({$id},'Page', '{$csrf}')" class="btn btn-danger">
-                                         <i class="bi bi-trash3-fill"></i>
-                                    </button>
-                                </div>
-                                 <div class="btn-toolbar col-12 col-md-auto justify-content-center gap-1" role="group" aria-label="group 5">
-                                    <button type="button" onclick="duplicate({$id}, {$menu_id_js}, '{$csrf}')" class="btn btn-info">
-                                         <i class="bi bi-copy"></i>
+                                        <i class="bi bi-trash3-fill"></i>
                                     </button>
                                 </div>
                             </div>

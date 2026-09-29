@@ -15,14 +15,16 @@
     animation: navbarIn 1.5s ease-out forwards, navbarFlow 8s ease-in-out infinite;
 }
 
-.btn-search {
- background-color: $primary;
-
+.btn {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
 }
 
-.btn-search:hover {
- background-color: $tertiary;
+.btn:hover {
+    color: black;
 }
+
 
 .nav-link {
     margin-right: 15px;

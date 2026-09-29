@@ -44,6 +44,7 @@ body {
 .page {
     margin-right: 0;
 }
+
 .menu-item {
     border-radius: 10px;
     border: 2px solid black;
@@ -66,19 +67,10 @@ body {
     border: 2px solid $tertiary;
 }
 
-.btn {
-    font-size: 18px;
-    font-weight: bold;
-}
-
 .form-label {
     color: black;
     font-size: 30px;
     font-weight: bold;
-}
-
-.btn:hover {
-    color: white;
 }
 
 .form_login {
@@ -141,7 +133,7 @@ body {
     color: rgba(255, 255, 255, 0.75) !important;
 }
 
-#bloc-list > .container,
+#bloc-list>.container,
 #menu-list .list-group,
 .child-group {
     margin-bottom: 8px;
@@ -158,6 +150,45 @@ body {
     margin-bottom: 8px;
 }
 
+.board-menu {
+    #menu-list>.list-group {
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    // titre de menu principal - fond sombre
+    .list-group-item.active {
+        background-color: $tertiary;
+        border-color: $tertiary;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+        opacity: 1;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    // pages du menu - fond clair
+    .child-group .list-group-item {
+        background-color: #ffffdb;
+        border-color: #e9ecef;
+        border-radius: 10px;
+        color: black;
+    }
+
+    .child-group .list-group-item:hover {
+        background-color: #eef1f4;
+
+    }
+}
+
+.no-menu {
+    background-color: $tertiary;
+    color: white;
+    border-radius: 10px;
+}
 
 @media (min-width: 992px) {
 

@@ -23,14 +23,11 @@ try {
 
 
     // Modal d'ajout pour les menus
+    echo "<div class='btn-toolbar' role='toolba' aria-label='btn-dashboard'>";
     echo <<< HTML
-            <div class="btn-toolbar m-1" role="toolbar" aria-label="Toolbar with button groups">
-                <div class="btn-group me-2" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new_menu">
-                        Nouveau Menu
-                    </button>
-                </div>
-            </div>
+            <button type="button" class="btn btn-board m-1 btn-primary" data-bs-toggle="modal" data-bs-target="#new_menu">
+                Nouveau Menu
+            </button>
         HTML;
 
     echo <<< HTML
@@ -59,13 +56,9 @@ try {
 
     // Modal d'ajout pour les pages
     echo <<< HTML
-                <div class="btn-toolbar m-1" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group me-2" role="group" aria-label="First group">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new_page">
-                            Nouvelle Page
-                        </button>
-                    </div>
-                </div>
+            <button type="button" class="btn btn-board m-1 btn-primary" data-bs-toggle="modal" data-bs-target="#new_page">
+                Nouvelle Page
+            </button>
             HTML;
 
     echo <<< HTML
@@ -81,7 +74,8 @@ try {
                                     <input type="hidden" name="type" value="Page">
                                     <input class="form-control" type="text" name="titre" id="titre" value="Nouvelle Page" aria-label="Nouvelle Page">
                 HTML;
-    echo "<select class='form-select' name='menu_id' aria-label='list_page'>";
+    
+                echo "<select class='form-select' name='menu_id' aria-label='list_page'>";
     echo '<option selected>Sélectionnez le menu</option>'; {
         echo "<option value=''>...</option>";
         foreach ($all_menus as $m) {
@@ -103,12 +97,14 @@ try {
                 </div>
             HTML;
 
+    echo "</div>";
 
 
 
+ echo "<div class='board-menu container-fluid'>";
     echo "<div id='menu-list' data-csrf_token='{$csrf}'>";
     foreach ($all_menus as $m) {
-        echo "<div class='list-group' draggable='true' id='Menu_{$m['menu_id']}' data-id='{$m['menu_id']}' data-csrf_token='{$csrf}'>";
+        echo "<div class='list-group mt-2' draggable='true' id='Menu_{$m['menu_id']}' data-id='{$m['menu_id']}' data-csrf_token='{$csrf}'>";
         echo render_modal_menu($m);
         echo render_menu($m);
 
@@ -126,14 +122,14 @@ try {
     $pages_sans_menu = $page_group['sans_menu'] ?? [];
     if (!empty($pages_sans_menu)) {
         echo "<div class='list-group child-group' id='Page_x' data-csrf_token='{$csrf}'>";
-        echo "<h5>Pages sans menu</h5>";
+        echo "<h5 class='no-menu text-center'>PAGE SANS MENU</h5>";
         foreach ($pages_sans_menu as $p) {
             echo render_modal_page($p);
             echo render_page($p);
         }
         echo "</div>";
     }
-
+echo "</div>";
 
     require_once __DIR__ . '/../templates/footer.php';
 } catch (PDOException $e) {

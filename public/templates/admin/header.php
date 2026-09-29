@@ -42,7 +42,7 @@
 
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 nav-underline">
                     <li class="nav-item">
-                        <a class="btn btn-danger" id="nav-item" href="/admin/logout.php">Déconnexion</a>
+                        <a class="btn btn-danger" id="nav-item" href="/admin/logout.php"><i class="bi bi-x-circle-fill"></i></a>
                     </li>
                 </ul>
             </div>

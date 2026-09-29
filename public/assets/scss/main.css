@@ -12048,19 +12048,10 @@ body {
   border: 2px solid #412872;
 }
 
-.btn {
-  font-size: 18px;
-  font-weight: bold;
-}
-
 .form-label {
   color: black;
   font-size: 30px;
   font-weight: bold;
-}
-
-.btn:hover {
-  color: white;
 }
 
 .form_login {
@@ -12142,6 +12133,38 @@ body {
   margin-bottom: 8px;
 }
 
+.board-menu #menu-list > .list-group {
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.board-menu .list-group-item.active {
+  background-color: #412872;
+  border-color: #412872;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  opacity: 1;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.board-menu .child-group .list-group-item {
+  background-color: #ffffdb;
+  border-color: #e9ecef;
+  border-radius: 10px;
+  color: black;
+}
+.board-menu .child-group .list-group-item:hover {
+  background-color: #eef1f4;
+}
+
+.no-menu {
+  background-color: #412872;
+  color: white;
+  border-radius: 10px;
+}
+
 @media (min-width: 992px) {
   .menu,
   .page {
@@ -12195,12 +12218,14 @@ body {
   animation: navbarIn 1.5s ease-out forwards, navbarFlow 8s ease-in-out infinite;
 }
 
-.btn-search {
-  background-color: #299ECD;
+.btn {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
 }
 
-.btn-search:hover {
-  background-color: #412872;
+.btn:hover {
+  color: black;
 }
 
 .nav-link {
