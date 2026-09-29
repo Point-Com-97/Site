@@ -211,6 +211,18 @@ class Page
         }
     }
 
+    public function search(string $terme): array
+{
+    try {
+        $stmt = $this->pdo->prepare("SELECT titre, slug FROM pages WHERE visible = 1 AND titre LIKE ? LIMIT 10");
+        $stmt->execute(['%' . $terme . '%']);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Erreur de recherche : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
+        return [];
+    }
+}
+
 
 }
 

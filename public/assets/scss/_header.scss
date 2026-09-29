@@ -1,21 +1,11 @@
 .logo {
-    display: block;
     max-width: 200px;
     border-radius: 10px;
-}
-
-@media (max-width: 768px) {
-    .logo {
-        max-width: 150px;
-        margin-top: 25px;
-        margin-bottom: 5px;
-    }
 }
 
 #navbar {
     background: linear-gradient(45deg, #432e7d, #3295c3, #432e7d);
     background-size: 200% 200%;
-    padding: 10px;
     margin: 0px;
 }
 
@@ -23,6 +13,26 @@
     opacity: 0;
     transform: translateY(-20px);
     animation: navbarIn 1.5s ease-out forwards, navbarFlow 8s ease-in-out infinite;
+}
+
+.btn-search {
+ background-color: $primary;
+
+}
+
+.btn-search:hover {
+ background-color: $tertiary;
+}
+
+.nav-link {
+    margin-right: 15px;
+    font-weight: bold;
+    color: #fff;
+    font-size: 16px;
+}
+
+.nav-link:hover {
+    color: $secondary;
 }
 
 @keyframes navbarIn {
@@ -47,13 +57,10 @@
     }
 }
 
-.nav-link {
-    margin-right: 15px;
-    font-weight: bold;
-    color: #fff;
-    font-size: 18px;
-}
-
-.nav-link:hover {
-    color: $secondary;
+@media (max-width: 768px) {
+    .logo {
+        max-width: 150px;
+        margin-top: 25px;
+        margin-bottom: 5px;
+    }
 }

@@ -12151,22 +12151,13 @@ body {
   }
 }
 .logo {
-  display: block;
   max-width: 200px;
   border-radius: 10px;
 }
 
-@media (max-width: 768px) {
-  .logo {
-    max-width: 150px;
-    margin-top: 25px;
-    margin-bottom: 5px;
-  }
-}
 #navbar {
   background: linear-gradient(45deg, #432e7d, #3295c3, #432e7d);
   background-size: 200% 200%;
-  padding: 10px;
   margin: 0px;
 }
 
@@ -12174,6 +12165,25 @@ body {
   opacity: 0;
   transform: translateY(-20px);
   animation: navbarIn 1.5s ease-out forwards, navbarFlow 8s ease-in-out infinite;
+}
+
+.btn-search {
+  background-color: #299ECD;
+}
+
+.btn-search:hover {
+  background-color: #412872;
+}
+
+.nav-link {
+  margin-right: 15px;
+  font-weight: bold;
+  color: #fff;
+  font-size: 16px;
+}
+
+.nav-link:hover {
+  color: #ED8E33;
 }
 
 @keyframes navbarIn {
@@ -12193,17 +12203,13 @@ body {
     background-position: 0% 50%;
   }
 }
-.nav-link {
-  margin-right: 15px;
-  font-weight: bold;
-  color: #fff;
-  font-size: 18px;
+@media (max-width: 768px) {
+  .logo {
+    max-width: 150px;
+    margin-top: 25px;
+    margin-bottom: 5px;
+  }
 }
-
-.nav-link:hover {
-  color: #ED8E33;
-}
-
 .footer {
   margin-top: 32px;
   background: linear-gradient(45deg, #1a2f78, #3295c3);

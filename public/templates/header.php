@@ -50,21 +50,45 @@ $settings = $new_settings->get();
 
 
 <body>
-<nav class="navbar navbar-expand-lg bg-primary navbar-animate" id="navbar">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/"><img src="/assets/image/logo.jpeg" alt="Logo" class="logo"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+    <nav class="navbar sticky-top navbar-expand-lg bg-primary navbar-animate" id="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img src="/assets/image/logo.jpeg" alt="Logo" class="logo"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
                 aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <ul class="navbar-nav me-auto nav-underline">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link" href="/">ACCUEIL</a>
-                            </li>
-                            <li class="nav-item">
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                PAGES
+                            </a>
+                            <ul class="dropdown-menu">
+                                <?php foreach ($all_menu as $menu):
+                                    $pages_menu = $page_group[$menu['menu_id']] ?? [];
+                                    if (empty($pages_menu)) continue;
+                                ?>
+                                    <li>
+                                        <div class="btn-group dropend">
+                                            <a class="dropdown-item" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <?= htmlspecialchars($menu['menu_titre']) ?> <i class="bi bi-caret-right-fill"></i>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <?php foreach ($pages_menu as $page): ?>
+                                                    <li><a class="dropdown-item" href="/<?= htmlspecialchars($page['slug']) ?>"><?= htmlspecialchars($page['titre']) ?></a></li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="https://canva.link/8vn2d5u0lnkz6p4">CATALOGUE DE FORMATION</a>
                         </li>
                         <li class="nav-item">
@@ -75,6 +99,13 @@ $settings = $new_settings->get();
                         </li>
                     </ul>
                 </div>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 nav-underline">
+                    <form class="d-flex position-relative" role="search" id="search-form" autocomplete="off">
+                        <input class="form-control me-2" type="search" name="q" id="search-input" placeholder="Rechercher" aria-label="Search" />
+                        <button class="btn btn-search" type="submit">Recherche</button>
+                        <ul class="list-group position-absolute w-100" id="search-results" style="top: 100%; z-index: 1050; display: none;"></ul>
+                    </form>
+                </ul>
             </div>
         </div>
     </nav>
