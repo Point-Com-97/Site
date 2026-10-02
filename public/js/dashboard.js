@@ -61,8 +61,8 @@ function duplicate(id, menu_id, csrf) {
 }
 
 // Modifier un menu ou une page via le formulaire et la methode GET
-function edit_menu(id, type, titre, csrf) {
-    fetch(`/admin/endpoint/update.php?id=${id}&type=${type}&titre=${titre}&csrf_token=${csrf}`)
+function edit_menu(id, type, titre, meta_description, csrf) {
+    fetch(`/admin/endpoint/update.php?id=${id}&type=${type}&titre=${titre}&meta_description=${meta_description}&csrf_token=${csrf}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -81,8 +81,8 @@ function edit_menu(id, type, titre, csrf) {
 }
 
 // Ajouter un menu ou une page via le formulaire et la methode GET
-function add(titre, type, menu_id, csrf) {
-    fetch(`/admin/endpoint/create.php?titre=${titre}&type=${type}&menu_id=${menu_id}&csrf_token=${csrf}`)
+function add(titre, type, menu_id, meta_description, csrf) {
+    fetch(`/admin/endpoint/create.php?titre=${titre}&type=${type}&menu_id=${menu_id}&meta_description=${meta_description}&csrf_token=${csrf}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -119,7 +119,7 @@ document.querySelectorAll('.edit_form').forEach(function (form) {
     form.addEventListener('submit', function (event) {
         event.preventDefault();
         const data = new FormData(form);
-        edit_menu(data.get('id'), data.get('type'), data.get('titre'), data.get('csrf_token'));
+        edit_menu(data.get('id'), data.get('type'), data.get('titre'), data.get('meta_description'), data.get('csrf_token'));
     });
 });
 
@@ -135,6 +135,6 @@ document.querySelectorAll('.add_form_page').forEach(function (form) {
     form.addEventListener('submit', function (event) {
         event.preventDefault();
         const data = new FormData(form);
-        add(data.get('titre'), data.get('type'), data.get('menu_id'), data.get('csrf_token'));
+        add(data.get('titre'), data.get('type'), data.get('menu_id'), data.get('meta_description'), data.get('csrf_token'));
     });
 });

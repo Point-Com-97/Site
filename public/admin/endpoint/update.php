@@ -14,6 +14,7 @@ require_once __DIR__ . '/../../../src/php/Page.php';
 
 $id = (int) ($_GET['id'] ?? 0);
 $name = mb_strtoupper(trim($_GET['titre'] ?? ''));
+$meta_description = $_GET['meta_description'] ?? '';
 $type = $_GET['type'] ?? '';
 
 if ($id <= 0 || $name === '') {
@@ -24,10 +25,10 @@ if ($id <= 0 || $name === '') {
 if ($type === 'Menu') {
     $resultat = (new Menu())->update($id, $name);
 } elseif ($type === 'Page') {
-    $resultat = (new Page())->update($id, $name);
+    $resultat = (new Page())->update($id, $name, $meta_description);
 } else {
     echo json_encode(['success' => false, 'message' => 'Type invalide']);
     exit;
 }
 
-echo json_encode(['success' => (bool) $resultat, 'titre' => $name]);
+echo json_encode(['success' => (bool) $resultat, 'titre' => $name, 'meta' => $meta_description]);

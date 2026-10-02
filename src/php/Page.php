@@ -77,7 +77,7 @@ class Page
         }
     }
 
-    public function create(string $titre, ?int $menu_id)
+    public function create(string $titre, ?int $menu_id, ?string $meta_description = null)
     {
 
         try {
@@ -94,9 +94,9 @@ class Page
 
                 $order = ($result['max_ordre'] ?? 0) + 1;
 
-                $stmt = $this->pdo->prepare("INSERT INTO pages (titre, slug, menu_id, ordre) VALUES (?, ?, ?, ?)");
+                $stmt = $this->pdo->prepare("INSERT INTO pages (titre, slug, menu_id, ordre, meta_description) VALUES (?, ?, ?, ?, ?)");
 
-                $stmt->execute([$page_titre, $slug, $menu_id, $order]);
+                $stmt->execute([$page_titre, $slug, $menu_id, $order, $meta_description]);
 
                 return $this->pdo->lastInsertId();
             } else {
@@ -108,11 +108,11 @@ class Page
         }
     }
 
-    public function update(int $id, string $titre)
+    public function update(int $id, string $titre, ?string $meta_description = null)
     {
         try {
-            $stmt = $this->pdo->prepare("UPDATE pages SET titre = ? WHERE id = ?");
-            $stmt->execute([$titre, $id]);
+            $stmt = $this->pdo->prepare("UPDATE pages SET titre = ?, meta_description = ? WHERE id = ?");
+            $stmt->execute([$titre, $meta_description, $id]);
             return true;
         } catch (PDOException $e) {
             error_log("Erreur lors de la mise a jour : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");

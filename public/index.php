@@ -40,6 +40,11 @@ try {
 
     $current_page = $new_page->getBySlug($final_url);
 
+    // Récupération des blocs associés à la page actuelle
+    $new_blocs = new Bloc();
+
+    $all_blocs = $new_blocs->getByPageId($current_page['id']);
+
 
     if ($current_page === "404" || ((int) $current_page['visible'] === 0 && !$is_admin)) {
         http_response_code(404);
@@ -150,11 +155,6 @@ try {
     echo "</div>";
 
 
-
-    // Récupération des blocs associés à la page actuelle
-    $new_blocs = new Bloc();
-
-    $all_blocs = $new_blocs->getByPageId($current_page['id']);
 
     echo '<div class="page col-12 col-lg-7 view">';
 

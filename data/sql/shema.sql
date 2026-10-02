@@ -26,6 +26,7 @@ slug varchar(255) NOT NULL,
 menu_id int NULL,
 ordre int NOT NULL DEFAULT 0,
 visible TINYINT(1) NOT NULL DEFAULT 1,
+meta_description VARCHAR(160) NULL,
 CONSTRAINT unique_slug_pages UNIQUE (slug),
 CONSTRAINT fk_menu FOREIGN KEY (menu_id) REFERENCES menu_items(id) ON DELETE SET NULL -- Clé étrangère vers la table menu_items
 );

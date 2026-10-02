@@ -97,6 +97,7 @@ function render_modal_page(array $item): string
                                         <input type="hidden" name="id" value="{$id}">
                                         <input type="hidden" name="type" value="Page">
                                         <input class="form-control form-control-lg" type="text" id="Page_titre_{$id}" name="titre" value="{$titre}">
+                                        <textarea class="form-control" name="meta_description" maxlength="160" rows="2" placeholder="Description pour les moteurs de recherche">{$item['meta_description']}</textarea>
                                         <input type="hidden" name="csrf_token" value="$csrf"> 
                                 </div>
                                 <div class="modal-footer">

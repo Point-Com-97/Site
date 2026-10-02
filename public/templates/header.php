@@ -7,6 +7,25 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once __DIR__ . '/../../src/php/Settings.php';
 $new_settings = new Settings();
 $settings = $new_settings->get();
+
+$description = htmlspecialchars($current_page['meta_description'] ?? 'Point Com - La formation tout au long de la vie');
+$titre_page = htmlspecialchars($current_page['titre']);
+$url_courante = 'https://www.pointcom-guyane.fr' . $_SERVER['REQUEST_URI'];
+
+$og_image = 'https://www.pointcom-guyane.fr/assets/image/logo.jpeg';
+if (!empty($all_blocs)) {
+    foreach ($all_blocs as $b) {
+        $d = json_decode($b['donnees'], true);
+        if ($b['type'] === 'image' && !empty($d['media_id'])) {
+            $m = new Media();
+            $media = $m->getById($d['media_id']);
+            if (!empty($media)) {
+                $og_image = 'https://www.pointcom-guyane.fr' . $media['url'];
+            }
+            break;
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +41,14 @@ $settings = $new_settings->get();
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="/assets/scss/main.css">
+
+    <meta name="description" content="<?= $description ?>">
+    <link rel="canonical" href="<?= htmlspecialchars($url_courante) ?>">
+    <meta property="og:title" content="<?= $titre_page ?>">
+    <meta property="og:description" content="<?= $description ?>">
+    <meta property="og:image" content="<?= htmlspecialchars($og_image) ?>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?= htmlspecialchars($url_courante) ?>">
 
     <style>
         :root {

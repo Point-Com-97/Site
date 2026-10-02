@@ -73,6 +73,7 @@ try {
                                 <div class="modal-body">   
                                     <input type="hidden" name="type" value="Page">
                                     <input class="form-control" type="text" name="titre" id="titre" value="Nouvelle Page" aria-label="Nouvelle Page">
+                                    <textarea class="form-control" name="meta_description" maxlength="160" rows="2" placeholder="Description pour les moteurs de recherche">Description</textarea>
                 HTML;
     
                 echo "<select class='form-select' name='menu_id' aria-label='list_page'>";
@@ -101,7 +102,7 @@ try {
 
 
 
- echo "<div class='board-menu container-fluid'>";
+ echo "<div class='board-menu container'>";
     echo "<div id='menu-list' data-csrf_token='{$csrf}'>";
     foreach ($all_menus as $m) {
         echo "<div class='list-group mt-2' draggable='true' id='Menu_{$m['menu_id']}' data-id='{$m['menu_id']}' data-csrf_token='{$csrf}'>";
@@ -121,7 +122,7 @@ try {
     // Pages sans menu associé
     $pages_sans_menu = $page_group['sans_menu'] ?? [];
     if (!empty($pages_sans_menu)) {
-        echo "<div class='list-group child-group' id='Page_x' data-csrf_token='{$csrf}'>";
+        echo "<div class='list-group child-group div-no-menu' id='Page_x' data-csrf_token='{$csrf}'>";
         echo "<h5 class='no-menu text-center'>PAGE SANS MENU</h5>";
         foreach ($pages_sans_menu as $p) {
             echo render_modal_page($p);

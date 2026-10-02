@@ -12135,6 +12135,7 @@ body {
 
 .board-menu #menu-list > .list-group {
   border-radius: 8px;
+  background-color: rgb(234, 232, 231);
   overflow: hidden;
   margin-bottom: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -12150,19 +12151,25 @@ body {
   margin-bottom: 10px;
 }
 .board-menu .child-group .list-group-item {
-  background-color: #ffffdb;
+  background-color: #f5f5e8;
   border-color: #e9ecef;
   border-radius: 10px;
   color: black;
 }
 .board-menu .child-group .list-group-item:hover {
-  background-color: #eef1f4;
+  background-color: #b1c4d7;
 }
 
 .no-menu {
   background-color: #412872;
   color: white;
   border-radius: 10px;
+}
+
+.div-no-menu {
+  background-color: rgb(234, 232, 231);
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 @media (min-width: 992px) {
