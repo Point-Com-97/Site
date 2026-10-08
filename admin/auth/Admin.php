@@ -18,7 +18,7 @@ class Admin
     {
 
         try {
-            // Requête SQL pour récupérer les éléments du menu avec les slugs des pages associées via une jointure et alias pour les colonnes
+            // Préparer la requête SQL pour récupérer l'administrateur par nom d'utilisateur
             $stmt = $this->pdo->prepare("SELECT * FROM admins WHERE username = ?");
 
             $stmt->execute([$username]);
