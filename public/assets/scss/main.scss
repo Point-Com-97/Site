@@ -1,7 +1,18 @@
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css");
+@import "../bootstrap-icons/font/bootstrap-icons.css";
 
-@import 'variables';
-@import 'base';
-@import 'header';
-@import 'footer';
-@import 'bloc';
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
+
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+
+@import "../font/index.css";
+
+@import 'base/global';
+@import 'base/header';
+@import 'base/footer';
+@import 'base/navbar';
+@import 'components/bloc';
+@import 'components/bouton';
+@import 'components/cartes';
+@import 'components/animation';
+

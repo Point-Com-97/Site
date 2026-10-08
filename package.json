@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@fontsource/crimson-pro": "^5.3.0",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "chart.js": "^4.5.1",
