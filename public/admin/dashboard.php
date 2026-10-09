@@ -9,13 +9,10 @@ require_once __DIR__ . '/../../src/php/Csrf.php';
 
 try {
 
-    require_once __DIR__ . '/../../src/php/Menu.php';
     require_once __DIR__ . '/../../src/php/Page.php';
 
-    $menu = new Menu();
     $page = new Page();
 
-    $all_menus = $menu->getAll();
     $all_pages = $page->getAll();
     $page_by_menu = $page->getByMenu();
     $page_group = sort_pages($page_by_menu);
@@ -24,11 +21,6 @@ try {
 
     // Modal d'ajout pour les menus
     echo "<div class='btn-toolbar' role='toolba' aria-label='btn-dashboard'>";
-    echo <<< HTML
-            <button type="button" class="btn btn-board m-1 btn-primary" data-bs-toggle="modal" data-bs-target="#new_menu">
-                Nouveau Menu
-            </button>
-        HTML;
 
     echo <<< HTML
             <div class="modal fade" id="new_menu" tabindex="-1" aria-labelledby="new_menu_label" aria-hidden="true">
@@ -74,18 +66,16 @@ try {
                                     <input type="hidden" name="type" value="Page">
                                     <input class="form-control" type="text" name="titre" id="titre" value="Nouvelle Page" aria-label="Nouvelle Page">
                                     <textarea class="form-control" name="meta_description" maxlength="160" rows="2" placeholder="Description pour les moteurs de recherche">Description</textarea>
-                HTML;
-    
-                echo "<select class='form-select' name='menu_id' aria-label='list_page'>";
-    echo '<option selected>Sélectionnez le menu</option>'; {
-        echo "<option value=''>...</option>";
-        foreach ($all_menus as $m) {
-            echo "<option value='{$m['menu_id']}'>{$m['menu_titre']}</option>";
-        }
-    }
-    echo '</select>';
 
-    echo <<< HTML
+                                   <select class='form-select' name='menu_slug' aria-label='list_page'>
+                                    <option selected value='' disabled>Sélectionnez le menu</option>
+                                    <option value='PCM-1'>A propos</option>
+                                    <option value='PCM-2'>Formation</option>
+                                    <option value='PCM-3'>Recrutement</option>
+                                    <option value='PCM-4'>Alternance</option>
+                                    <option value='PCM-5'>Inclusion Handi'Cap</option>
+                                   </select>
+
                             <input type="hidden" name="csrf_token" value="$csrf"> 
                             </div>
                                     <div class="modal-footer">
@@ -102,35 +92,115 @@ try {
 
 
 
- echo "<div class='board-menu container'>";
+    echo "<div class='board-menu container'>";
     echo "<div id='menu-list' data-csrf_token='{$csrf}'>";
-    foreach ($all_menus as $m) {
-        echo "<div class='list-group mt-2' draggable='true' id='Menu_{$m['menu_id']}' data-id='{$m['menu_id']}' data-csrf_token='{$csrf}'>";
-        echo render_modal_menu($m);
-        echo render_menu($m);
+    echo <<<HTML
+                <div class='list-group mt-2' draggable='true' id='PCM-1' data-id='PCM-1' data-csrf_token='{$csrf}'>
+                    <div class="container text-center" data-id="PCM-1">
+                        <div class="d-flex align-items-center justify-content-between flex-nowrap">
+                            <a class="list-group-item list-group-item-action active disabled flex-grow-1 text-truncate" aria-current="true" >
+                                <i class="bi bi-arrows-move"></i> A propos
+                            </a>
+                        </div>
+            HTML;
+    $page_menu = $page_group['PCM-1'] ?? [];
+    echo "<div class='list-group child-group' data-csrf_token='{$csrf}'>";
+    foreach ($page_menu as $p) {
+        echo render_modal_page($p);
+        echo render_page($p);
+    }
+    echo <<<HTML
+                        </div>
+                    </div>
+                </div>
+        HTML;
 
-        $page_menu = $page_group[$m['menu_id']] ?? [];
-        echo "<div class='list-group child-group' data-csrf_token='{$csrf}'>";
-        foreach ($page_menu as $p) {
-            echo render_modal_page($p);
-            echo render_page($p);
-        }
-        echo "</div>";
-        echo "</div>";
+    echo <<<HTML
+            <div class='list-group mt-2' draggable='true' id='PCM-2' data-id='PCM-2' data-csrf_token='{$csrf}'>
+                <div class="container text-center" data-id="PCM-2">
+                    <div class="d-flex align-items-center justify-content-between flex-nowrap">
+                        <a class="list-group-item list-group-item-action active disabled flex-grow-1 text-truncate" aria-current="true" >
+                            <i class="bi bi-arrows-move"></i> Formation
+                        </a>
+                    </div>
+            HTML;
+    $page_menu = $page_group['PCM-2'] ?? [];
+    echo "<div class='list-group child-group' data-csrf_token='{$csrf}'>";
+    foreach ($page_menu as $p) {
+        echo render_modal_page($p);
+        echo render_page($p);
     }
+    echo <<<HTML
+                        </div>
+                    </div>
+                </div>
+        HTML;
+
+    echo <<<HTML
+            <div class='list-group mt-2' draggable='true' id='PCM-3' data-id='PCM-3' data-csrf_token='{$csrf}'>
+                <div class="container text-center" data-id="PCM-3">
+                    <div class="d-flex align-items-center justify-content-between flex-nowrap">
+                        <a class="list-group-item list-group-item-action active disabled flex-grow-1 text-truncate" aria-current="true" >
+                            <i class="bi bi-arrows-move"></i> Recrutement
+                        </a>
+                    </div>
+            HTML;
+    $page_menu = $page_group['PCM-3'] ?? [];
+    echo "<div class='list-group child-group' data-csrf_token='{$csrf}'>";
+    foreach ($page_menu as $p) {
+        echo render_modal_page($p);
+        echo render_page($p);
+    }
+    echo <<<HTML
+                        </div>
+                    </div>
+                </div>
+    HTML;
+
+    echo <<<HTML
+            <div class='list-group mt-2' draggable='true' id='PCM-4' data-id='PCM-4' data-csrf_token='{$csrf}'>
+                <div class="container text-center" data-id="PCM-4">
+                    <div class="d-flex align-items-center justify-content-between flex-nowrap">
+                        <a class="list-group-item list-group-item-action active disabled flex-grow-1 text-truncate" aria-current="true" >
+                            <i class="bi bi-arrows-move"></i> Alternance
+                        </a>
+                    </div>
+            HTML;
+    $page_menu = $page_group['PCM-4'] ?? [];
+    echo "<div class='list-group child-group' data-csrf_token='{$csrf}'>";
+    foreach ($page_menu as $p) {
+        echo render_modal_page($p);
+        echo render_page($p);
+    }
+    echo <<<HTML
+                        </div>
+                    </div>
+                </div>
+        HTML;
+
+    echo <<<HTML
+            <div class='list-group mt-2' draggable='true' id='PCM-5' data-id='PCM-5' data-csrf_token='{$csrf}'>
+                <div class="container text-center" data-id="PCM-5">
+                    <div class="d-flex align-items-center justify-content-between flex-nowrap">
+                        <a class="list-group-item list-group-item-action active disabled flex-grow-1 text-truncate" aria-current="true" >
+                            <i class="bi bi-arrows-move"></i> Inclusion Handi'Cap
+                        </a>
+                    </div>
+            HTML;
+    $page_menu = $page_group['PCM-5'] ?? [];
+    echo "<div class='list-group child-group' data-csrf_token='{$csrf}'>";
+    foreach ($page_menu as $p) {
+        echo render_modal_page($p);
+        echo render_page($p);
+    }
+    echo <<<HTML
+                        </div>
+                    </div>
+                </div>
+        HTML;
+
     echo "</div>";
-    // Pages sans menu associé
-    $pages_sans_menu = $page_group['sans_menu'] ?? [];
-    if (!empty($pages_sans_menu)) {
-        echo "<div class='list-group child-group div-no-menu' id='Page_x' data-csrf_token='{$csrf}'>";
-        echo "<h5 class='no-menu text-center'>PAGE SANS MENU</h5>";
-        foreach ($pages_sans_menu as $p) {
-            echo render_modal_page($p);
-            echo render_page($p);
-        }
-        echo "</div>";
-    }
-echo "</div>";
+    echo "</div>";
 
     require_once __DIR__ . '/../templates/footer.php';
 } catch (PDOException $e) {

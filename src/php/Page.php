@@ -77,7 +77,7 @@ class Page
         }
     }
 
-    public function create(string $titre, ?int $menu_id, ?string $meta_description = null)
+    public function create(string $titre, string $menu_slug, ?string $meta_description = null)
     {
 
         try {
@@ -87,16 +87,16 @@ class Page
 
                 $slug = $this->uniqueSlug($this->slugify($page_titre));
 
-                $stmt = $this->pdo->prepare("SELECT MAX(ordre) as max_ordre FROM pages WHERE menu_id <=> ?");
-                $stmt->execute([$menu_id]);
+                $stmt = $this->pdo->prepare("SELECT MAX(ordre) as max_ordre FROM pages WHERE menu_slug = ?");
+                $stmt->execute([$menu_slug]);
 
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 $order = ($result['max_ordre'] ?? 0) + 1;
 
-                $stmt = $this->pdo->prepare("INSERT INTO pages (titre, slug, menu_id, ordre, meta_description) VALUES (?, ?, ?, ?, ?)");
+                $stmt = $this->pdo->prepare("INSERT INTO pages (titre, slug, menu_slug, ordre, meta_description) VALUES (?, ?, ?, ?, ?)");
 
-                $stmt->execute([$page_titre, $slug, $menu_id, $order, $meta_description]);
+                $stmt->execute([$page_titre, $slug, $menu_slug, $order, $meta_description]);
 
                 return $this->pdo->lastInsertId();
             } else {
@@ -157,7 +157,7 @@ class Page
     public function getByMenu()
     {
         try {
-            $stmt = $this->pdo->query("SELECT * FROM pages ORDER BY menu_id, ordre");
+            $stmt = $this->pdo->query("SELECT * FROM pages ORDER BY menu_slug, ordre");
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log("Erreur de requête SQL : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
@@ -168,7 +168,7 @@ class Page
         public function getByMenuOn()
     {
         try {
-            $stmt = $this->pdo->query("SELECT * FROM pages WHERE visible = 1 ORDER BY menu_id, ordre");
+            $stmt = $this->pdo->query("SELECT * FROM pages WHERE visible = 1 ORDER BY menu_slug, ordre");
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log("Erreur de requête SQL : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
