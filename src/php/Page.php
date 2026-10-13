@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../../data/config/database.php';
+require_once __DIR__ . '/../config/menus.php';
 
 class Page
 {
@@ -87,6 +88,10 @@ class Page
 
                 $slug = $this->uniqueSlug($this->slugify($page_titre));
 
+                if (!menu_validation($menu_slug)) {
+                    return false;
+                }
+
                 $stmt = $this->pdo->prepare("SELECT MAX(ordre) as max_ordre FROM pages WHERE menu_slug = ?");
                 $stmt->execute([$menu_slug]);
 
@@ -98,7 +103,7 @@ class Page
 
                 $stmt->execute([$page_titre, $slug, $menu_slug, $order, $meta_description]);
 
-                return $this->pdo->lastInsertId();
+                return true;
             } else {
                 return false;
             }
@@ -108,11 +113,11 @@ class Page
         }
     }
 
-    public function update(int $id, string $titre, ?string $meta_description = null)
+    public function update(int $id, string $titre, string $menu_slug, ?string $meta_description = null)
     {
         try {
-            $stmt = $this->pdo->prepare("UPDATE pages SET titre = ?, meta_description = ? WHERE id = ?");
-            $stmt->execute([$titre, $meta_description, $id]);
+            $stmt = $this->pdo->prepare("UPDATE pages SET titre = ?, menu_slug = ?, meta_description = ? WHERE id = ?");
+            $stmt->execute([$titre, $menu_slug, $meta_description, $id]);
             return true;
         } catch (PDOException $e) {
             error_log("Erreur lors de la mise a jour : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");

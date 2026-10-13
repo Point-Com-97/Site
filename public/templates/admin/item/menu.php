@@ -4,7 +4,7 @@ function sort_pages(array $pages): array
     $groupes = [];
 
     foreach ($pages as $page) {
-        $cle = $page['menu_id'] ?? 'sans_menu';
+        $cle = $page['menu_slug'] ?? 'accueil';
         $groupes[$cle][] = $page;
     }
 
@@ -17,6 +17,7 @@ function render_modal_page(array $item): string
 {
     $id = $item['id'];
     $titre = htmlspecialchars($item['titre'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $meta_description = htmlspecialchars($item['meta_description'] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     $csrf = generer_csrf_token();
 
     return <<<HTML
@@ -32,8 +33,17 @@ function render_modal_page(array $item): string
                                         <input type="hidden" name="id" value="{$id}">
                                         <input type="hidden" name="type" value="Page">
                                         <input class="form-control form-control-lg" type="text" id="Page_titre_{$id}" name="titre" value="{$titre}">
-                                        <textarea class="form-control" name="meta_description" maxlength="160" rows="2" placeholder="Description pour les moteurs de recherche">{$item['meta_description']}</textarea>
-                                        <input type="hidden" name="csrf_token" value="$csrf"> 
+                                        <textarea class="form-control" name="meta_description" maxlength="160" rows="2" placeholder="Description pour les moteurs de recherche">{$meta_description}</textarea>
+                                        <input type="hidden" name="csrf_token" value="$csrf">
+
+                                        <select class='form-select' name='menu_slug' aria-label='list_page' required>
+                                            <option selected value='' disabled>Sélectionnez le menu</option>
+                                            <option value='PCM-1'>Centre de formation</option>
+                                            <option value='PCM-2'>Formation</option>
+                                            <option value='PCM-3'>Recrutement</option>
+                                            <option value='PCM-4'>Alternance</option>
+                                            <option value='PCM-5'>Inclusion Handi'Cap</option>
+                                        </select>
                                 </div>
                                 <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -55,9 +65,7 @@ function render_page(array $item): string
     $titre = htmlspecialchars($item['titre'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
     $visible =  $item['visible'];
-    $menu_id = $item['menu_id'];
-    
-    $menu_id_js = $menu_id ?? 'null';
+
 
     if ($visible == 1) {
         $statue = 'bi bi-circle-fill text-success';
@@ -89,7 +97,7 @@ function render_page(array $item): string
                                     </a>
                                 </div>
                                 <div class="btn-group" role="group" aria-label="group 4">
-                                    <button type="button" onclick="remove_items({$id},'Page', '{$csrf}')" class="btn btn-danger">
+                                    <button type="button" onclick="remove_items({$id}, '{$csrf}')" class="btn btn-danger">
                                         <i class="bi bi-trash3-fill"></i>
                                     </button>
                                 </div>

@@ -1,140 +1,153 @@
-// Supprimer un menu ou une page via le formulaire et la methode GET
-function remove_items(id, type, csrf) {
+// Supprimer d'une page via le formulaire et la methode POST
+function remove_items(id, csrf) {
     if (!confirm('Supprimer ce menu définitivement ?')) {
         return;
     }
-    fetch(`/admin/endpoint/delete.php?id=${id}&type=${type}&csrf_token=${csrf}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                show_message('Suppression effectuée.', 'success');
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('csrf_token', csrf)
 
-                const menu = document.getElementById(`${type}_${id}`);
-                menu.remove();
+    try {
+        fetch(`/admin/endpoint/delete.php`, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    show_message('Suppression effectuée.', 'success');
 
-            } else {
-                show_message('La suppression a échoué.');
-            }
-        });
+                    const menu = document.getElementById(`Page_${id}`);
+                    menu.remove();
+
+                } else {
+                    show_message('La suppression a échoué.');
+                }
+            });
+    } catch (error) {
+        console.error('Erreur lors de la suppression :', error);
+        show_message('Une erreur est survenue lors de la suppression.', 'danger');
+    }
 }
 
-// Toggle la visibilité d'une page via le formulaire et la methode GET
+// Toggle la visibilité d'une page via le formulaire et la methode POST
 function toggle_visible(id, csrf) {
-    fetch(`/admin/endpoint/toggle.php?id=${id}&csrf_token=${csrf}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                const icone = document.getElementById(`visible${id}`);
-                const etait_visible = icone.classList.contains('text-success');
 
-                icone.classList.toggle('text-success'); // ajoute la classe si elle est absente, ou la retire si elle est présente
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('csrf_token', csrf)
 
-                show_message(etait_visible ? 'Page passée hors-ligne' : 'Page passée en ligne', 'success');
-            } else {
-                show_message('Echec de la tentative');
-            }
-        });
-}
+    try {
+        fetch(`/admin/endpoint/toggle.php`, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const icone = document.getElementById(`visible${id}`);
+                    const etait_visible = icone.classList.contains('text-success');
 
-// Duplication d'un menu ou d'une page via le formulaire et la methode GET
-function duplicate(id, menu_id, csrf) {
-    fetch(`/admin/endpoint/duplicate.php?id=${id}&csrf_token=${csrf}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                show_message('Duplication réussie', 'success');
+                    icone.classList.toggle('text-success'); // ajoute la classe si elle est absente, ou la retire si elle est présente
 
-                if (menu_id == null) {
-                    const parent = document.getElementById(`Page_x`);
-                    // Insert les bloc html pour la modal et le menu à la fin du parent
-                    parent.insertAdjacentHTML('beforeend', data.html);
+                    show_message(etait_visible ? 'Page passée hors-ligne' : 'Page passée en ligne', 'success');
                 } else {
-                    const parent = document.getElementById(`Menu_${menu_id}`);
-                    // Insert les bloc html pour la modal et le menu à la fin du parent
-                    parent.insertAdjacentHTML('beforeend', data.html);
+                    show_message('Echec de la tentative');
                 }
-
-            } else {
-                show_message('Echec de la duplication');
-            }
-        });
+            });
+    } catch (error) {
+        console.error('Erreur lors du changement de la publication :', error);
+        show_message('Une erreur est survenue lors du changement de la publication.', 'danger');
+    }
 }
 
-// Modifier un menu ou une page via le formulaire et la methode GET
-function edit_menu(id, type, titre, meta_description, csrf) {
-    fetch(`/admin/endpoint/update.php?id=${id}&type=${type}&titre=${titre}&meta_description=${meta_description}&csrf_token=${csrf}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                show_message('Mise à jour réussie', 'success');
+    // Modifier d'une page via le formulaire et la methode POST
+    function edit_menu(id, menu_slug, titre, meta_description, csrf) {
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('menu_slug', menu_slug);
+        formData.append('titre', titre);
+        formData.append('meta_description', meta_description);
+        formData.append('csrf_token', csrf);
 
-                const title = document.getElementById(`${type}_label_${id}`);
-                title.textContent = titre;
+        try {
+            fetch(`/admin/endpoint/update.php`, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        show_message('Mise à jour réussie', 'success');
 
-                const modalElement = document.querySelector(`#editModal${type}${id}`);
-                const modalInstance = bootstrap.Modal.getInstance(modalElement);
-                modalInstance.hide();
-            } else {
-                show_message('Echec de la modification');
-            }
+                        const title = document.getElementById(`Page_label_${id}`);
+                        title.textContent = titre;
+
+                        const modalElement = document.querySelector(`#editModalPage${id}`);
+                        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                        modalInstance.hide();
+                        setTimeout(() => location.reload(), 800);
+                    } else {
+                        show_message('Echec de la modification');
+                    }
+                });
+        } catch (error) {
+            console.error('Erreur lors de la mise à jour :', error);
+            show_message('Une erreur est survenue lors de la mise à jour.', 'danger');
+        }
+    }
+
+    // Ajouter une page via le formulaire et la methode POST
+    function add(titre, menu_slug, meta_description, csrf) {
+
+        const formData = new FormData();
+        formData.append('titre', titre);
+        formData.append('menu_slug', menu_slug);
+        formData.append('meta_description', meta_description);
+        formData.append('csrf_token', csrf);
+
+        try {
+            fetch(`/admin/endpoint/create.php`, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+
+                        show_message('Element ajouter', 'success');
+
+                        const modalElement = document.querySelector(`#new_page`);
+                        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+
+                        modalInstance.hide();
+
+                        setTimeout(() => location.reload(), 800);
+                    } else {
+                        show_message('Echec de la ajout');
+                    }
+                });
+        } catch (error) {
+            console.error('Erreur lors de l\'ajout :', error);
+            show_message('Une erreur est survenue lors de l\'ajout.', 'danger');
+        }
+    }
+
+    // QuerySelector Gestion des formulaires d'édition et d'ajout
+
+    document.querySelectorAll('.edit_form').forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const data = new FormData(form);
+            edit_menu(data.get('id'), data.get('menu_slug'), data.get('titre'), data.get('meta_description'), data.get('csrf_token'));
         });
-}
+    });
 
-// Ajouter un menu ou une page via le formulaire et la methode GET
-function add(titre, type, menu_id, meta_description, csrf) {
-    fetch(`/admin/endpoint/create.php?titre=${titre}&type=${type}&menu_id=${menu_id}&meta_description=${meta_description}&csrf_token=${csrf}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                show_message('Element ajouter', 'success');
-                if (type == 'Menu') {
-                    const body = document.querySelector(`#menu-list`);
-                    // Insert les bloc html pour la modal et le menu à la fin du body
-                    body.insertAdjacentHTML('beforeend', data.html);
 
-                    // Ajouter la nouvelle option au select de sélection de menu
-                    const select = document.querySelector('select[name="menu_id"]');
-                    const option = document.createElement('option');
-                    option.value = data.id;
-                    option.textContent = titre;
-                    select.appendChild(option);
-
-                    const modalElement = document.querySelector(`#new_menu`);
-                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
-                    modalInstance.hide();
-                    setTimeout(() => location.reload(), 800);
-
-                } else {
-                    setTimeout(() => location.reload(), 800);
-                }
-            } else {
-                show_message('Echec de la ajout');
-            }
+    document.querySelectorAll('.add_form_page').forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const data = new FormData(form);
+            add(data.get('titre'), data.get('menu_slug'), data.get('meta_description'), data.get('csrf_token'));
         });
-}
-
-// QuerySelector Gestion des formulaires d'édition et d'ajout
-
-document.querySelectorAll('.edit_form').forEach(function (form) {
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const data = new FormData(form);
-        edit_menu(data.get('id'), data.get('type'), data.get('titre'), data.get('meta_description'), data.get('csrf_token'));
     });
-});
-
-document.querySelectorAll('.add_form_menu').forEach(function (form) {
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const data = new FormData(form);
-        add(data.get('titre'), data.get('type'), data.get('menu_id'), data.get('csrf_token'));
-    });
-});
-
-document.querySelectorAll('.add_form_page').forEach(function (form) {
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const data = new FormData(form);
-        add(data.get('titre'), data.get('type'), data.get('menu_id'), data.get('meta_description'), data.get('csrf_token'));
-    });
-});

@@ -3,6 +3,9 @@ require __DIR__ . '/../auth-check.php';
 
 require_once __DIR__ . '/../../../src/php/Csrf.php';
 
+// Définir l'en-tête de réponse pour indiquer que le contenu est au format JSON
+header('Content-Type: application/json; charset=utf-8');
+
 if (!verifier_csrf_token($_POST['csrf_token'] ?? $_GET['csrf_token'] ?? null)) {
     echo json_encode(['success' => false, 'message' => 'Requête invalide']);
     exit;
@@ -11,8 +14,6 @@ if (!verifier_csrf_token($_POST['csrf_token'] ?? $_GET['csrf_token'] ?? null)) {
 
 require __DIR__ . '/../../templates/admin/item/bloc.php';
 require_once __DIR__ . '/../../../src/php/Bloc.php';
-
-header('Content-Type: application/json');
 
 $page_id = (int) ($_POST['page_id'] ?? 0);
 $type = $_POST['type'] ?? '';
