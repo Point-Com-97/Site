@@ -21,6 +21,7 @@ ordre int NOT NULL DEFAULT 0,
 visible TINYINT(1) NOT NULL DEFAULT 1,
 meta_description VARCHAR(160) NULL,
 menu_slug varchar(50) NULL,
+systeme TINYINT(1),
 CONSTRAINT unique_slug_pages UNIQUE (slug)
 ) DEFAULT CHARSET=utf8mb4;
 

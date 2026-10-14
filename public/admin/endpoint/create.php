@@ -25,11 +25,14 @@ if ($name === '') {
 }
 
 
-if (menu_validation($menu_slug)) {
-    if($resultat = (new Page())->create($name, $menu_slug, $meta_description)) {
-         echo json_encode(['success' => true, 'message' => 'Page créée avec succès']);
+if (!menu_validation($menu_slug)) {
+    if ($resultat = (new Page())->create($name, $menu_slug, $meta_description)) {
+        echo json_encode(['success' => true, 'message' => 'Page créée avec succès']);
     } else {
         echo json_encode(['success' => false, 'message' => 'Erreur lors de la création']);
         exit;
-    } 
-} 
+    }
+} else {
+    echo json_encode(['success' => false, 'message' => 'Menu introuvable']);
+    exit;
+}

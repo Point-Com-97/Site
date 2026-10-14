@@ -46,23 +46,30 @@ class Page
         }
     }
 
-        private function slugify(string $texte): string
+
+    // Transforme le titre en menu en slug
+    public function slug_menu(string $menu): string
     {
-        $texte = trim($texte);
+        $slug = trim($menu);
 
         // Accents : é -> e, à -> a, etc. (extension intl)
         if (function_exists('transliterator_transliterate')) {
-            $texte = transliterator_transliterate('Any-Latin; Latin-ASCII; Lower()', $texte);
+            $slug = transliterator_transliterate('Any-Latin; Latin-ASCII; Lower()', $slug);
         } else {
-            $texte = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $texte));
+            $slug = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $slug));
         }
 
         // Tout ce qui n'est pas une lettre ou un chiffre devient un tiret
-        $texte = preg_replace('/[^a-z0-9]+/', '-', $texte);
+        $slug = preg_replace('/[^a-z0-9]+/', '-', $slug);
 
-        return trim($texte, '-') ?: 'page';
+        $slug = preg_replace('/^-+|-+$-+"-+/', '', $slug);
+
+        $slug = preg_replace("/'/", '', $slug);
+
+        return trim($slug, '-') ?: 'page';
     }
 
+    // Génère un slug unique en ajoutant un suffixe numérique si nécessaire
     private function uniqueSlug(string $base): string
     {
         $slug = $base;
@@ -86,9 +93,13 @@ class Page
 
                 $page_titre = trim($titre);
 
-                $slug = $this->uniqueSlug($this->slugify($page_titre));
+                $slug = $this->uniqueSlug($this->slug_menu($page_titre));
 
                 if (!menu_validation($menu_slug)) {
+                    return false;
+                }
+
+                if (!banned_menu_slug($slug)) {
                     return false;
                 }
 
@@ -99,9 +110,11 @@ class Page
 
                 $order = ($result['max_ordre'] ?? 0) + 1;
 
-                $stmt = $this->pdo->prepare("INSERT INTO pages (titre, slug, menu_slug, ordre, meta_description) VALUES (?, ?, ?, ?, ?)");
+                $systeme = 0;
 
-                $stmt->execute([$page_titre, $slug, $menu_slug, $order, $meta_description]);
+                $stmt = $this->pdo->prepare("INSERT INTO pages (titre, slug, ordre, meta_description, menu_slug, systeme) VALUES (?, ?, ?, ?, ?,?)");
+
+                $stmt->execute([$page_titre, $slug, $order, $meta_description, $menu_slug, $systeme]);
 
                 return true;
             } else {
@@ -116,8 +129,8 @@ class Page
     public function update(int $id, string $titre, string $menu_slug, ?string $meta_description = null)
     {
         try {
-            $stmt = $this->pdo->prepare("UPDATE pages SET titre = ?, menu_slug = ?, meta_description = ? WHERE id = ?");
-            $stmt->execute([$titre, $menu_slug, $meta_description, $id]);
+            $stmt = $this->pdo->prepare("UPDATE pages SET titre = ?, meta_description = ?, menu_slug = ? WHERE id = ?");
+            $stmt->execute([$titre, $meta_description, $menu_slug, $id]);
             return true;
         } catch (PDOException $e) {
             error_log("Erreur lors de la mise a jour : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
@@ -170,7 +183,7 @@ class Page
         }
     }
 
-        public function getByMenuOn()
+    public function getByMenuOn()
     {
         try {
             $stmt = $this->pdo->query("SELECT * FROM pages WHERE visible = 1 ORDER BY menu_slug, ordre");
@@ -217,18 +230,16 @@ class Page
     }
 
     public function search(string $terme): array
-{
-    try {
-        $stmt = $this->pdo->prepare("SELECT titre, slug FROM pages WHERE visible = 1 AND titre LIKE ? LIMIT 10");
-        $stmt->execute(['%' . $terme . '%']);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        error_log("Erreur de recherche : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
-        return [];
+    {
+        try {
+            $stmt = $this->pdo->prepare("SELECT titre, slug FROM pages WHERE visible = 1 AND titre LIKE ? LIMIT 10");
+            $stmt->execute(['%' . $terme . '%']);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Erreur de recherche : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
+            return [];
+        }
     }
-}
-
-
 }
 
 

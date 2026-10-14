@@ -23,11 +23,32 @@ if ($id <= 0 || $name === '') {
     exit;
 }
 
+$page = new Page();
+$info = $page->getById($id);
+
 if (menu_validation($menu_slug)) {
-     $resultat = (new Page())->update($id, $name, $menu_slug, $meta_description);
-    echo json_encode(['success' => true, 'result' => $resultat, 'titre' => $name, 'menu_slug' => $menu_slug, 'meta' => $meta_description]);
+
+    if ($info) {
+        if ($info['menu_slug'] !== null) {
+            if ($resultat = (new Page())->update($id, $name, $menu_slug, $meta_description)) {
+                echo json_encode(['success' => true, 'result' => $resultat, 'titre' => $name,'menu_slug' => $menu_slug, 'meta' => $meta_description]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Erreur lors de la création']);
+                exit;
+            }
+        } else {
+            if ($resultat = (new Page())->update($id, $name, $meta_description)) {
+                echo json_encode(['success' => true, 'result' => $resultat, 'titre' => $name, 'meta' => $meta_description]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Erreur lors de la création']);
+                exit;
+            }
+        }
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Page introuvable']);
+        exit;
+    }
 } else {
-    echo json_encode(['success' => false, 'message' => 'Erreur lors de la modification']);
+    echo json_encode(['success' => false, 'message' => 'Menu introuvable']);
     exit;
 }
-

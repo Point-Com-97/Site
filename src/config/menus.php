@@ -3,49 +3,26 @@
 // Retourne la liste de menu
 function list_menus(): array
 {
-    $menus = ['Centre de formation', 'Formation', 'Recrutement', 'Alternance', 'RHF Inclusion'];
+    $menus = [
+        'centre' => ['label' => 'Centre de formation', 'icone' => 'bi-building', 'page' => 'centre-de-formation', 'dropdown' => true],
+        'formation' => ['label' => 'Formation', 'icone' => 'bi-book', 'page' => 'formation', 'dropdown' => true],
+        'recrutement' => ['label' => 'Recrutement', 'icone' => 'bi-person-fill', 'page' => 'recrutement', 'dropdown' => true],
+        'alternance' => ['label' => 'Alternance', 'icone' => 'bi-people', 'page' => 'alternance', 'dropdown' => true],
+        'rhf-inclusion' => ['label' => 'RHF Inclusion', 'icone' => 'bi-inclusive', 'page' => 'rhf-inclusion', 'dropdown' => true],
+        'stat' => ['label' => 'Statistiques', 'icone' => 'bi-graph-up', 'page' => 'statistiques', 'dropdown' => true],
+        'bilan' => ['label' => 'Bilan de compétences', 'icone' => 'bi-bar-chart', 'page' => 'bilan-de-competences', 'dropdown' => false],
+        'contact' => ['label' => 'Contact', 'icone' => 'bi-envelope', 'page' => 'contact', 'dropdown' => false],
+        'portail' => ['label' => 'Portail', 'icone' => 'bi-box-arrow-in-right', 'url' => 'https://…', 'dropdown' => false],
+    ];
     return $menus;
 }
 
-// Transforme le nom du menu en slug
-function slug_menu(string $menu): string
-{
-    $slug = trim($menu);
-    $slug = strtolower($slug);
-    $slug = str_replace(" ", "_", $slug);
-    return $slug;
-}
-
-// Retourne la liste des menus avec leurs slug
-function list_of_menus(): array
-{
-    $menus = list_menus();
-
-    $all_menus = [];
-
-    foreach ($menus as $m) {
-        $slug = slug_menu($m);
-
-        $all_menus[] = [
-            'titre' => $m,
-            'slug' => $slug,
-        ];
-    };
-    return $all_menus;
-}
-
-// Recherche le menu dans le tableau et retourne true si trouvé
+// Retourne true si le menu existe et possède un sous-menu (dropdown)
 function menu_validation(string $menu_slug): bool
 {
     $menus = list_menus();
-    $all_slug = [];
 
-    foreach ($menus as $m) {
-        $slug = slug_menu($m);
-        $all_slug[] = $slug;
-    }
-
-    return in_array($menu_slug, $all_slug, true);
+    return isset($menus[$menu_slug]) && $menus[$menu_slug]['dropdown'];
 }
 
 // Recherhce dans la liste si le slug existe et retourne true si oui

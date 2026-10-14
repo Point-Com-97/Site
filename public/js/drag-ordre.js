@@ -43,24 +43,24 @@ function envoyer_nouvel_ordre(conteneur, selecteur_items, type, csrf_token) {
         nouvel_ordre.push({ id: ligne.dataset.id, ordre: index + 1, type: type, csrf_token: csrf_token });
     });
     // Envoie le nouvel ordre au serveur via une requête POST
-    fetch('/admin/endpoint/drag-drop.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(nouvel_ordre)
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                show_message('Ordre mis à jour', 'success');
-            } else {
-                show_message('Échec de la mise à jour de l\'ordre');
-            }
-        });
-}
 
-const menuList = document.getElementById('menu-list');
-if (menuList) {
-    activer_drag_drop(menuList, '.list-group[draggable="true"]', 'menu', menuList.dataset.csrf_token);
+    try {
+        fetch('/admin/endpoint/drag-drop.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(nouvel_ordre)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    show_message('Ordre mis à jour', 'success');
+                } else {
+                    show_message('Échec de la mise à jour de l\'ordre');
+                }
+            });
+    } catch (error) {
+        console.error('Erreur lors de l\'envoi du nouvel ordre:', error);
+    }
 }
 
 document.querySelectorAll('.child-group').forEach(function (groupe) {

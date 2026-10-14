@@ -20,8 +20,14 @@ if (!$id) {
     exit;
 }
 
-    $new_page = new Page();
+$new_page = new Page();
+$info = $page->getById($id);
+if ($info['systeme'] == 0) {
     $resultat = $new_page->delete((int) $id);
+} else {
+    echo json_encode(['success' => false, 'message' => 'Suppresion impossible']);
+}
+
 
 
 echo json_encode(['success' => (bool) $resultat]);

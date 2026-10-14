@@ -3,10 +3,10 @@
 
 require __DIR__ . '/auth-check.php';
 
-require_once __DIR__ . '/../templates/admin/header.php';
-require_once __DIR__ . '/../templates/admin/item/menu.php';
 require_once __DIR__ . '/../../src/php/Csrf.php';
+require_once __DIR__ . '/../templates/admin/header.php';
 require_once __DIR__ . '/../../src/config/menus.php';
+require_once __DIR__ . '/../templates/admin/item/menu.php';
 
 try {
 
@@ -18,7 +18,7 @@ try {
     $page_by_menu = $page->getByMenu();
     $page_group = sort_pages($page_by_menu);
     $csrf = generer_csrf_token();
-    $menus = list_of_menus();
+    $menus = list_menus();
 
     // Modal d'ajout pour les pages
     echo <<< HTML
@@ -44,10 +44,13 @@ try {
                                    <select class='form-select' name='menu_slug' aria-label='list_page' required>
                                     <option selected value='' disabled>Sélectionnez le menu</option>
             HTML;
-    foreach ($menus as $m) {
-        $titre = $m['titre'];
-        $slug = $m['slug'];
-        echo "<option value='$slug'>$titre</option>";
+    foreach ($menus as $cle => $m) {
+        if (menu_validation($cle)) {
+            $titre = $m['label'];
+            $slug  = $m['page'] ?? $m['url'] ?? '#'; // page, sinon url, sinon '#'
+
+            echo "<option value='$slug'>$titre</option>";
+        }
     }
     echo <<< HTML
                                    </select>
@@ -68,31 +71,54 @@ try {
     echo "<div class='board-menu container'>";
     echo "<div id='menu-list' data-csrf_token='{$csrf}'>";
 
-    foreach ($menus as $m) {
-        $titre = $m['titre'];
-        $slug = $m['slug'];
+    foreach ($menus as $cle => $m) {
+        if (menu_validation($cle)) {
+            $titre = $m['label'];
+            $slug  = $m['page'] ?? $m['url'] ?? '#'; // page, sinon url, sinon '#'
 
-        echo <<<HTML
-                <div class='list-group mt-2' draggable='true' id='PCM-1' data-id='PCM-1' data-csrf_token='{$csrf}'>
-                    <div class="container text-center" data-id="PCM-1">
+            echo <<<HTML
+                <div class='list-group mt-2' id='{$slug}' data-id='{$slug}' data-csrf_token='{$csrf}'>
+                    <div class="container text-center" data-id="{$slug}">
                         <div class="d-flex align-items-center justify-content-between flex-nowrap">
                             <a class="list-group-item list-group-item-action active disabled flex-grow-1 text-truncate" aria-current="true" >
-                                <i class="bi bi-arrows-move"></i> $titre
+                             $titre
                             </a>
                         </div>
             HTML;
-        $page_menu = $page_group[$slug] ?? [];
-        echo "<div class='list-group child-group' data-csrf_token='{$csrf}'>";
-        foreach ($page_menu as $p) {
-            echo render_modal_page($p);
-            echo render_page($p);
-        }
-        echo <<<HTML
+            $page_menu = $page_group[$slug] ?? [];
+            echo "<div class='list-group child-group' data-csrf_token='{$csrf}'>";
+            foreach ($page_menu as $p) {
+                echo render_modal_page($p);
+                echo render_page($p);
+            }
+            echo <<<HTML
                         </div>
                     </div>
                 </div>
         HTML;
+        }
     }
+
+    echo <<<HTML
+                <div class='list-group mt-2'id='self_page' data-id='self_page' data-csrf_token='{$csrf}'>
+                    <div class="container text-center" data-id="self_page">
+                        <div class="d-flex align-items-center justify-content-between flex-nowrap">
+                            <a class="list-group-item list-group-item-action active disabled flex-grow-1 text-truncate" aria-current="true" >
+                            Page système
+                            </a>
+                        </div>
+            HTML;
+    $page_menu = $page_group[null] ?? [];
+    echo "<div class='list-group child-group' data-csrf_token='{$csrf}'>";
+    foreach ($page_menu as $p) {
+        echo render_modal_self_page($p);
+        echo render_self_page($p);
+    }
+    echo <<<HTML
+                        </div>
+                    </div>
+                </div>
+        HTML;
 
     echo "</div>";
     echo "</div>";
