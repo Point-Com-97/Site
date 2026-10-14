@@ -27,8 +27,7 @@ function render_modal_page(array $item): string
     foreach ($menus as $cle => $m) {
         if (menu_validation($cle)) {
             $titre = $m['label'];
-            $slug  = $m['page'] ?? $m['url'] ?? '#'; // page, sinon url, sinon '#'
-            $select .= "<option value='{$slug}'>{$titre}</option>";
+            $select .= "<option value='$cle'>{$titre}</option>";
         }
     }
 

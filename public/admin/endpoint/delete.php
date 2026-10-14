@@ -21,11 +21,12 @@ if (!$id) {
 }
 
 $new_page = new Page();
-$info = $page->getById($id);
+$info = $new_page->getById($id);
 if ($info['systeme'] == 0) {
     $resultat = $new_page->delete((int) $id);
 } else {
     echo json_encode(['success' => false, 'message' => 'Suppresion impossible']);
+    exit;
 }
 
 

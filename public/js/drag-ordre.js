@@ -5,12 +5,18 @@ function activer_drag_drop(conteneur, selecteur_items, type, csrf_token) {
     // Ajoute les événements de glisser-déposer à chaque élément
     items.forEach(function (ligne) {
         ligne.addEventListener('dragstart', function (event) {
+            event.dataTransfer.setData('text/plain', '');
             element_glisse = ligne;
         });
         // Empêche le comportement par défaut pour permettre le drop
         ligne.addEventListener('dragover', function (event) {
             event.preventDefault();
         });
+
+        ligne.addEventListener('dragend', function (event) {
+            element_glisse = null;
+        });
+
         // Gère l'événement de drop pour réorganiser les éléments
         ligne.addEventListener('drop', function (event) {
             event.preventDefault();

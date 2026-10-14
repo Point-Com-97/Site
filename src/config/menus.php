@@ -12,7 +12,6 @@ function list_menus(): array
         'stat' => ['label' => 'Statistiques', 'icone' => 'bi-graph-up', 'page' => 'statistiques', 'dropdown' => true],
         'bilan' => ['label' => 'Bilan de compétences', 'icone' => 'bi-bar-chart', 'page' => 'bilan-de-competences', 'dropdown' => false],
         'contact' => ['label' => 'Contact', 'icone' => 'bi-envelope', 'page' => 'contact', 'dropdown' => false],
-        'portail' => ['label' => 'Portail', 'icone' => 'bi-box-arrow-in-right', 'url' => 'https://…', 'dropdown' => false],
     ];
     return $menus;
 }
@@ -28,6 +27,6 @@ function menu_validation(string $menu_slug): bool
 // Recherhce dans la liste si le slug existe et retourne true si oui
 function banned_menu_slug(string $menu_slug): bool
 {
-    $banned_slugs = ['admin', 'search', 'login', 'logout', 'register', 'dashboard'];
+    $banned_slugs = ['admin', 'search', 'login', 'logout', 'register', 'dashboard','assets', 'uploads', 'sitemap', 'robots'];
     return in_array($menu_slug, $banned_slugs, true);
 }

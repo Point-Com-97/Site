@@ -25,7 +25,7 @@ if ($name === '') {
 }
 
 
-if (!menu_validation($menu_slug)) {
+if (menu_validation($menu_slug)) {
     if ($resultat = (new Page())->create($name, $menu_slug, $meta_description)) {
         echo json_encode(['success' => true, 'message' => 'Page créée avec succès']);
     } else {

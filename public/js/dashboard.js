@@ -61,93 +61,102 @@ function toggle_visible(id, csrf) {
     }
 }
 
-    // Modifier d'une page via le formulaire et la methode POST
-    function edit_menu(id, menu_slug, titre, meta_description, csrf) {
-        const formData = new FormData();
-        formData.append('id', id);
-        formData.append('menu_slug', menu_slug);
-        formData.append('titre', titre);
-        formData.append('meta_description', meta_description);
-        formData.append('csrf_token', csrf);
+// Modifier d'une page via le formulaire et la methode POST
+function edit_menu(id, menu_slug, titre, meta_description, csrf) {
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('menu_slug', menu_slug);
+    formData.append('titre', titre);
+    formData.append('meta_description', meta_description);
+    formData.append('csrf_token', csrf);
 
-        try {
-            fetch(`/admin/endpoint/update.php`, {
-                method: 'POST',
-                body: formData
+    try {
+        fetch(`/admin/endpoint/update.php`, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    show_message('Mise à jour réussie', 'success');
+
+                    const title = document.getElementById(`Page_label_${id}`);
+                    title.textContent = titre;
+
+                    const modalElement = document.querySelector(`#editModalPage${id}`);
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    modalInstance.hide();
+                    setTimeout(() => location.reload(), 800);
+                } else {
+                    show_message('Echec de la modification');
+                }
             })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        show_message('Mise à jour réussie', 'success');
+            .catch(error => {
+                console.error('Erreur lors de l\'ajout :', error);
+                show_message('Une erreur est survenue lors de l\'ajout.', 'danger');
 
-                        const title = document.getElementById(`Page_label_${id}`);
-                        title.textContent = titre;
-
-                        const modalElement = document.querySelector(`#editModalPage${id}`);
-                        const modalInstance = bootstrap.Modal.getInstance(modalElement);
-                        modalInstance.hide();
-                        setTimeout(() => location.reload(), 800);
-                    } else {
-                        show_message('Echec de la modification');
-                    }
-                });
-        } catch (error) {
-            console.error('Erreur lors de la mise à jour :', error);
-            show_message('Une erreur est survenue lors de la mise à jour.', 'danger');
-        }
+            });
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour :', error);
+        show_message('Une erreur est survenue lors de la mise à jour.', 'danger');
     }
+}
 
-    // Ajouter une page via le formulaire et la methode POST
-    function add(titre, menu_slug, meta_description, csrf) {
+// Ajouter une page via le formulaire et la methode POST
+function add(titre, menu_slug, meta_description, csrf) {
 
-        const formData = new FormData();
-        formData.append('titre', titre);
-        formData.append('menu_slug', menu_slug);
-        formData.append('meta_description', meta_description);
-        formData.append('csrf_token', csrf);
+    const formData = new FormData();
+    formData.append('titre', titre);
+    formData.append('menu_slug', menu_slug);
+    formData.append('meta_description', meta_description);
+    formData.append('csrf_token', csrf);
 
-        try {
-            fetch(`/admin/endpoint/create.php`, {
-                method: 'POST',
-                body: formData
+    try {
+        fetch(`/admin/endpoint/create.php`, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+
+                    show_message('Element ajouter', 'success');
+
+                    const modalElement = document.querySelector(`#new_page`);
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+
+                    modalInstance.hide();
+
+                    setTimeout(() => location.reload(), 800);
+                } else {
+                    show_message('Echec de la ajout');
+                }
             })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-
-                        show_message('Element ajouter', 'success');
-
-                        const modalElement = document.querySelector(`#new_page`);
-                        const modalInstance = bootstrap.Modal.getInstance(modalElement);
-
-                        modalInstance.hide();
-
-                        setTimeout(() => location.reload(), 800);
-                    } else {
-                        show_message('Echec de la ajout');
-                    }
-                });
-        } catch (error) {
-            console.error('Erreur lors de l\'ajout :', error);
-            show_message('Une erreur est survenue lors de l\'ajout.', 'danger');
-        }
+            .catch(error => {
+                console.error('Erreur lors de l\'ajout :', error);
+                show_message('Une erreur est survenue lors de l\'ajout.', 'danger');
+            });
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout :', error);
+        show_message('Une erreur est survenue lors de l\'ajout.', 'danger');
     }
+}
 
-    // QuerySelector Gestion des formulaires d'édition et d'ajout
+// QuerySelector Gestion des formulaires d'édition et d'ajout
 
-    document.querySelectorAll('.edit_form').forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-            const data = new FormData(form);
-            edit_menu(data.get('id'), data.get('menu_slug'), data.get('titre'), data.get('meta_description'), data.get('csrf_token'));
-        });
+document.querySelectorAll('.edit_form').forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const data = new FormData(form);
+        edit_menu(data.get('id'), data.get('menu_slug'), data.get('titre'), data.get('meta_description'), data.get('csrf_token'));
     });
+});
 
 
-    document.querySelectorAll('.add_form_page').forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-            const data = new FormData(form);
-            add(data.get('titre'), data.get('menu_slug'), data.get('meta_description'), data.get('csrf_token'));
-        });
+document.querySelectorAll('.add_form_page').forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const data = new FormData(form);
+        add(data.get('titre'), data.get('menu_slug'), data.get('meta_description'), data.get('csrf_token'));
     });
+});

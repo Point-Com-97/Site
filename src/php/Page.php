@@ -93,13 +93,13 @@ class Page
 
                 $page_titre = trim($titre);
 
-                $slug = $this->uniqueSlug($this->slug_menu($page_titre));
-
-                if (!menu_validation($menu_slug)) {
+                $base = $this->slug_menu($page_titre);
+                if (banned_menu_slug($base)) {
                     return false;
                 }
+                $slug = $this->uniqueSlug($base);
 
-                if (!banned_menu_slug($slug)) {
+                if (!menu_validation($menu_slug)) {
                     return false;
                 }
 
@@ -138,6 +138,18 @@ class Page
         }
     }
 
+    public function update_infos(int $id, string $titre, ?string $meta_description = null)
+    {
+        try {
+            $stmt = $this->pdo->prepare("UPDATE pages SET titre = ?, meta_description = ? WHERE id = ?");
+            $stmt->execute([$titre, $meta_description, $id]);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Erreur lors de la mise a jour : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
+            return false;
+        }
+    }
+
     public function update_ordre(int $id, int $nouvelOrdre)
     {
         try {
@@ -153,7 +165,7 @@ class Page
     public function delete(int $id)
     {
         try {
-            $stmt = $this->pdo->prepare("SELECT * FROM pages WHERE id = ?");
+            $stmt = $this->pdo->prepare("SELECT * FROM pages WHERE id = ? AND systeme = 0");
 
             $stmt->execute([$id]);
 
@@ -165,7 +177,14 @@ class Page
 
             $stmt = $this->pdo->prepare("DELETE FROM pages WHERE id = ?");
             $stmt->execute([$id]);
-            return true;
+
+            $is_deleted = $stmt->rowCount();
+
+            if ($is_deleted > 0) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (PDOException $e) {
             error_log("Erreur lors de la suppression : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
             return false;

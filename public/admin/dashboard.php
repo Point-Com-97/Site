@@ -36,8 +36,7 @@ try {
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <form class="container-fluid d-grid gap-2 mx-auto add_form_page" method="post">
-                                <div class="modal-body">   
-                                    <input type="hidden" name="type" value="Page">
+                                <div class="modal-body">
                                     <input class="form-control" type="text" name="titre" id="titre" value="Nouvelle Page" aria-label="Nouvelle Page">
                                     <textarea class="form-control" name="meta_description" maxlength="160" rows="2" placeholder="Description pour les moteurs de recherche"></textarea>
 
@@ -48,8 +47,7 @@ try {
         if (menu_validation($cle)) {
             $titre = $m['label'];
             $slug  = $m['page'] ?? $m['url'] ?? '#'; // page, sinon url, sinon '#'
-
-            echo "<option value='$slug'>$titre</option>";
+            echo "<option value='$cle'>$titre</option>";
         }
     }
     echo <<< HTML
@@ -85,7 +83,7 @@ try {
                             </a>
                         </div>
             HTML;
-            $page_menu = $page_group[$slug] ?? [];
+            $page_menu = $page_group[$cle] ?? [];
             echo "<div class='list-group child-group' data-csrf_token='{$csrf}'>";
             foreach ($page_menu as $p) {
                 echo render_modal_page($p);
