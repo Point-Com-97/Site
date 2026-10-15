@@ -22,10 +22,10 @@ if (!$id) {
 
 $new_page = new Page();
 $info = $new_page->getById($id);
-if ($info['systeme'] == 0) {
-    $resultat = $new_page->delete((int) $id);
+if ($resultat = $new_page->delete((int) $id)) {
+    echo json_encode(['success' => true, 'message' => 'Page supprimée avec succès']);
 } else {
-    echo json_encode(['success' => false, 'message' => 'Suppresion impossible']);
+    echo json_encode(['success' => false, 'message' => 'Suppression impossible']);
     exit;
 }
 

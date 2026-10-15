@@ -14,7 +14,6 @@ try {
 
     $page = new Page();
 
-    $all_pages = $page->getAll();
     $page_by_menu = $page->getByMenu();
     $page_group = sort_pages($page_by_menu);
     $csrf = generer_csrf_token();
@@ -45,9 +44,8 @@ try {
             HTML;
     foreach ($menus as $cle => $m) {
         if (menu_validation($cle)) {
-            $titre = $m['label'];
-            $slug  = $m['page'] ?? $m['url'] ?? '#'; // page, sinon url, sinon '#'
-            echo "<option value='$cle'>$titre</option>";
+            $menu = $m['label'];
+            echo "<option value='$cle'>$menu</option>";
         }
     }
     echo <<< HTML
@@ -106,7 +104,7 @@ try {
                             </a>
                         </div>
             HTML;
-    $page_menu = $page_group[null] ?? [];
+    $page_menu = $page_group['systeme'] ?? [];
     echo "<div class='list-group child-group' data-csrf_token='{$csrf}'>";
     foreach ($page_menu as $p) {
         echo render_modal_self_page($p);

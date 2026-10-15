@@ -48,7 +48,7 @@ class Page
 
 
     // Transforme le titre en menu en slug
-    public function slug_menu(string $menu): string
+    private function slugify(string $menu): string
     {
         $slug = trim($menu);
 
@@ -61,10 +61,6 @@ class Page
 
         // Tout ce qui n'est pas une lettre ou un chiffre devient un tiret
         $slug = preg_replace('/[^a-z0-9]+/', '-', $slug);
-
-        $slug = preg_replace('/^-+|-+$-+"-+/', '', $slug);
-
-        $slug = preg_replace("/'/", '', $slug);
 
         return trim($slug, '-') ?: 'page';
     }
@@ -93,7 +89,7 @@ class Page
 
                 $page_titre = trim($titre);
 
-                $base = $this->slug_menu($page_titre);
+                $base = $this->slugify($page_titre);
                 if (banned_menu_slug($base)) {
                     return false;
                 }
@@ -176,6 +172,7 @@ class Page
             }
 
             $stmt = $this->pdo->prepare("DELETE FROM pages WHERE id = ?");
+            
             $stmt->execute([$id]);
 
             $is_deleted = $stmt->rowCount();

@@ -24,6 +24,15 @@ if ($name === '') {
     exit;
 }
 
+if(mb_strlen($name) <= 255) {
+    echo json_encode(['success' => false, 'message' => 'Le titre ne peut pas dépasser 255 caractères']);
+    exit;
+}
+
+if(mb_strlen($meta_description) <= 160) {
+    echo json_encode(['success' => false, 'message' => 'La description ne peut pas dépasser 160 caractères']);
+    exit;
+}
 
 if (menu_validation($menu_slug)) {
     if ($resultat = (new Page())->create($name, $menu_slug, $meta_description)) {

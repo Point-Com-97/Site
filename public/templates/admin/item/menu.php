@@ -5,7 +5,12 @@ function sort_pages(array $pages): array
     $groupes = [];
 
     foreach ($pages as $page) {
-        $cle = $page['menu_slug'] ?? null;
+        $cle = $page['menu_slug'] ?? 'systeme';
+
+        if (!isset($groupes[$cle])) {
+            $groupes[$cle] = [];
+        }
+
         $groupes[$cle][] = $page;
     }
 
@@ -26,8 +31,9 @@ function render_modal_page(array $item): string
 
     foreach ($menus as $cle => $m) {
         if (menu_validation($cle)) {
-            $titre = $m['label'];
-            $select .= "<option value='$cle'>{$titre}</option>";
+            $current_selected = ($cle === $item['menu_slug']) ? 'selected' : '';
+            $menu= $m['label'];
+            $select .= "<option value='$cle' {$current_selected}>{$menu}</option>";
         }
     }
 
@@ -48,7 +54,7 @@ function render_modal_page(array $item): string
                                         <input type="hidden" name="csrf_token" value="$csrf">
 
                                         <select class='form-select' name='menu_slug' aria-label='list_page' required>
-                                            <option selected value='' disabled>Sélectionnez le menu</option>
+                                            <option value='' disabled>Sélectionnez le menu</option>
                                             {$select}
                                         </select>
                                 </div>
@@ -154,19 +160,8 @@ function render_modal_self_page(array $item): string
 function render_self_page(array $item): string
 {
 
-    $csrf = generer_csrf_token();
-
     $id = $item['id'];
     $titre = htmlspecialchars($item['titre'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-
-    $visible =  $item['visible'];
-
-
-    if ($visible == 1) {
-        $statue = 'bi bi-circle-fill text-success';
-    } else {
-        $statue = 'bi bi-circle-fill';
-    }
 
     // structure liste + boutons / page
     return <<<HTML
@@ -176,11 +171,6 @@ function render_self_page(array $item): string
                                 <i class="bi bi-arrows-move"></i> {$titre}
                             </a>
                             <div class="btn-toolbar flex-shrink-0 gap-1 ms-2" role="toolbar" aria-label="Toolbar with button groups">
-                                <div class="btn-group" role="group" aria-label="group 2">
-                                    <button type="button" onclick="toggle_visible({$id}, '{$csrf}')" class="btn">
-                                        <i class="{$statue}" id="visible{$id}"></i>
-                                    </button>
-                                </div>
                                 <div class="btn-group" role="group" aria-label="group 2">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModalPage{$id}">
                                         <i class="bi bi-pencil-square"></i>

@@ -1,6 +1,6 @@
 // Supprimer d'une page via le formulaire et la methode POST
 function remove_items(id, csrf) {
-    if (!confirm('Supprimer ce menu définitivement ?')) {
+    if (!confirm('Supprimer cette page définitivement ?')) {
         return;
     }
     const formData = new FormData();
@@ -23,6 +23,11 @@ function remove_items(id, csrf) {
                 } else {
                     show_message('La suppression a échoué.');
                 }
+            })
+            .catch(error => {
+                console.error('Erreur lors de la suppression :', error);
+                show_message('Une erreur est survenue lors de la suppression.', 'danger');
+
             });
     } catch (error) {
         console.error('Erreur lors de la suppression :', error);
@@ -54,15 +59,20 @@ function toggle_visible(id, csrf) {
                 } else {
                     show_message('Echec de la tentative');
                 }
+            })
+            .catch(error => {
+                console.error('Erreur lors du changement de statut :', error);
+                show_message('Une erreur est survenue lors du changement de statut ', 'danger');
+
             });
     } catch (error) {
-        console.error('Erreur lors du changement de la publication :', error);
-        show_message('Une erreur est survenue lors du changement de la publication.', 'danger');
+        console.error('Erreur lors du changement de la visibilité :', error);
+        show_message('Une erreur est survenue lors du changement de la visibilité.', 'danger');
     }
 }
 
 // Modifier d'une page via le formulaire et la methode POST
-function edit_menu(id, menu_slug, titre, meta_description, csrf) {
+function edit(id, menu_slug, titre, meta_description, csrf) {
     const formData = new FormData();
     formData.append('id', id);
     formData.append('menu_slug', menu_slug);
@@ -92,8 +102,8 @@ function edit_menu(id, menu_slug, titre, meta_description, csrf) {
                 }
             })
             .catch(error => {
-                console.error('Erreur lors de l\'ajout :', error);
-                show_message('Une erreur est survenue lors de l\'ajout.', 'danger');
+                console.error('Erreur lors de la mise à jour :', error);
+                show_message('Une erreur est survenue lors de la mise à jour.', 'danger');
 
             });
     } catch (error) {
@@ -148,7 +158,7 @@ document.querySelectorAll('.edit_form').forEach(function (form) {
     form.addEventListener('submit', function (event) {
         event.preventDefault();
         const data = new FormData(form);
-        edit_menu(data.get('id'), data.get('menu_slug'), data.get('titre'), data.get('meta_description'), data.get('csrf_token'));
+        edit(data.get('id'), data.get('menu_slug'), data.get('titre'), data.get('meta_description'), data.get('csrf_token'));
     });
 });
 

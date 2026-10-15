@@ -18,6 +18,17 @@ $name = trim($_POST['titre'] ?? '');
 $meta_description = $_POST['meta_description'] ?? '';
 $menu_slug = $_POST['menu_slug'] ?? '';
 
+
+if(mb_strlen($name) <= 255) {
+    echo json_encode(['success' => false, 'message' => 'Le titre ne peut pas dépasser 255 caractères']);
+    exit;
+}
+
+if(mb_strlen($meta_description) <= 160) {
+    echo json_encode(['success' => false, 'message' => 'La description ne peut pas dépasser 160 caractères']);
+    exit;
+}
+
 if ($id <= 0 || $name === '') {
     echo json_encode(['success' => false, 'message' => 'ID ou titre manquant']);
     exit;
@@ -27,11 +38,11 @@ $page = new Page();
 $info = $page->getById($id);
 
 if (is_array($info)) {
-    if ($info['systeme'] === 1) {
+    if ($info['systeme'] === (int) 1) {
         if ($resultat = (new Page())->update_infos($id, $name, $meta_description)) {
             echo json_encode(['success' => true, 'result' => $resultat, 'titre' => $name, 'meta' => $meta_description]);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Erreur lors de la création']);
+            echo json_encode(['success' => false, 'message' => 'Erreur lors de la mise à jour']);
             exit;
         }
     } else {
@@ -39,7 +50,7 @@ if (is_array($info)) {
             if ($resultat = (new Page())->update($id, $name, $menu_slug, $meta_description)) {
                 echo json_encode(['success' => true, 'result' => $resultat, 'titre' => $name, 'menu_slug' => $menu_slug, 'meta' => $meta_description]);
             } else {
-                echo json_encode(['success' => false, 'message' => 'Erreur lors de la création']);
+                echo json_encode(['success' => false, 'message' => 'Erreur lors de la mise à jour']);
                 exit;
             }
         } else {
