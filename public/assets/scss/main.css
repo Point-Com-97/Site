@@ -12247,4 +12247,64 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.nav-hover .nav-caret {
+  color: #fff;
+  padding: 0 0.4rem;
+}
+
+@media (min-width: 992px) {
+  .nav-hover:hover > .dropdown-menu {
+    display: block;
+    margin-top: 0;
+  }
+}
+.hero {
+  background: linear-gradient(rgba(41, 158, 205, 0.85), rgba(41, 158, 205, 0.85)), url("/assets/image/hero.jpg") center/cover;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+
+.page-titre {
+  background: #299ECD;
+}
+
+.card-rubrique {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card-rubrique:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s, transform 0.6s;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+.video-clic {
+  background: #000;
+}
+
+.video-play {
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 4rem;
 }/*# sourceMappingURL=main.css.map */

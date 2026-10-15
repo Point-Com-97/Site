@@ -1,9 +1,7 @@
 <?php
 require __DIR__ . '/../auth-check.php';
-
 require_once __DIR__ . '/../../../src/php/Csrf.php';
 
-// Définir l'en-tête de réponse pour indiquer que le contenu est au format JSON
 header('Content-Type: application/json; charset=utf-8');
 
 if (!verifier_csrf_token($_POST['csrf_token'] ?? null)) {
@@ -13,22 +11,17 @@ if (!verifier_csrf_token($_POST['csrf_token'] ?? null)) {
 
 require_once __DIR__ . '/../../../src/php/Page.php';
 
-$id = $_POST['id'] ?? null;
+// filter_var renvoie false pour tout ce qui n'est pas un entier >= 1 (un seul test suffit)
+$id = filter_var($_POST['id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
 
-if (!$id) {
-    echo json_encode(['success' => false, 'message' => 'ID manquant']);
+if ($id === false) {
+    echo json_encode(['success' => false, 'message' => 'ID invalide']);
     exit;
 }
 
-$new_page = new Page();
-$info = $new_page->getById($id);
-if ($resultat = $new_page->delete((int) $id)) {
+// Page::delete refuse déjà les pages système (systeme = 0 dans la requête)
+if ((new Page())->delete($id)) {
     echo json_encode(['success' => true, 'message' => 'Page supprimée avec succès']);
 } else {
     echo json_encode(['success' => false, 'message' => 'Suppression impossible']);
-    exit;
 }
-
-
-
-echo json_encode(['success' => (bool) $resultat]);

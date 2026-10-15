@@ -165,10 +165,10 @@ function render_self_page(array $item): string
 
     // structure liste + boutons / page
     return <<<HTML
-                    <div class="container text-center" id="Page_{$id}" draggable="true" data-id='{$id}'>
+                    <div class="container text-center" id="Page_{$id}" data-id='{$id}'>
                         <div class="d-flex align-items-center justify-content-between flex-nowrap">
                             <a class="list-group-item list-group-item-action flex-grow-1 text-truncate" aria-current="true" id="Page_label_{$id}">
-                                <i class="bi bi-arrows-move"></i> {$titre}
+                                {$titre}
                             </a>
                             <div class="btn-toolbar flex-shrink-0 gap-1 ms-2" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="btn-group" role="group" aria-label="group 2">

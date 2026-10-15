@@ -12,7 +12,7 @@ function list_menus(): array
         'stat' => ['label' => 'Statistiques', 'icone' => 'bi-graph-up', 'page' => 'statistiques', 'dropdown' => true],
         'bilan' => ['label' => 'Bilan de compétences', 'icone' => 'bi-bar-chart', 'page' => 'bilan-de-competences', 'dropdown' => false],
         'contact' => ['label' => 'Contact', 'icone' => 'bi-envelope', 'page' => 'contact', 'dropdown' => false],
-        'portail' => ['label' => 'Portail', 'icone' => 'bi-box-arrow-in-right', 'url' => 'https://point-com-97.github.io/Portail/ ', 'dropdown' => false],
+        'portail' => ['label' => 'Portail', 'icone' => 'bi-box-arrow-in-right', 'url' => 'https://point-com-97.github.io/Portail/', 'dropdown' => false],
     ];
     return $menus;
 }

@@ -20,14 +20,14 @@ class Page
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($data == false) {
-                return '404';
+                return null;
             } else {
                 return $data;
             }
         } catch (PDOException $e) {
-            error_log("Erreur de requête SQL : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
+            error_log("Erreur de requête SQL : " . $e->getMessage() . "\n", 3, __DIR__ . "/../../var/tmp/erreur.log");
 
-            return "404";
+            return null;
         }
     }
 
@@ -85,17 +85,20 @@ class Page
     {
 
         try {
+            $this->pdo->beginTransaction();
             if (!empty($titre)) {
 
                 $page_titre = trim($titre);
 
                 $base = $this->slugify($page_titre);
                 if (banned_menu_slug($base)) {
+                    $this->pdo->rollBack();
                     return false;
                 }
                 $slug = $this->uniqueSlug($base);
 
                 if (!menu_validation($menu_slug)) {
+                    $this->pdo->rollBack();
                     return false;
                 }
 
@@ -112,24 +115,55 @@ class Page
 
                 $stmt->execute([$page_titre, $slug, $order, $meta_description, $menu_slug, $systeme]);
 
+                $this->pdo->commit();
+
                 return true;
             } else {
                 return false;
             }
         } catch (PDOException $e) {
+            if ($this->pdo->inTransaction()) {
+                $this->pdo->rollBack();
+            }
             error_log("Erreur lors de la creation " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
             return false;
         }
     }
 
-    public function update(int $id, string $titre, string $menu_slug, ?string $meta_description = null)
+    public function update(int $id, string $titre, string $menu_slug, ?string $meta_description = null): bool
     {
         try {
-            $stmt = $this->pdo->prepare("UPDATE pages SET titre = ?, meta_description = ?, menu_slug = ? WHERE id = ?");
-            $stmt->execute([$titre, $meta_description, $menu_slug, $id]);
+            $this->pdo->beginTransaction();
+
+            $stmt = $this->pdo->prepare("SELECT menu_slug FROM pages WHERE id = ? AND systeme = 0");
+            $stmt->execute([$id]);
+            $actuel = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$actuel) {
+                $this->pdo->rollBack();
+                return false;
+            }
+
+            if ($actuel['menu_slug'] !== $menu_slug) {
+                // La page change de menu : on la place à la fin du nouveau menu
+                $stmt = $this->pdo->prepare("SELECT COALESCE(MAX(ordre), 0) + 1 FROM pages WHERE menu_slug = ?");
+                $stmt->execute([$menu_slug]);
+                $ordre = (int) $stmt->fetchColumn();
+
+                $stmt = $this->pdo->prepare("UPDATE pages SET titre = ?, meta_description = ?, menu_slug = ?, ordre = ? WHERE id = ? AND systeme = 0");
+                $stmt->execute([$titre, $meta_description, $menu_slug, $ordre, $id]);
+            } else {
+                $stmt = $this->pdo->prepare("UPDATE pages SET titre = ?, meta_description = ? WHERE id = ? AND systeme = 0");
+                $stmt->execute([$titre, $meta_description, $id]);
+            }
+
+            $this->pdo->commit();
             return true;
         } catch (PDOException $e) {
-            error_log("Erreur lors de la mise a jour : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
+            if ($this->pdo->inTransaction()) {
+                $this->pdo->rollBack();
+            }
+            error_log("Erreur lors de la mise a jour : " . $e->getMessage() . "\n", 3, __DIR__ . "/../../var/tmp/erreur.log");
             return false;
         }
     }
@@ -172,7 +206,7 @@ class Page
             }
 
             $stmt = $this->pdo->prepare("DELETE FROM pages WHERE id = ?");
-            
+
             $stmt->execute([$id]);
 
             $is_deleted = $stmt->rowCount();
@@ -216,9 +250,9 @@ class Page
     {
 
         try {
-            $stmt = $this->pdo->prepare("UPDATE pages SET visible = NOT visible WHERE id = ?");
+            $stmt = $this->pdo->prepare("UPDATE pages SET visible = NOT visible WHERE id = ? AND systeme = 0");
             $stmt->execute([$id]);
-            return true;
+            return $stmt->rowCount() > 0;
         } catch (PDOException $e) {
             error_log("Erreur lors de la mise a jour : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
             return false;
@@ -233,15 +267,11 @@ class Page
             $stmt->execute([$id]);
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($data == false) {
-                return '404';
-            } else {
-                return $data;
-            }
+            return $data ?: null;
         } catch (PDOException $e) {
-            error_log("Erreur de requête SQL : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log");
+            error_log("Erreur de requête SQL : " . $e->getMessage() . "\n", 3, __DIR__ . "/../../var/tmp/erreur.log");
 
-            return "404";
+            return null;
         }
     }
 
@@ -257,11 +287,3 @@ class Page
         }
     }
 }
-
-
-
-// $a = New Page('acceuil');
-
-// $a::getBySlug(); Appel une méthode static
-
-// $a->getBySlug(); Appel une méthode public

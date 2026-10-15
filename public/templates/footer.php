@@ -71,6 +71,7 @@ $flash = get_flash();
 
 <script src="/js/bootstrap.bundle.js"></script>
 <script src="/js/search.js"></script>
+<script src="/js/public.js" defer></script>
 <?php if (!empty($_SESSION['admin_id'])) : ?>
     <script src="/js/toast.js"></script>
     <script src="/assets/vendor/quill/quill.js"></script>
