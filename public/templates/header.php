@@ -3,15 +3,12 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once __DIR__ . '/../../src/config/menus.php';
+require_once __DIR__ . '/../../src/php/helpers.php';
 
-const SITE_URL = 'https://www.point-com.cfa-pcom.fr';
+const SITE_URL = 'https://www.cfa-pcom.fr';
 
-function e(?string $v): string
-{
-    return htmlspecialchars((string) $v, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-}
-
-$description = e($current_page['meta_description'] ?? '') ?: 'Point Com - La formation tout au long de la vie';
+$intro_rubrique = ($cle_menu ?? null) ? (list_menus()[$cle_menu]['intro'] ?? '') : '';
+$description = e($current_page['meta_description'] ?? '') ?: e($intro_rubrique) ?: 'Point Com - La formation tout au long de la vie';
 $titre_page = e($current_page['titre'] ?? 'Accueil');
 $chemin_url = strtok($_SERVER['REQUEST_URI'], '?');
 $url_courante = SITE_URL . $chemin_url;
@@ -61,7 +58,8 @@ function menu_href(array $m): string
     <meta property="og:image" content="<?= e($og_image) ?>">
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?= e($url_courante) ?>">
-    <?php if (http_response_code() === 404): ?><meta name="robots" content="noindex"><?php endif; ?>
+    <?php if (http_response_code() === 404): ?>
+        <meta name="robots" content="noindex"><?php endif; ?>
 </head>
 
 <body>
@@ -97,10 +95,23 @@ function menu_href(array $m): string
                                     </button>
                                 </div>
                                 <ul class="dropdown-menu">
-                                    <?php foreach ($pages_menu as $p): ?>
-                                        <li><a class="dropdown-item" href="/<?= e($p['slug']) ?>"><?= e($p['titre']) ?></a></li>
-                                    <?php endforeach; ?>
-                                    <?php if (!empty($pages_menu) && !empty($liens)): ?><li><hr class="dropdown-divider"></li><?php endif; ?>
+                                    <?php if (!empty($m['sous_menus'])): ?>
+                                        <?php foreach (group_by_sous_menu($pages_menu, $m['sous_menus']) as $label => $liste): ?>
+                                            <li>
+                                                <h6 class="dropdown-header"><?= e($label) ?></h6>
+                                            </li>
+                                            <?php foreach ($liste as $p): ?>
+                                                <li><a class="dropdown-item" href="/<?= e($p['slug']) ?>"><?= e($p['titre']) ?></a></li>
+                                            <?php endforeach; ?>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <?php foreach ($pages_menu as $p): ?>
+                                            <li><a class="dropdown-item" href="/<?= e($p['slug']) ?>"><?= e($p['titre']) ?></a></li>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                    <?php if (!empty($pages_menu) && !empty($liens)): ?>
+                                        <li><hr class="dropdown-divider"></li>
+                                    <?php endif; ?>
                                     <?php foreach ($liens as $l): ?>
                                         <li><a class="dropdown-item" href="<?= e(trim($l['url'])) ?>" target="_blank" rel="noopener noreferrer">
                                                 <i class="bi <?= e($l['icone']) ?>"></i> <?= e($l['label']) ?></a></li>
@@ -109,7 +120,7 @@ function menu_href(array $m): string
                             </li>
                         <?php else: ?>
                             <li class="nav-item">
-                                <a class="nav-link<?= $actif ? ' active' : '' ?>" href="<?= e($href) ?>"<?= $cible ?>>
+                                <a class="nav-link<?= $actif ? ' active' : '' ?>" href="<?= e($href) ?>" <?= $cible ?>>
                                     <i class="bi <?= e($m['icone']) ?>"></i> <?= e($m['label']) ?>
                                 </a>
                             </li>

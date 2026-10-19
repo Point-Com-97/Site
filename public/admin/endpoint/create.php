@@ -24,24 +24,23 @@ if ($name === '') {
     exit;
 }
 
-if(mb_strlen($name) > 255) {
+if (mb_strlen($name) > 255) {
     echo json_encode(['success' => false, 'message' => 'Le titre ne peut pas dépasser 255 caractères']);
     exit;
 }
 
-if(mb_strlen($meta_description) > 160) {
+if (mb_strlen($meta_description) > 160) {
     echo json_encode(['success' => false, 'message' => 'La description ne peut pas dépasser 160 caractères']);
     exit;
 }
 
-if (menu_validation($menu_slug)) {
-    if ($resultat = (new Page())->create($name, $menu_slug, $meta_description)) {
-        echo json_encode(['success' => true, 'message' => 'Page créée avec succès']);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Erreur lors de la création']);
-        exit;
-    }
-} else {
-    echo json_encode(['success' => false, 'message' => 'Menu introuvable']);
+$dest = destination_validation($menu_slug);
+if ($dest === null) {
+    echo json_encode(['success' => false, 'message' => 'Destination introuvable']);
     exit;
+}
+if ((new Page())->create($name, $dest[0], $dest[1], $meta_description)) {
+    echo json_encode(['success' => true, 'message' => 'Page créée avec succès']);
+} else {
+    echo json_encode(['success' => false, 'message' => 'Erreur lors de la création']);
 }

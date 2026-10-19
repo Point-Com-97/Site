@@ -81,13 +81,13 @@ class Page
         }
     }
 
-    public function create(string $titre, string $menu_slug, ?string $meta_description = null)
+    public function create(string $titre, string $menu_slug, ?string $sous_menu, ?string $meta_description = null)
     {
 
         try {
-            $this->pdo->beginTransaction();
-            if (!empty($titre)) {
 
+            if (!empty($titre)) {
+                $this->pdo->beginTransaction();
                 $page_titre = trim($titre);
 
                 $base = $this->slugify($page_titre);
@@ -111,9 +111,9 @@ class Page
 
                 $systeme = 0;
 
-                $stmt = $this->pdo->prepare("INSERT INTO pages (titre, slug, ordre, meta_description, menu_slug, systeme) VALUES (?, ?, ?, ?, ?,?)");
+                $stmt = $this->pdo->prepare("INSERT INTO pages (titre, slug, ordre, meta_description, menu_slug, sous_menu, systeme) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-                $stmt->execute([$page_titre, $slug, $order, $meta_description, $menu_slug, $systeme]);
+                $stmt->execute([$page_titre, $slug, $order, $meta_description, $menu_slug, $sous_menu, $systeme]);
 
                 $this->pdo->commit();
 
@@ -130,7 +130,7 @@ class Page
         }
     }
 
-    public function update(int $id, string $titre, string $menu_slug, ?string $meta_description = null): bool
+    public function update(int $id, string $titre, string $menu_slug, ?string $sous_menu, ?string $meta_description = null): bool
     {
         try {
             $this->pdo->beginTransaction();
@@ -144,18 +144,22 @@ class Page
                 return false;
             }
 
-            if ($actuel['menu_slug'] !== $menu_slug) {
-                // La page change de menu : on la place à la fin du nouveau menu
+            $params = [$titre, $meta_description, $menu_slug, $sous_menu];
+            $ordre_sql = '';
+
+            if ($actuel['menu_slug'] !== $menu_slug) {            // nouveau menu : fin de liste
                 $stmt = $this->pdo->prepare("SELECT COALESCE(MAX(ordre), 0) + 1 FROM pages WHERE menu_slug = ?");
                 $stmt->execute([$menu_slug]);
-                $ordre = (int) $stmt->fetchColumn();
-
-                $stmt = $this->pdo->prepare("UPDATE pages SET titre = ?, meta_description = ?, menu_slug = ?, ordre = ? WHERE id = ? AND systeme = 0");
-                $stmt->execute([$titre, $meta_description, $menu_slug, $ordre, $id]);
-            } else {
-                $stmt = $this->pdo->prepare("UPDATE pages SET titre = ?, meta_description = ? WHERE id = ? AND systeme = 0");
-                $stmt->execute([$titre, $meta_description, $id]);
+                $ordre_sql = ', ordre = ?';
+                $params[] = (int) $stmt->fetchColumn();
             }
+
+            $params[] = $id;
+
+            $stmt = $this->pdo->prepare(
+                "UPDATE pages SET titre = ?, meta_description = ?, menu_slug = ?, sous_menu = ?{$ordre_sql} WHERE id = ? AND systeme = 0"
+            );
+            $stmt->execute($params);
 
             $this->pdo->commit();
             return true;

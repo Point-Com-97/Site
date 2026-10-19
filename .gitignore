@@ -2,5 +2,6 @@ node_modules
 data/config/database.php
 data/config/mail.php
 var
-data/sql/seed.php
+data/sql/make-seed.php
+data/sql/seed.sql
 public/Test

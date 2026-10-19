@@ -1,3 +1,3 @@
 User-agent: *
 Disallow: /admin/
-Sitemap: https://www.pointcom-guyane.fr/sitemap.xml
+Sitemap: https://www.cfa-pcom.fr/sitemap.xml

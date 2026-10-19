@@ -19,12 +19,12 @@ $meta_description = $_POST['meta_description'] ?? '';
 $menu_slug = $_POST['menu_slug'] ?? '';
 
 
-if(mb_strlen($name) > 255) {
+if (mb_strlen($name) > 255) {
     echo json_encode(['success' => false, 'message' => 'Le titre ne peut pas dépasser 255 caractères']);
     exit;
 }
 
-if(mb_strlen($meta_description) > 160) {
+if (mb_strlen($meta_description) > 160) {
     echo json_encode(['success' => false, 'message' => 'La description ne peut pas dépasser 160 caractères']);
     exit;
 }
@@ -46,15 +46,16 @@ if (is_array($info)) {
             exit;
         }
     } else {
-        if (menu_validation($menu_slug)) {
-            if ($resultat = (new Page())->update($id, $name, $menu_slug, $meta_description)) {
-                echo json_encode(['success' => true, 'result' => $resultat, 'titre' => $name, 'menu_slug' => $menu_slug, 'meta' => $meta_description]);
-            } else {
-                echo json_encode(['success' => false, 'message' => 'Erreur lors de la mise à jour']);
-                exit;
-            }
+        $dest = destination_validation($menu_slug);
+        if ($dest === null) {
+            echo json_encode(['success' => false, 'message' => 'Destination introuvable']);
+            exit;
+        }
+
+        if ($resultat = (new Page())->update($id, $name, $dest[0], $dest[1], $meta_description)) {
+            echo json_encode(['success' => true, 'result' => $resultat, 'titre' => $name, 'menu_slug' => $menu_slug, 'meta' => $meta_description]);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Menu introuvable']);
+            echo json_encode(['success' => false, 'message' => 'Erreur lors de la mise à jour']);
             exit;
         }
     }

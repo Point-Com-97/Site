@@ -22,10 +22,12 @@ visible TINYINT(1) NOT NULL DEFAULT 1,
 meta_description VARCHAR(160) NULL,
 menu_slug varchar(50) NULL,
 systeme TINYINT(1) NOT NULL DEFAULT 0,
+sous_menu VARCHAR(50) NULL,
 CONSTRAINT unique_slug_pages UNIQUE (slug)
 ) DEFAULT CHARSET=utf8mb4;
 
 CREATE INDEX idx_slug ON pages(menu_slug, ordre);
+CREATE INDEX idx_sous_menu ON pages(menu_slug, sous_menu, ordre);
 
 CREATE TABLE blocs (
 id int PRIMARY KEY AUTO_INCREMENT,

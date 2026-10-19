@@ -27,7 +27,7 @@
                 </a>
                 <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                     <li class="nav-item">
-                        <a class="nav-link" id="nav-item" aria-current="page" href="/accueil" target="_blank">Voir Site</a>
+                        <a class="nav-link" id="nav-item" aria-current="page" href="/" target="_blank">Voir Site</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="nav-item" aria-current="page" href="/admin/dashboard.php">Tableau de bord</a>

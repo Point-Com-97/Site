@@ -42,12 +42,7 @@ try {
                                    <select class='form-select' name='menu_slug' aria-label='list_page' required>
                                     <option selected value='' disabled>Sélectionnez le menu</option>
             HTML;
-    foreach ($menus as $cle => $m) {
-        if (menu_validation($cle)) {
-            $menu = $m['label'];
-            echo "<option value='$cle'>$menu</option>";
-        }
-    }
+    echo destination_options();
     echo <<< HTML
                                    </select>
 

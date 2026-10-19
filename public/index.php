@@ -17,7 +17,11 @@ function page_404(): never
     http_response_code(404);
     $current_page = ['titre' => 'Page introuvable', 'meta_description' => 'Cette page n\'existe pas.'];
     $all_blocs = [];
-    try { $page_group = sort_pages((new Page())->getByMenuOn()); } catch (Throwable) { $page_group = []; }
+    try {
+        $page_group = sort_pages((new Page())->getByMenuOn());
+    } catch (Throwable) {
+        $page_group = [];
+    }
     require __DIR__ . '/templates/header.php';
     require __DIR__ . '/templates/404.php';
     require __DIR__ . '/templates/footer.php';
@@ -28,10 +32,11 @@ try {
     $chemin = trim(rawurldecode((string) parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)), '/');
 
     // "/" = accueil ; "/centre-de-formation" est redirigé vers "/" (une seule URL par page)
-    if ($chemin === ACCUEIL) {
+    if (in_array($chemin, [ACCUEIL, 'accueil'], true)) {
         header('Location: /', true, 301);
         exit;
     }
+
     $slug = ($chemin === '') ? ACCUEIL : $chemin;
 
     $is_admin = !empty($_SESSION['admin_id']);

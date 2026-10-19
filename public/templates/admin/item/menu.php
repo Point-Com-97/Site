@@ -25,17 +25,8 @@ function render_modal_page(array $item): string
     $titre = htmlspecialchars($item['titre'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     $meta_description = htmlspecialchars($item['meta_description'] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     $csrf = generer_csrf_token();
-    $menus = list_menus();
 
-    $select = '';
-
-    foreach ($menus as $cle => $m) {
-        if (menu_validation($cle)) {
-            $current_selected = ($cle === $item['menu_slug']) ? 'selected' : '';
-            $menu= $m['label'];
-            $select .= "<option value='$cle' {$current_selected}>{$menu}</option>";
-        }
-    }
+    $select = destination_options($item['menu_slug'] . ($item['sous_menu'] ? '/' . $item['sous_menu'] : ''));
 
     return <<<HTML
                 <div class="modal fade" id="editModalPage{$id}" tabindex="-1" aria-labelledby="editModalLabelPage{$id}" aria-hidden="true">
@@ -185,4 +176,29 @@ function render_self_page(array $item): string
                         </div>
                     </div>    
                 HTML;
+}
+
+function destination_options(?string $selection = null): string
+{
+    $h = fn(string $s) => htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $html = '';
+
+    foreach (list_menus() as $cle => $m) {
+        if (!menu_validation($cle)) {
+            continue;
+        }
+        if (empty($m['sous_menus'])) {
+            $sel = ($selection === $cle) ? ' selected' : '';
+            $html .= '<option value="' . $h($cle) . '"' . $sel . '>' . $h($m['label']) . '</option>';
+        } else {
+            $html .= '<optgroup label="' . $h($m['label']) . '">';
+            foreach ($m['sous_menus'] as $sc => $sl) {
+                $val = $cle . '/' . $sc;
+                $sel = ($selection === $val) ? ' selected' : '';
+                $html .= '<option value="' . $h($val) . '"' . $sel . '>' . $h($sl) . '</option>';
+            }
+            $html .= '</optgroup>';
+        }
+    }
+    return $html;
 }

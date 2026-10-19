@@ -6,7 +6,7 @@
         <h1 class="display-4 fw-bold reveal"><?= e($current_page['titre']) ?></h1>
         <p class="lead reveal"><?= e($current_page['meta_description'] ?: 'La formation tout au long de la vie') ?></p>
         <div class="d-flex flex-wrap justify-content-center gap-2 reveal">
-            <a class="btn btn-light btn-lg" href="/formation"><i class="bi bi-book"></i> Nos formations</a>
+            <a class="btn btn-outline-light btn-lg" href="/formation"><i class="bi bi-book"></i> Nos formations</a>
             <a class="btn btn-outline-light btn-lg" href="/contact"><i class="bi bi-envelope"></i> Nous contacter</a>
         </div>
     </div>
