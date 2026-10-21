@@ -15,7 +15,7 @@ function list_partenaires(): array
         'immersion-facilitee' => ['nom' => 'IMMERSION FACILITÉE', 'image' => '/assets/image/ISF.jpg', 'url' => 'https://immersion-facile.beta.gouv.fr/', 'class' => ''],
         'crf' => ['nom' => 'CROIX ROUGE FRANÇAISE', 'image' => '/assets/image/CR.jpg', 'url' => 'https://www.croix-rouge.fr/', 'class' => ''],
         'dreets' => ['nom' => 'DREETS', 'image' => '/assets/image/DREETS.jpg', 'url' => 'https://dreets.gouv.fr/', 'class' => ''],
-        'handi-bienveillant' => ['nom' => 'HANDI BIENVEILLANT', 'image' => '/assets/image/HANDI.png', 'url' => '/', 'class' => ''],
+        'handi-bienveillant' => ['nom' => 'HANDI BIENVEILLANT', 'image' => '/assets/image/HANDI.png', 'url' => '', 'class' => ''],
         'epnak' => ['nom' => 'EPNAK', 'image' => '/assets/image/EPNAK.png', 'url' => 'https://www.epnak.org/', 'class' => ''],
     ];
     return $infos;

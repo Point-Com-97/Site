@@ -13,8 +13,8 @@
 }
 
 .hero {
-    background: linear-gradient(rgba($primary, .85), rgba($primary, .85)), url('/assets/image/hero.jpg') center/cover;
-    min-height: 60vh;
+    background:url('/assets/image/rubriques/home.svg') center/cover;
+    min-height: 80vh;
     display: flex;
     align-items: center;
 }
@@ -33,6 +33,7 @@
 }
 
 .reveal {
+    color: $tertiary;
     opacity: 0;
     transform: translateY(24px);
     transition: opacity .6s, transform .6s;

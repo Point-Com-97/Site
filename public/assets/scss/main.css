@@ -12091,11 +12091,11 @@ body {
 .btn {
   font-size: 18px;
   font-weight: bold;
-  color: white;
+  color: #412872;
 }
 
 .btn:hover {
-  color: black;
+  color: #ED8E33;
 }
 
 .nav-link {
@@ -12241,8 +12241,8 @@ body {
   }
 }
 .hero {
-  background: linear-gradient(rgba(41, 158, 205, 0.85), rgba(41, 158, 205, 0.85)), url("/assets/image/hero.jpg") center/cover;
-  min-height: 60vh;
+  background: url("/assets/image/rubriques/home.svg") center/cover;
+  min-height: 80vh;
   display: flex;
   align-items: center;
 }
@@ -12261,6 +12261,7 @@ body {
 }
 
 .reveal {
+  color: #412872;
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.6s, transform 0.6s;
