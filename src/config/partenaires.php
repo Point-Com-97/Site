@@ -9,7 +9,7 @@ function list_partenaires(): array
         'france-travail' => ['nom' => 'FRANCE TRAVAIL', 'image' => '/assets/image/FT.png', 'url' => 'https://www.francetravail.fr/accueil/', 'class' => ''],
         'ocapiat' => ['nom' => 'OCAPIAT', 'image' => '/assets/image/OCAPIAT.png', 'url' => 'https://www.ocapiat.fr/', 'class' => ''],
         'mlg' => ['nom' => 'MISSION LOCALE GUYANE', 'image' => '/assets/image/MLG.png', 'url' => 'https://missionlocaleguyane.fr/', 'class' => ''],
-        'qualiopi' => ['nom' => 'QUALIOPI', 'image' => '/assets/image/QV1.JPG', 'url' => 'https://travail-emploi.gouv.fr/formation-professionnelle/acteurs-cadre-et-qualite-de-la-formation-professionnelle/article/qualiopi-marque-de-certification-qualite-des-prestataires-de-formation', 'class' => ''],
+        'qualiopi' => ['nom' => 'QUALIOPI', 'image' => '/assets/image/QV1.jpg', 'url' => 'https://travail-emploi.gouv.fr/formation-professionnelle/acteurs-cadre-et-qualite-de-la-formation-professionnelle/article/qualiopi-marque-de-certification-qualite-des-prestataires-de-formation', 'class' => ''],
         'opco' => ['nom' => 'OPCO', 'image' => '/assets/image/OPCO.png', 'url' => 'https://www.opcoep.fr/', 'class' => ''],
         'les-entreprises-engagent' => ['nom' => "LES ENTREPRISES S'ENGAGENT", 'image' => '/assets/image/LES.jpg', 'url' => 'https://lesentreprises-sengagent.gouv.fr/', 'class' => ''],
         'immersion-facilitee' => ['nom' => 'IMMERSION FACILITÉE', 'image' => '/assets/image/ISF.jpg', 'url' => 'https://immersion-facile.beta.gouv.fr/', 'class' => ''],
