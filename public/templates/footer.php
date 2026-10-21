@@ -49,7 +49,7 @@ $flash = get_flash();
                             <?php if (!$p['url']): ?>
                                 <span><?= e($p['nom']) ?></span>
                             <?php else: ?>
-                                <a href="<?= e($p['url']) ?>"target="_blank" rel="noopener noreferrer"><?= e($p['nom']) ?></a>
+                                <a href="<?= e($p['url']) ?> "target="_blank" rel="noopener noreferrer"><?= e($p['nom']) ?></a>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </div>

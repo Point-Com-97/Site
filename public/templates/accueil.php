@@ -36,7 +36,7 @@
 </section>
 
 
-<section class="partenaires container pb-4 menu-block">
+<section class="partenaires container pb-4">
     <h2 class="menu-title">Nos partenaires</h2>
     <div class="partenaires">
         <ul class="partenaires-piste">

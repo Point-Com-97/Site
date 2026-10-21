@@ -12317,4 +12317,11 @@ body {
   .partenaires-piste {
     animation: none;
   }
+}
+.partenaires-piste img {
+  transition: transform 0.3s ease;
+}
+
+.partenaires-piste a:hover img {
+  transform: scale(2.5);
 }/*# sourceMappingURL=main.css.map */

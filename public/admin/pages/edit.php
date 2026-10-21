@@ -31,9 +31,9 @@ try {
     }
 
     if (!page_editable($page_info)) {
-    echo 'Cette page est gérée par la configuration et ne peut pas être modifiée. <a href="/admin/dashboard.php">Retour</a>';
-    exit;
-}
+        echo 'Cette page est gérée par la configuration et ne peut pas être modifiée. <a href="/admin/dashboard.php">Retour</a>';
+        exit;
+    }
 
     $bloc_info = $bloc->getByPageId($id);
     $all_medias = $media->getAll();

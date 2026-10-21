@@ -93,3 +93,11 @@
         animation: none;
     }
 }
+
+.partenaires-piste img {
+    transition: transform .3s ease;
+}
+
+.partenaires-piste a:hover img {
+    transform: scale(2.5);
+}
