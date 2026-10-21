@@ -16,6 +16,7 @@ require __DIR__ . '/../../templates/admin/item/bloc.php';
 require_once __DIR__ . '/../../../src/php/Bloc.php';
 require_once __DIR__ . '/../../../src/php/Media.php';
 require_once __DIR__ . '/../../../src/php/Page.php';
+require_once __DIR__ . '/../../../src/config/menus.php';
 
 $page_id = (int) ($_POST['page_id'] ?? 0);
 $type = $_POST['type'] ?? '';

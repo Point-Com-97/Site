@@ -179,7 +179,7 @@ try {
     echo <<< HTML
     <div class="container-fluid">
         <a href="/admin/dashboard.php" class="btn btn-link ps-0 mb-2"><i class="bi bi-arrow-left"></i> Retour</a>
-            <a href="/{$page_info['slug']}" target="_blank" class="btn btn-outline-primary mb-2">
+            <a href="/{$slug}" target="_blank" class="btn btn-outline-primary mb-2">
         <i class="bi bi-eye"></i> Voir le rendu
     </a>
         <div class="card mb-3 page-header-card">

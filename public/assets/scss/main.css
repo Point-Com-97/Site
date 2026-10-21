@@ -11890,7 +11890,7 @@ body {
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 14px;
-  padding: 16px;
+  padding: 10px;
   box-shadow: 1px 3px 2px black;
 }
 
@@ -12257,7 +12257,7 @@ body {
 
 .card-rubrique:hover {
   transform: translateY(-4px);
-  box-shadow: black;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
 .reveal {
@@ -12288,11 +12288,6 @@ body {
   background: transparent;
   color: #fff;
   font-size: 4rem;
-}
-
-.partenaire {
-  height: 25vw;
-  width: 35vw;
 }
 
 .partenaires {

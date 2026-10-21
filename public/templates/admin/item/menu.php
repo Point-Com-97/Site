@@ -77,6 +77,12 @@ function render_page(array $item): string
         $statue = 'bi bi-circle-fill';
     }
 
+    $btn_editeur = page_editable($item)
+        ? '<div class="btn-group" role="group" aria-label="group 3">'
+        . '<a href="/admin/pages/edit.php?id=' . $id . '" class="btn btn-warning">'
+        . '<i class="bi bi-file-earmark-text"></i></a></div>'
+        : '';
+
     // structure liste + boutons / page
     return <<<HTML
                     <div class="container text-center" id="Page_{$id}" draggable="true" data-id='{$id}'>
@@ -95,11 +101,7 @@ function render_page(array $item): string
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
                                 </div>
-                                <div class="btn-group" role="group" aria-label="group 3">
-                                    <a href="/admin/pages/edit.php?id={$id}" class="btn btn-warning">
-                                        <i class="bi bi-file-earmark-text"></i>
-                                    </a>
-                                </div>
+                                    {$btn_editeur}
                                 <div class="btn-group" role="group" aria-label="group 4">
                                     <button type="button" onclick="remove_items({$id}, '{$csrf}')" class="btn btn-danger">
                                         <i class="bi bi-trash3-fill"></i>
@@ -154,6 +156,12 @@ function render_self_page(array $item): string
     $id = $item['id'];
     $titre = htmlspecialchars($item['titre'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
+    $btn_editeur = page_editable($item)
+        ? '<div class="btn-group" role="group" aria-label="group 3">'
+        . '<a href="/admin/pages/edit.php?id=' . $id . '" class="btn btn-warning">'
+        . '<i class="bi bi-file-earmark-text"></i></a></div>'
+        : '';
+
     // structure liste + boutons / page
     return <<<HTML
                     <div class="container text-center" id="Page_{$id}" data-id='{$id}'>
@@ -167,6 +175,7 @@ function render_self_page(array $item): string
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
                                 </div>
+                                {$btn_editeur}
                             </div>
                         </div>
                     </div>    
