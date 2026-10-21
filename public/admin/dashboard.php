@@ -117,7 +117,7 @@ try {
     require_once __DIR__ . '/../templates/footer.php';
 } catch (PDOException $e) {
 
-    error_log("Erreur de connexion PDO : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log"); // Message d'erreur pour le dévellopeur
+    error_log("Erreur de connexion PDO : " . $e->getMessage(), 3, __DIR__ . "/../../var/tmp/erreur.log"); // Message d'erreur pour le développeur
 
     die(" Une erreur est survenue, veuillez réessayer plus tard."); // Message d'erreur pour les visiteurs
 }

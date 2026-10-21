@@ -9,12 +9,11 @@ try {
     require_once __DIR__ . '/../../../src/php/Media.php';
     require_once __DIR__ . '/../../../src/php/Csrf.php';
     require_once __DIR__ . '/../../../src/php/helpers.php';
-
-
+    require_once __DIR__ . '/../../../src/config/menus.php';
 
     $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
 
-    if ($id === false) {
+    if (!$id) {
         echo 'Une erreur est survenue';
         exit;
     }
@@ -30,6 +29,11 @@ try {
         echo 'Erreur lors du chargement';
         exit;
     }
+
+    if (!page_editable($page_info)) {
+    echo 'Cette page est gérée par la configuration et ne peut pas être modifiée. <a href="/admin/dashboard.php">Retour</a>';
+    exit;
+}
 
     $bloc_info = $bloc->getByPageId($id);
     $all_medias = $media->getAll();
@@ -202,7 +206,7 @@ HTML;
     require_once __DIR__ . '/../../templates/footer.php';
 } catch (PDOException $e) {
 
-    error_log("Erreur de connexion PDO : " . $e->getMessage(), 3, __DIR__ . "/../../../var/tmp/erreur.log"); // Message d'erreur pour le dévellopeur
+    error_log("Erreur de connexion PDO : " . $e->getMessage(), 3, __DIR__ . "/../../../var/tmp/erreur.log"); // Message d'erreur pour le développeur
 
     die(" Une erreur est survenue, veuillez réessayer plus tard."); // Message d'erreur pour l'admin
 }

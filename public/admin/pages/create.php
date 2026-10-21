@@ -14,10 +14,20 @@ if (!verifier_csrf_token($_POST['csrf_token'] ?? $_GET['csrf_token'] ?? null)) {
 
 require __DIR__ . '/../../templates/admin/item/bloc.php';
 require_once __DIR__ . '/../../../src/php/Bloc.php';
+require_once __DIR__ . '/../../../src/php/Media.php';
+require_once __DIR__ . '/../../../src/php/Page.php';
 
 $page_id = (int) ($_POST['page_id'] ?? 0);
 $type = $_POST['type'] ?? '';
 $classes = htmlspecialchars($_POST['classes_css'] ?? '', ENT_QUOTES, 'UTF-8');
+
+
+$page = new Page();
+$page_info = $page->getById($page_id);
+if ($page_info === null || !page_editable($page_info)) {
+    echo json_encode(['success' => false, 'message' => 'Page introuvable ou non éditable']);
+    exit;
+}
 
 switch ($type) {
     case 'texte':

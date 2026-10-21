@@ -85,7 +85,7 @@ function render_page(array $item): string
                                 <i class="bi bi-arrows-move"></i> {$titre}
                             </a>
                             <div class="btn-toolbar flex-shrink-0 gap-1 ms-2" role="toolbar" aria-label="Toolbar with button groups">
-                                <div class="btn-group" role="group" aria-label="group 2">
+                                <div class="btn-group" role="group" aria-label="group 1">
                                     <button type="button" onclick="toggle_visible({$id}, '{$csrf}')" class="btn">
                                         <i class="{$statue}" id="visible{$id}"></i>
                                     </button>
@@ -162,15 +162,10 @@ function render_self_page(array $item): string
                                 {$titre}
                             </a>
                             <div class="btn-toolbar flex-shrink-0 gap-1 ms-2" role="toolbar" aria-label="Toolbar with button groups">
-                                <div class="btn-group" role="group" aria-label="group 2">
+                                <div class="btn-group" role="group" aria-label="group 1">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModalPage{$id}">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
-                                </div>
-                                <div class="btn-group" role="group" aria-label="group 3">
-                                    <a href="/admin/pages/edit.php?id={$id}" class="btn btn-warning">
-                                        <i class="bi bi-file-earmark-text"></i>
-                                    </a>
                                 </div>
                             </div>
                         </div>

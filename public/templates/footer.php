@@ -45,8 +45,12 @@ $flash = get_flash();
                 <div class="footer-block">
                     <h5 class="footer-title"><i class="bi bi-buildings-fill"></i>Nos Partenaires</h5>
                     <div class="list-group">
-                        <?php foreach (list_partenaires() as $cle => $p):?>
-                            <a href="<?= e($p['url']) ?>"><?= e($p['nom']) ?></a>
+                        <?php foreach (list_partenaires() as $cle => $p): ?>
+                            <?php if (!$p['url']): ?>
+                                <span><?= e($p['nom']) ?></span>
+                            <?php else: ?>
+                                <a href="<?= e($p['url']) ?>"><?= e($p['nom']) ?></a>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     </div>
                 </div>

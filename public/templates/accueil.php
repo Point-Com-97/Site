@@ -7,7 +7,7 @@
         <h1 class="display-4 fw-bold reveal"><?= e($current_page['titre']) ?></h1>
         <p class="lead reveal"><?= e($current_page['meta_description'] ?: 'La formation tout au long de la vie') ?></p>
         <div class="d-flex flex-wrap justify-content-center gap-2 reveal">
-            <a class="btn btn-outline-light btn-lg" href="/nos-formation"><i class="bi bi-book"></i> Nos formations</a>
+            <a class="btn btn-outline-light btn-lg" href="/nos-formations"><i class="bi bi-book"></i> Nos formations</a>
             <a class="btn btn-outline-light btn-lg" href="/contact"><i class="bi bi-envelope"></i> Nous contacter</a>
         </div>
     </div>
@@ -36,18 +36,21 @@
 </section>
 
 
-<!-- CONTENU ÉDITÉ DANS L'ADMIN (blocs de la page centre-de-formation) -->
-<section class="partenaire container pb-1">
-    <div class="menu-block">
-        <h2 class="menu-title">Tous nos partenaires</h2>
-        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <?php foreach (list_partenaires() as $cle => $p): ?>
-                    <div class="carousel-item <?= e($p['class']) ?>">
-                        <img src="<?= e($p['image']) ?>" class="d-block" alt="<?= e($p['nom']) ?>">
-                    </div>
+<section class="partenaires container pb-4">
+    <h2 class="menu-title">Tous nos partenaires</h2>
+    <div class="partenaires">
+        <ul class="partenaires-piste">
+            <?php for ($copie = 0; $copie <= 1; $copie++): ?>
+                <?php foreach (list_partenaires() as $p): ?>
+                    <li>
+                        <a href="<?= e($p['url']) ?>" target="_blank" rel="noopener noreferrer"
+                           <?= $copie ? 'tabindex="-1"' : '' ?>>
+                            <img src="<?= e($p['image']) ?>" alt="<?= $copie ? '' : e($p['nom']) ?>"
+                                 height="60" loading="lazy">
+                        </a>
+                    </li>
                 <?php endforeach; ?>
-            </div>
-        </div>
+            <?php endfor; ?>
+        </ul>
     </div>
 </section>
