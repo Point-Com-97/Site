@@ -8,15 +8,29 @@ try {
     require_once __DIR__ . '/../../../src/php/Bloc.php';
     require_once __DIR__ . '/../../../src/php/Media.php';
     require_once __DIR__ . '/../../../src/php/Csrf.php';
+    require_once __DIR__ . '/../../../src/php/helpers.php';
 
 
-    $id = $_GET['id'];
+
+    $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+
+    if ($id === false) {
+        echo 'Une erreur est survenue';
+        exit;
+    }
 
     $page = new Page();
     $bloc = new Bloc();
     $media = new Media();
 
+
     $page_info = $page->getById($id);
+
+    if ($page_info === null) {
+        echo 'Erreur lors du chargement';
+        exit;
+    }
+
     $bloc_info = $bloc->getByPageId($id);
     $all_medias = $media->getAll();
     $csrf = generer_csrf_token();
@@ -144,17 +158,16 @@ try {
             </div>
         HTML;
 
-    $nom_menu = 'Aucun';
-    if (!empty($page_info['menu_id'])) {
-        require_once __DIR__ . '/../../../src/php/Menu.php';
-        $menu_lookup = new Menu();
-        foreach ($menu_lookup->getAll() as $m) {
-            if ($m['menu_id'] == $page_info['menu_id']) {
-                $nom_menu = $m['menu_titre'];
-                break;
-            }
-        }
+    $menu = list_menus()[$page_info['menu_slug'] ?? ''] ?? [];
+    $nom_menu = $menu['label'] ?? 'Aucun';
+    $sous_menu = $page_info['sous_menu'] ?? null;
+    if ($sous_menu !== null && isset($menu['sous_menus'][$sous_menu])) {
+        $nom_menu .= ' / ' . $menu['sous_menus'][$sous_menu];
     }
+
+    $titre = e($page_info['titre']);
+    $slug = e($page_info['slug']);
+
     $badge_visible = $page_info['visible']
         ? '<span class="badge bg-success">En ligne</span>'
         : '<span class="badge bg-secondary">Hors ligne</span>';
@@ -168,8 +181,8 @@ try {
         <div class="card mb-3 page-header-card">
             <div class="card-body d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <div>
-                    <h1 class="h3 mb-1">{$page_info['titre']}</h1>
-                    <span class="text-muted">/{$page_info['slug']} · Menu : {$nom_menu}</span>
+                    <h1 class="h3 mb-1">{$titre}</h1>
+                    <span class="text-muted">/{$slug} · Menu : {$nom_menu}</span>
                 </div>
                 <div>{$badge_visible}</div>
             </div>
@@ -191,5 +204,5 @@ HTML;
 
     error_log("Erreur de connexion PDO : " . $e->getMessage(), 3, __DIR__ . "/../../../var/tmp/erreur.log"); // Message d'erreur pour le dévellopeur
 
-    die(" Une erreur est survenue, veuillez réessayer plus tard."); // Message d'erreur pour les visiteurs
+    die(" Une erreur est survenue, veuillez réessayer plus tard."); // Message d'erreur pour l'admin
 }

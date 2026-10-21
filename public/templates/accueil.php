@@ -1,4 +1,5 @@
 <?php require_once __DIR__ . '/blocs.php'; ?>
+<?php require_once __DIR__ . '/../../src/config/partenaires.php'; ?>
 
 <!-- HERO -->
 <section class="hero text-center text-white">
@@ -30,6 +31,23 @@
 </section>
 
 <!-- CONTENU ÉDITÉ DANS L'ADMIN (blocs de la page centre-de-formation) -->
-<section class="container pb-5">
+<section class="container pb-2">
     <?php render_blocs($all_blocs); ?>
+</section>
+
+
+<!-- CONTENU ÉDITÉ DANS L'ADMIN (blocs de la page centre-de-formation) -->
+<section class="partenaire container pb-1">
+    <div class="menu-block">
+        <h2 class="menu-title">Tous nos partenaires</h2>
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <?php foreach (list_partenaires() as $cle => $p): ?>
+                    <div class="carousel-item <?= e($p['class']) ?>">
+                        <img src="<?= e($p['image']) ?>" class="d-block" alt="<?= e($p['nom']) ?>">
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
 </section>

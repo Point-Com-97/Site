@@ -1,17 +1,90 @@
-.nav-hover .nav-caret { color: $white; padding: 0 .4rem; }
-@include media-breakpoint-up(lg) {
-    // Dropdown au survol sur ordinateur
-    .nav-hover:hover > .dropdown-menu { display: block; margin-top: 0; }
+.nav-hover .nav-caret {
+    color: $white;
+    padding: 0 .4rem;
 }
+
+@include media-breakpoint-up(lg) {
+
+    // Dropdown au survol sur ordinateur
+    .nav-hover:hover>.dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+}
+
 .hero {
     background: linear-gradient(rgba($primary, .85), rgba($primary, .85)), url('/assets/image/hero.jpg') center/cover;
-    min-height: 60vh; display: flex; align-items: center;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
 }
-.page-titre { background: $primary; }
-.card-rubrique { transition: transform .2s, box-shadow .2s; }
-.card-rubrique:hover { transform: translateY(-4px); box-shadow: $box-shadow-lg; }
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s, transform .6s; }
-.reveal.visible { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
-.video-clic { background: #000; }
-.video-play { border: 0; background: transparent; color: #fff; font-size: 4rem; }
+
+.page-titre {
+    background: $primary;
+}
+
+.card-rubrique {
+    transition: transform .2s, box-shadow .2s;
+}
+
+.card-rubrique:hover {
+    transform: translateY(-4px);
+    box-shadow: black;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .6s, transform .6s;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+.video-clic {
+    background: #000;
+}
+
+.video-play {
+    border: 0;
+    background: transparent;
+    color: #fff;
+    font-size: 4rem;
+}
+
+.partenaire {
+    height: 25vw;
+    width: 35vw;
+}
+
+
+.carousel {
+    padding: 2px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+}
+
+.carousel .carousel-item {
+    height: 150px;
+}
+
+.carousel .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+@media (max-width: 768px) {
+    .carousel .carousel-item {
+        height: 120px;
+    }
+}

@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../src/php/Flash.php';
 require_once __DIR__ . '/../../src/config/menus.php';
+require_once __DIR__ . '/../../src/config/partenaires.php';
 require_once __DIR__ . '/../../src/php/helpers.php';
 
 $flash = get_flash();
@@ -44,17 +45,9 @@ $flash = get_flash();
                 <div class="footer-block">
                     <h5 class="footer-title"><i class="bi bi-buildings-fill"></i>Nos Partenaires</h5>
                     <div class="list-group">
-                        <a href="https://www.ctguyane.fr/">COLLECTIVITE TERRITORIALE DE LA GUYANE</a>
-                        <a href="https://www.akto.fr/">AKTO</a>
-                        <a href="https://www.francetravail.fr/accueil/">FRANCE TRAVAIL</a>
-                        <a href="https://www.ocapiat.fr/">OCAPIAT</a>
-                        <a href="https://missionlocaleguyane.fr/">MISSION LOCALE GUYANE</a>
-                        <a href="https://travail-emploi.gouv.fr/formation-professionnelle/acteurs-cadre-et-qualite-de-la-formation-professionnelle/article/qualiopi-marque-de-certification-qualite-des-prestataires-de-formation" class="link">QUALIOPI</a>
-                        <a href="https://www.opcoep.fr/">OPCO</a>
-                        <a href="https://lesentreprises-sengagent.gouv.fr/">LES ENTREPRISES S'ENGAGENT</a>
-                        <a href="https://immersion-facile.beta.gouv.fr/">IMMERSION FACILITÉE</a>
-                        <a href="https://www.croix-rouge.fr/">CROIX ROUGE FRANÇAISE</a>
-                        <a href="https://dreets.gouv.fr/">DREETS</a>
+                        <?php foreach (list_partenaires() as $cle => $p):?>
+                            <a href="<?= e($p['url']) ?>"><?= e($p['nom']) ?></a>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
