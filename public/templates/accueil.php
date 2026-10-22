@@ -36,22 +36,20 @@
 </section>
 
 
-<section class="partenaires container pb-4">
-    <h2 class="menu-title">Nos partenaires</h2>
-    <div class="partenaires">
-        <ul class="partenaires-piste">
-            <?php for ($copie = 0; $copie <= 1; $copie++): ?>
-                <?php foreach (list_partenaires() as $p): ?>
-                    <?php if (empty($p['url'])) continue; ?>
-                    <li>
-                        <a href="<?= e($p['url']) ?>" target="_blank" rel="noopener noreferrer"
-                           <?= $copie ? 'tabindex="-1"' : '' ?>>
-                            <img src="<?= e($p['image']) ?>" alt="<?= $copie ? '' : e($p['nom']) ?>"
-                                 height="60" loading="lazy">
-                        </a>
-                    </li>
-                <?php endforeach; ?>
-            <?php endfor; ?>
-        </ul>
-    </div>
+
+<section class="partenaires container pb-4 menu-block">
+    <ul class="partenaires-piste">
+        <?php for ($copie = 0; $copie <= 1; $copie++): ?>
+            <?php foreach (list_partenaires() as $p): ?>
+                <?php if (empty($p['url'])) continue; ?>
+                <li>
+                    <a href="<?= e($p['url']) ?>" target="_blank" rel="noopener noreferrer"
+                        <?= $copie ? 'tabindex="-1"' : '' ?>>
+                        <img src="<?= e($p['image']) ?>" alt="<?= $copie ? '' : e($p['nom']) ?>"
+                            height="60" loading="lazy">
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        <?php endfor; ?>
+    </ul>
 </section>
