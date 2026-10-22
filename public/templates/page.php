@@ -13,6 +13,14 @@ if (!empty($pages_liees)) {
         ? group_by_sous_menu($pages_liees, $conf['sous_menus'])
         : ['' => $pages_liees];
 }
+
+// Message personnalisé pour menu vide
+$empty_message_title = $conf['empty_title'] ?? 'Contenu en préparation';
+$empty_message_text = $conf['empty_text'] ?? 'Cette page est en cours de mise à jour. Revenez bientôt pour découvrir son contenu.';
+$empty_message_icon = $conf['empty_icon'] ?? 'bi-info-circle-fill';
+$empty_message_cta = $conf['empty_cta'] ?? null;
+$empty_message_cta_url = $conf['empty_cta_url'] ?? null;
+
 ?>
 <section class="page-titre text-white py-5">
     <div class="container">
@@ -40,11 +48,29 @@ if (!empty($pages_liees)) {
     <?php if (empty($all_blocs) && !$est_contact && empty($pages_liees) && empty($conf)): ?>
         <div class="row justify-content-center py-5">
             <div class="col-12 col-md-10 col-lg-8">
-                <div class="empty-menu-message reveal">
-                    <div class="text-center">
-                        <i class="bi bi-info-circle-fill"></i>
-                        <h3 class="mt-3 mb-2">Contenu en préparation</h3>
-                        <p class="mb-0">Cette page est en cours de mise à jour. Revenez bientôt pour découvrir son contenu.</p>
+                <!-- NOUVEAU MESSAGE ANIMÉ POUR MENU VIDE -->
+                <div class="empty-menu-message-container">
+                    <div class="empty-menu-message text-center reveal reveal--fade-up">
+                        <!-- Icône animée -->
+                        <div class="empty-menu-icon mb-4">
+                            <div class="icon-wrapper">
+                                <i class="bi <?= e($empty_message_icon) ?>"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Titre -->
+                        <h2 class="empty-menu-title h3 mb-3"><?= e($empty_message_title) ?></h2>
+                        
+                        <!-- Texte -->
+                        <p class="empty-menu-text mb-4"><?= e($empty_message_text) ?></p>
+                        
+                        <!-- Bouton CTA (optionnel) -->
+                        <?php if ($empty_message_cta && $empty_message_cta_url): ?>
+                            <a href="<?= e($empty_message_cta_url) ?>" 
+                               class="btn btn-primary btn-lg empty-menu-cta reveal reveal-delay-1">
+                                <i class="bi bi-arrow-right"></i> <?= e($empty_message_cta) ?>
+                            </a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -63,7 +89,7 @@ if (!empty($pages_liees)) {
         <?php endif; ?>
         <div class="row g-3">
             <?php foreach ($liste as $p): ?>
-                <div class="col-12 col-md-6 col-lg-4 reveal">
+                <div class="col-12 col-md-6 col-lg-4 reveal reveal--fade-up">
                     <a class="card card-rubrique h-100 text-decoration-none" href="/<?= e($p['slug']) ?>">
                         <div class="card-body d-flex align-items-center justify-content-between">
                             <span><?= e($p['titre']) ?></span><i class="bi bi-arrow-right"></i>

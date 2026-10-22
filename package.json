@@ -5,5 +5,13 @@
     "bootstrap-icons": "^1.13.1",
     "chart.js": "^4.5.1",
     "quill": "^2.0.3"
+  },
+  "devDependencies": {
+    "sass": "^1.75.0"
+  },
+  "scripts": {
+    "scss:compile": "sass public/assets/scss/main.scss:public/assets/css/main.css --style=compressed --no-source-map",
+    "scss:watch": "sass --watch public/assets/scss/main.scss:public/assets/css/main.css --style=compressed --no-source-map",
+    "scss:expanded": "sass public/assets/scss/main.scss:public/assets/css/main.css --style=expanded"
   }
 }

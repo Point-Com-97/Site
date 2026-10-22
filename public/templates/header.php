@@ -48,7 +48,7 @@ function menu_href(array $m): string
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/assets/image/ico.png">
-    <link rel="stylesheet" href="/assets/scss/main.css">
+    <link rel="stylesheet" href="assets/scss/main.css">
 
     <title><?= $titre_page ?> - Point Com</title>
     <meta name="description" content="<?= $description ?>">

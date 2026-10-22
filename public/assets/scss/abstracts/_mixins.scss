@@ -1,0 +1,602 @@
+// ============================================
+// MIXINS SCSS - Site Point Com
+// ============================================
+// Ce fichier contient des mixins réutilisables pour le site
+// ============================================
+
+// --------------------------------------------
+// 1. MIXINS DE COULEURS
+// --------------------------------------------
+
+// Génère un dégradé
+@mixin gradient($direction: 45deg, $color1, $color2: null) {
+  @if $color2 {
+    background: linear-gradient($direction, $color1, $color2);
+  } @else {
+    background: linear-gradient($direction, $color1);
+  }
+}
+
+// Couleur de texte avec opacité
+@mixin text-color($color, $opacity: 1) {
+  color: rgba($color, $opacity);
+}
+
+// Couleur de fond avec opacité
+@mixin bg-color($color, $opacity: 1) {
+  background-color: rgba($color, $opacity);
+}
+
+// --------------------------------------------
+// 2. MIXINS DE BORDURES
+// --------------------------------------------
+
+// Bordure simple
+@mixin border($width, $color, $radius: 0) {
+  border: $width solid $color;
+  @if $radius {
+    border-radius: $radius;
+  }
+}
+
+// Bordure spécifique par côté
+@mixin border-top($width, $color) {
+  border-top: $width solid $color;
+}
+
+@mixin border-right($width, $color) {
+  border-right: $width solid $color;
+}
+
+@mixin border-bottom($width, $color) {
+  border-bottom: $width solid $color;
+}
+
+@mixin border-left($width, $color) {
+  border-left: $width solid $color;
+}
+
+// --------------------------------------------
+// 3. MIXINS DE TRANSITIONS
+// --------------------------------------------
+
+// Transition simple
+@mixin transition($property: all, $duration: 0.25s, $timing: ease) {
+  transition: $property $duration $timing;
+}
+
+// Transition multiple
+@mixin transitions($transitions...) {
+  transition: $transitions;
+}
+
+// Transition pour transform
+@mixin transition-transform($duration: 0.25s, $timing: ease) {
+  transition: transform $duration $timing;
+}
+
+// Transition pour opacity
+@mixin transition-opacity($duration: 0.25s, $timing: ease) {
+  transition: opacity $duration $timing;
+}
+
+// Transition pour box-shadow
+@mixin transition-shadow($duration: 0.25s, $timing: ease) {
+  transition: box-shadow $duration $timing;
+}
+
+// Transition pour background
+@mixin transition-bg($duration: 0.25s, $timing: ease) {
+  transition: background-color $duration $timing;
+}
+
+// --------------------------------------------
+// 4. MIXINS DE TYPOGRAPHIE
+// --------------------------------------------
+
+// Taille de police responsive
+@mixin font-size($mobile, $tablet: null, $desktop: null) {
+  font-size: $mobile;
+  
+  @if $tablet {
+    @media (min-width: 576px) {
+      font-size: $tablet;
+    }
+  }
+  
+  @if $desktop {
+    @media (min-width: 992px) {
+      font-size: $desktop;
+    }
+  }
+}
+
+// Poids de police
+@mixin font-weight($weight) {
+  font-weight: $weight;
+}
+
+// Alignement de texte
+@mixin text-align($alignment) {
+  text-align: $alignment;
+}
+
+// Hauteur de ligne
+@mixin line-height($height) {
+  line-height: $height;
+}
+
+// Couleur et style de texte
+@mixin text-style($color, $size: null, $weight: null, $align: null) {
+  color: $color;
+  
+  @if $size {
+    font-size: $size;
+  }
+  
+  @if $weight {
+    font-weight: $weight;
+  }
+  
+  @if $align {
+    text-align: $align;
+  }
+}
+
+// --------------------------------------------
+// 5. MIXINS DE POSITIONNEMENT
+// --------------------------------------------
+
+// Position absolue avec centrage
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Position fixe avec centrage
+@mixin fixed-center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Position relative
+@mixin position-relative {
+  position: relative;
+}
+
+// Position absolute
+@mixin position-absolute($top: null, $right: null, $bottom: null, $left: null) {
+  position: absolute;
+  
+  @if $top {
+    top: $top;
+  }
+  
+  @if $right {
+    right: $right;
+  }
+  
+  @if $bottom {
+    bottom: $bottom;
+  }
+  
+  @if $left {
+    left: $left;
+  }
+}
+
+// --------------------------------------------
+// 6. MIXINS DE FLEXBOX
+// --------------------------------------------
+
+// Flex container
+@mixin flex-container($direction: row, $wrap: null, $justify: null, $align: null, $gap: null) {
+  display: flex;
+  flex-direction: $direction;
+  
+  @if $wrap {
+    flex-wrap: $wrap;
+  }
+  
+  @if $justify {
+    justify-content: $justify;
+  }
+  
+  @if $align {
+    align-items: $align;
+  }
+  
+  @if $gap {
+    gap: $gap;
+  }
+}
+
+// Flex item
+@mixin flex-item($grow: null, $shrink: null, $basis: null, $align: null) {
+  @if $grow {
+    flex-grow: $grow;
+  }
+  
+  @if $shrink {
+    flex-shrink: $shrink;
+  }
+  
+  @if $basis {
+    flex-basis: $basis;
+  }
+  
+  @if $align {
+    align-self: $align;
+  }
+}
+
+// --------------------------------------------
+// 7. MIXINS DE GRID
+// --------------------------------------------
+
+// Grid container
+@mixin grid-container($columns: 1, $gap: null, $rows: null) {
+  display: grid;
+  
+  @if type-of($columns) == 'number' {
+    grid-template-columns: repeat($columns, 1fr);
+  } @else {
+    grid-template-columns: $columns;
+  }
+  
+  @if $gap {
+    gap: $gap;
+  }
+  
+  @if $rows {
+    grid-template-rows: $rows;
+  }
+}
+
+// Grid item
+@mixin grid-item($column: null, $row: null) {
+  @if $column {
+    grid-column: $column;
+  }
+  
+  @if $row {
+    grid-row: $row;
+  }
+}
+
+// --------------------------------------------
+// 8. MIXINS DE TAILLES
+// --------------------------------------------
+
+// Largeur et hauteur
+@mixin size($width, $height: null) {
+  width: $width;
+  
+  @if $height {
+    height: $height;
+  }
+}
+
+// Largeur max
+@mixin max-width($width) {
+  max-width: $width;
+}
+
+// Hauteur max
+@mixin max-height($height) {
+  max-height: $height;
+}
+
+// --------------------------------------------
+// 9. MIXINS D'ESPACEMENTS
+// --------------------------------------------
+
+// Margin
+@mixin margin($top: null, $right: null, $bottom: null, $left: null) {
+  @if $top != null {
+    margin-top: $top;
+  }
+  
+  @if $right != null {
+    margin-right: $right;
+  }
+  
+  @if $bottom != null {
+    margin-bottom: $bottom;
+  }
+  
+  @if $left != null {
+    margin-left: $left;
+  }
+}
+
+// Padding
+@mixin padding($top: null, $right: null, $bottom: null, $left: null) {
+  @if $top != null {
+    padding-top: $top;
+  }
+  
+  @if $right != null {
+    padding-right: $right;
+  }
+  
+  @if $bottom != null {
+    padding-bottom: $bottom;
+  }
+  
+  @if $left != null {
+    padding-left: $left;
+  }
+}
+
+// --------------------------------------------
+// 10. MIXINS D'OMBRES
+// --------------------------------------------
+
+// Ombre simple
+@mixin shadow($x, $y, $blur, $color) {
+  box-shadow: $x $y $blur $color;
+}
+
+// Ombre multiple
+@mixin shadows($shadows...) {
+  box-shadow: $shadows;
+}
+
+// Ombre portée avec offset
+@mixin box-shadow($x: 0, $y: 0, $blur: 0.5rem, $color: rgba(#000, 0.15)) {
+  box-shadow: $x $y $blur $color;
+}
+
+// --------------------------------------------
+// 11. MIXINS D'EFFETS
+// --------------------------------------------
+
+// Effet de hover avec scale
+@mixin hover-scale($scale: 1.05) {
+  transition: transform 0.25s ease;
+  
+  &:hover,
+  &:focus {
+    transform: scale($scale);
+  }
+}
+
+// Effet de hover avec translation
+@mixin hover-translate($x: 0, $y: -2px) {
+  transition: transform 0.25s ease;
+  
+  &:hover,
+  &:focus {
+    transform: translate($x, $y);
+  }
+}
+
+// Effet de hover avec rotation
+@mixin hover-rotate($degrees: 2) {
+  transition: transform 0.25s ease;
+  
+  &:hover,
+  &:focus {
+    transform: rotate(#{$degrees}deg);
+  }
+}
+
+// --------------------------------------------
+// 12. MIXINS D'ANIMATIONS
+// --------------------------------------------
+
+// Animation simple
+@mixin animation($name, $duration: 0.25s, $timing: ease, $delay: 0, $iteration: 1) {
+  animation: $name $duration $timing $delay $iteration;
+}
+
+// Keyframes
+@mixin keyframes($name) {
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+// Animation au survol
+@mixin hover-animation($name, $duration: 0.25s, $timing: ease) {
+  &:hover,
+  &:focus {
+    animation: $name $duration $timing;
+  }
+}
+
+// --------------------------------------------
+// 13. MIXINS DE RESPONSIVE
+// --------------------------------------------
+
+// Media query pour min-width
+@mixin min-width($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+// Media query pour max-width
+@mixin max-width($breakpoint) {
+  @media (max-width: calc(#{$breakpoint} - 0.02px)) {
+    @content;
+  }
+}
+
+// Media query pour range
+@mixin between($min, $max) {
+  @media (min-width: $min) and (max-width: calc(#{$max} - 0.02px)) {
+    @content;
+  }
+}
+
+// --------------------------------------------
+// 14. MIXINS POUR BOOTSTRAP
+// --------------------------------------------
+
+// Utilitaires Bootstrap-like
+@mixin bootstrap-utility($property, $value) {
+  #{$property}: #{$value} !important;
+}
+
+// --------------------------------------------
+// 15. MIXINS POUR ACCESSIBILITÉ
+// --------------------------------------------
+
+// Focus visible
+@mixin focus-visible($color: #299ECD, $width: 2px) {
+  &:focus-visible {
+    outline: $width solid $color;
+    outline-offset: 2px;
+  }
+}
+
+// SR-only (Screen Reader Only)
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// --------------------------------------------
+// 16. MIXINS POUR TRANSFORMATIONS
+// --------------------------------------------
+
+// Rotation
+@mixin rotate($degrees) {
+  transform: rotate(#{$degrees}deg);
+}
+
+// Translation
+@mixin translate($x: 0, $y: 0) {
+  transform: translate(#{$x}, #{$y});
+}
+
+// Scale
+@mixin scale($x: 1, $y: null) {
+  @if $y {
+    transform: scale(#{$x}, #{$y});
+  } @else {
+    transform: scale(#{$x});
+  }
+}
+
+// Skew
+@mixin skew($x: 0, $y: 0) {
+  transform: skew(#{$x}deg, #{$y}deg);
+}
+
+// --------------------------------------------
+// 17. MIXINS POUR LES CARTES
+// --------------------------------------------
+
+// Carte avec hover
+@mixin card-hover($translate-y: -4px, $shadow: 0 0.5rem 1rem rgba(#000, 0.15)) {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  
+  &:hover,
+  &:focus-within {
+    transform: translateY($translate-y);
+    box-shadow: $shadow;
+  }
+}
+
+// Carte avec bordure
+@mixin card-border($color: #299ECD, $width: 2px) {
+  border: $width solid $color;
+  border-radius: 0.375rem;
+}
+
+// --------------------------------------------
+// 18. MIXINS POUR LES BOUTONS
+// --------------------------------------------
+
+// Bouton avec style personnalisé
+@mixin button-style($bg: #299ECD, $color: #fff, $hover-bg: null, $hover-color: null) {
+  background-color: $bg;
+  color: $color;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  
+  &:hover,
+  &:focus {
+    background-color: $hover-bg or darken($bg, 10%);
+    color: $hover-color or $color;
+  }
+}
+
+// Bouton outline
+@mixin button-outline($color: #299ECD, $hover-bg: #299ECD, $hover-color: #fff) {
+  background-color: transparent;
+  color: $color;
+  border: 1px solid $color;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  
+  &:hover,
+  &:focus {
+    background-color: $hover-bg;
+    color: $hover-color;
+    border-color: $hover-bg;
+  }
+}
+
+// --------------------------------------------
+// 19. MIXINS POUR LES FORMULAIRES
+// --------------------------------------------
+
+// Input style
+@mixin input-style($border-color: #ced4da, $focus-color: #299ECD) {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid $border-color;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  
+  &:focus {
+    border-color: $focus-color;
+    box-shadow: 0 0 0 0.25rem rgba($focus-color, 0.25);
+  }
+}
+
+// --------------------------------------------
+// 20. MIXINS POUR UTILITAIRES
+// --------------------------------------------
+
+// Z-index
+@mixin z-index($value) {
+  z-index: $value;
+}
+
+// Opacité
+@mixin opacity($value) {
+  opacity: $value;
+}
+
+// Visibilité
+@mixin visibility($value: visible) {
+  visibility: $value;
+}
+
+// Overflow
+@mixin overflow($value) {
+  overflow: $value;
+}

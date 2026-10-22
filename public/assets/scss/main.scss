@@ -1,20 +1,30 @@
+// ============================================
+// MAIN SCSS - Site Point Com
+// Ce fichier importe tous les fichiers SCSS partiels
+// ============================================
+
+// 1. Import Bootstrap Icons
 @import "../bootstrap-icons/font/bootstrap-icons.css";
 
+// 2. Import des variables et mixins personnalisés
 @import 'abstracts/variables';
 @import 'abstracts/mixins';
 
+// 3. Import Bootstrap (doit être après nos variables pour override)
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
+// 4. Import des polices personnalisées
 @import "../font/index.css";
 
+// 5. Import des styles de base
 @import 'base/global';
 @import 'base/header';
 @import 'base/footer';
 @import 'base/navbar';
 
+// 6. Import des composants
 @import 'components/bloc';
 @import 'components/bouton';
 @import 'components/cartes';
 @import 'components/animation';
 @import 'components/public';
-

@@ -1,104 +1,294 @@
-.nav-hover .nav-caret {
-    color: $white;
-    padding: 0 .4rem;
-}
+// ============================================
+// STYLES PUBLICS - Site Point Com
+// Ce fichier utilise les variables globales définies dans _variables.scss
+// ============================================
 
-@include media-breakpoint-up(lg) {
-
-    // Dropdown au survol sur ordinateur
-    .nav-hover:hover>.dropdown-menu {
-        display: block;
-        margin-top: 0;
-    }
-}
+// ============================================
+// 1. HERO SECTION
+// ============================================
 
 .hero {
-    background: url('/assets/image/rubriques/home.svg') center/cover;
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
+  background: url('/assets/image/rubriques/home.svg') center/cover;
+  min-height: 60vh;
+  max-height: 70vh;
+  display: flex;
+  align-items: center;
 }
+
+// ============================================
+// 2. PAGE TITRE
+// ============================================
 
 .page-titre {
-    background: $primary;
+  background: $primary;
 }
 
+// ============================================
+// 3. CARTES RUBRIQUE
+// ============================================
+
 .card-rubrique {
-    transition: transform .2s, box-shadow .2s;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .card-rubrique:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+  transform: translateY(-4px);
+  box-shadow: $box-shadow-lg;
 }
 
+// ============================================
+// 4. REVEAL ANIMATIONS
+// ============================================
+
 .reveal {
-    color: $tertiary;
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity .6s, transform .6s;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s, transform 0.6s;
 }
 
 .reveal.visible {
-    opacity: 1;
-    transform: none;
+  opacity: 1;
+  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .reveal {
-        opacity: 1;
-        transform: none;
-        transition: none;
-    }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
+// ============================================
+// 5. VIDÉO CLIQUABLE
+// ============================================
+
 .video-clic {
-    background: #000;
+  background: #000;
 }
 
 .video-play {
-    border: 0;
-    background: transparent;
-    color: #fff;
-    font-size: 4rem;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 4rem;
 }
 
+// ============================================
+// 6. PARTENAIRES
+// ============================================
+
 .partenaires {
-    overflow: hidden;
-    padding: 1rem 2rem;
+  overflow: hidden;
+  padding: $spacer-lg $spacer-xl;
+  height: 120px; // Limite la hauteur de la section
+  max-height: 120px; // Hauteur maximale pour éviter le débordement
 }
 
 .partenaires-piste {
-    display: flex;
-    width: max-content;
-    gap: 3rem;
-    animation: defile 40s linear infinite;
+  display: flex;
+  width: max-content;
+  gap: 3rem;
+  flex-wrap: nowrap; // Empêche le retour à la ligne
+  align-items: center; // Centre verticalement les images
+  animation: defile 40s linear infinite;
 }
 
 .partenaires:hover .partenaires-piste {
-    animation-play-state: paused;
+  animation-play-state: paused;
 }
 
-@keyframes defile {
-    to {
-        transform: translateX(-50%);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .partenaires {
-        overflow-x: auto;
-    }
-
-    .partenaires-piste {
-        animation: none;
-    }
+.partenaires-piste li {
+  display: flex;
+  align-items: center;
 }
 
 .partenaires-piste img {
-    transition: transform .3s ease;
+  max-height: 60px; // Limite la hauteur des images
+  max-width: 150px; // Limite la largeur des images
+  object-fit: contain; // Conserve les proportions
+  transition: transform 0.3s ease;
+}
+
+@keyframes defile {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partenaires {
+    overflow-x: auto;
+  }
+  
+  .partenaires-piste {
+    animation: none;
+  }
 }
 
 .partenaires-piste a:hover img {
-    transform: scale(1.5);
+  transform: scale(1.5);
+}
+
+// ============================================
+// 7. MESSAGE VIDE (Empty Menu)
+// ============================================
+
+.empty-menu-message-container {
+  padding: $spacer-xl $spacer;
+  position: relative;
+}
+
+.empty-menu-message-container::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba($primary, 0.05) 0%, transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.empty-menu-message {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  
+  .empty-menu-icon {
+    display: inline-block;
+    margin-bottom: $spacer-lg;
+    
+    .icon-wrapper {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba($primary, 0.2), rgba($secondary, 0.2));
+      border: 3px solid $primary;
+      animation: emptyIconPulse 3s ease-in-out infinite;
+      
+      i.bi {
+        font-size: 2.5rem;
+        color: $primary;
+        animation: emptyIconPulse 3s ease-in-out infinite reverse;
+      }
+    }
+  }
+  
+  .empty-menu-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: $tertiary;
+    margin-bottom: $spacer;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  
+  .empty-menu-text {
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    color: $gray-600;
+    line-height: 1.7;
+    margin-bottom: $spacer-lg;
+    transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+  }
+  
+  .empty-menu-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacer-sm;
+    padding: $spacer-sm $spacer-lg;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: $border-radius;
+    background: $primary;
+    color: $white;
+    transition: all 0.3s ease;
+    
+    i.bi {
+      transition: transform 0.25s ease;
+    }
+    
+    &:hover {
+      background: #2188b8;
+      gap: $spacer;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba($primary, 0.3);
+      
+      i.bi {
+        transform: translateX(3px);
+      }
+    }
+  }
+}
+
+.empty-menu-message-container:hover .empty-menu-message {
+  transform: translateY(-3px);
+}
+
+// Animations pour le message vide
+@keyframes emptyIconPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+// Responsive pour le message vide
+@media (max-width: 767.98px) {
+  .empty-menu-message {
+    .empty-menu-icon .icon-wrapper {
+      width: 70px;
+      height: 70px;
+      
+      i.bi {
+        font-size: 2rem;
+      }
+    }
+    
+    .empty-menu-title {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+@media (max-width: 575.98px) {
+  .empty-menu-message {
+    .empty-menu-icon .icon-wrapper {
+      width: 60px;
+      height: 60px;
+      
+      i.bi {
+        font-size: 1.75rem;
+      }
+    }
+    
+    .empty-menu-title {
+      font-size: 1.3rem;
+    }
+    
+    .empty-menu-text {
+      font-size: 1rem;
+    }
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .empty-menu-icon .icon-wrapper,
+  .empty-menu-icon i.bi {
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  .empty-menu-message-container::before {
+    animation: none !important;
+  }
 }

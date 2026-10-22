@@ -1,68 +1,525 @@
+// ============================================
+// STYLES POUR LA NAVBAR - Site Point Com
+// ============================================
+
+// Couleurs
+$primary: #299ECD;
+$secondary: #ED8E33;
+$tertiary: #412872;
+$white: #ffffff;
+$black: #000000;
+
+// Espacements
+$spacer: 1rem;
+$spacer-sm: 0.5rem;
+
+// Bordures
+$border-radius: 0.375rem;
+$border-radius-sm: 0.25rem;
+
+// ============================================
+
+// 1. LOGO
 .logo {
-    max-width: 200px;
-    border-radius: 10px;
+  max-width: 180px;
+  height: auto;
+  border-radius: $border-radius;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0.125rem 0.25rem rgba($black, 0.075);
+  
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0.5rem 1rem rgba($black, 0.15);
+  }
 }
 
+@media (max-width: 991.98px) {
+  .logo {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .logo {
+    max-width: 130px;
+    margin-top: $spacer-sm;
+    margin-bottom: $spacer-sm;
+  }
+}
+
+// 2. NAVBAR - STYLES DE BASE
 #navbar {
-    background: linear-gradient(45deg, #432e7d, #3295c3, #432e7d);
-    background-size: 200% 200%;
-    margin: 0px;
-}
-
-.navbar-animate {
-    opacity: 0;
-    transform: translateY(-20px);
-    animation: navbarIn 1.5s ease-out forwards, navbarFlow 10s ease-in-out infinite;
-}
-
-.btn {
-    font-size: 18px;
-    font-weight: bold;
-    color: $tertiary;
-}
-
-.btn:hover {
-    color: $secondary
-}
-
-
-.nav-link {
-    margin-right: 15px;
-    font-weight: bold;
-    color: #fff;
-    font-size: 16px;
-}
-
-.nav-link:hover {
-    color: $secondary;
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  padding: 0.5rem 1rem;
+  
+  background: linear-gradient(45deg, $tertiary, $primary, $tertiary);
+  background-size: 200% 200%;
+  
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: navbarIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards, 
+             navbarFlow 15s ease-in-out infinite;
 }
 
 @keyframes navbarIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes navbarFlow {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-@media (max-width: 768px) {
-    .logo {
-        max-width: 150px;
-        margin-top: 25px;
-        margin-bottom: 5px;
+// 3. NAVBAR - EFFETS AU SCROLL
+#navbar.scrolled {
+  padding: 0.5rem 1rem;
+  box-shadow: 0 2px 10px rgba($black, 0.1);
+  
+  .logo {
+    max-width: 140px;
+    
+    @media (max-width: 575.98px) {
+      max-width: 120px;
     }
+  }
+  
+  .nav-link {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .navbar-brand {
+    padding: 0;
+  }
+}
+
+#navbar {
+  transition: padding 0.3s ease, box-shadow 0.3s ease;
+}
+
+// 4. NAVBAR BRAND
+.navbar-brand {
+  padding: 0;
+  margin-right: $spacer;
+  
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+// 5. NAVBAR TOGGLER
+.navbar-toggler {
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  border: none;
+  background: transparent;
+  color: $white;
+  cursor: pointer;
+  border-radius: $border-radius-sm;
+  transition: all 0.3s ease;
+  
+  &:hover,
+  &:focus {
+    background: rgba($white, 0.15);
+    color: $white;
+    transform: scale(1.1);
+  }
+  
+  .navbar-toggler-icon {
+    width: 1.25em;
+    height: 1.25em;
+  }
+}
+
+.navbar-toggler[aria-expanded="true"] {
+  animation: togglerPulse 0.3s ease;
+}
+
+@keyframes togglerPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+// 6. NAVBAR NAV - LIENS
+.navbar-nav {
+  margin-left: auto;
+  margin-right: $spacer;
+}
+
+.nav-item {
+  position: relative;
+  
+  & + .nav-item {
+    margin-left: $spacer-sm;
+  }
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: $spacer-sm;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  color: $white;
+  font-size: 1rem;
+  border-radius: $border-radius-sm;
+  transition: all 0.3s ease;
+  position: relative;
+  
+  i.bi {
+    font-size: 1.2em;
+    min-width: 1.2em;
+    text-align: center;
+  }
+  
+  &:hover,
+  &:focus {
+    color: $secondary;
+    background: rgba($white, 0.1);
+  }
+  
+  &.active {
+    color: $secondary;
+    background: rgba($white, 0.15);
+    
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 2px;
+      background: $secondary;
+      border-radius: 1px;
+    }
+  }
+}
+
+.nav-link {
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: $secondary;
+    border-radius: 1px;
+    transition: width 0.3s ease;
+  }
+  
+  &:hover::before,
+  &:focus::before {
+    width: 100%;
+  }
+}
+
+// 7. DROPDOWN MENU
+.nav-item.dropdown {
+  .nav-link {
+    padding-right: calc(1rem + 0.5rem);
+  }
+  
+  .dropdown-menu {
+    min-width: 10rem;
+    padding: 0.5rem;
+    border: none;
+    border-radius: $border-radius;
+    background: $white;
+    box-shadow: 0 0.5rem 1rem rgba($black, 0.15);
+    animation: dropdownFadeIn 0.3s ease-out;
+    
+    @media (min-width: 992px) {
+      margin-top: $spacer-sm;
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+    }
+  }
+  
+  .dropdown-menu.show {
+    animation: dropdownFadeIn 0.3s ease-out;
+  }
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+}
+
+// Dropdown items
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: $spacer-sm;
+  padding: 0.5rem 1rem;
+  color: #343a40;
+  border-radius: $border-radius-sm;
+  transition: all 0.3s ease;
+  
+  i.bi {
+    font-size: 1.1em;
+    color: $primary;
+  }
+  
+  &:hover,
+  &:focus {
+    color: $primary;
+    background: rgba($primary, 0.1);
+  }
+  
+  &.active {
+    color: $white;
+    background: $primary;
+    
+    i.bi {
+      color: $white;
+    }
+  }
+}
+
+.dropdown-header {
+  display: block;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0;
+  font-size: 0.875rem;
+  color: #6c757d;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.dropdown-divider {
+  height: 1px;
+  margin: 0.5rem 0;
+  background: $gray-200;
+  opacity: 0.5;
+}
+
+// Bouton caret
+.nav-caret {
+  color: $white;
+  padding: 0 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  
+  &:hover,
+  &:focus {
+    color: $secondary;
+  }
+  
+  &::before {
+    display: none;
+  }
+}
+
+// Flèche personnalisée
+.dropdown-toggle-split::after {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+  border-top: 5px solid $white;
+  border-right: 5px solid transparent;
+  border-bottom: 0;
+  border-left: 5px solid transparent;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-toggle-split[aria-expanded="true"]::after {
+  transform: rotate(180deg);
+}
+
+// 8. NAVBAR TOOLS (Recherche)
+#search-form {
+  margin-left: auto;
+  
+  .form-control {
+    background: rgba($white, 0.2);
+    border-color: rgba($white, 0.3);
+    color: $white;
+    min-width: 200px;
+    
+    &::placeholder {
+      color: rgba($white, 0.7);
+    }
+    
+    &:focus {
+      background: rgba($white, 0.25);
+      border-color: $secondary;
+      color: $white;
+    }
+  }
+  
+  .btn-search {
+    background: $secondary;
+    border-color: $secondary;
+    color: $white;
+    padding: $spacer-sm $spacer;
+    border-radius: $border-radius;
+    
+    &:hover,
+    &:focus {
+      background: #c97a28;
+      border-color: #c97a28;
+      color: $white;
+      transform: translateX(2px);
+    }
+  }
+}
+
+#search-results {
+  max-height: 300px;
+  overflow-y: auto;
+  background: $white;
+  border: 1px solid #dee2e6;
+  border-radius: $border-radius;
+  box-shadow: 0 0.5rem 1rem rgba($black, 0.15);
+  
+  .list-group-item {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    
+    &:hover,
+    &:focus {
+      background: rgba($primary, 0.1);
+      color: $primary;
+    }
+  }
+}
+
+// 9. NAVBAR - EFFETS MOBILE
+@media (max-width: 991.98px) {
+  .navbar-nav {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+  }
+  
+  .nav-item {
+    width: 100%;
+    
+    & + .nav-item {
+      margin-left: 0;
+    }
+  }
+  
+  .nav-link {
+    padding: 0.5rem 1rem;
+    justify-content: space-between;
+    
+    &.dropdown-toggle {
+      &::after {
+        content: "\25BC";
+        font-size: 0.8em;
+        transition: transform 0.3s ease;
+      }
+      
+      &[aria-expanded="true"]::after {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  
+  .dropdown-menu {
+    position: static;
+    margin-top: 0;
+    background: rgba($white, 0.05);
+    border: none;
+    box-shadow: none;
+    
+    .dropdown-item {
+      color: $white;
+      padding: 0.5rem 1rem;
+      
+      &:hover,
+      &:focus {
+        background: rgba($white, 0.1);
+        color: $secondary;
+      }
+    }
+    
+    .dropdown-header {
+      color: rgba($white, 0.7);
+    }
+    
+    .dropdown-divider {
+      background: rgba($white, 0.2);
+    }
+  }
+  
+  #search-form {
+    width: 100%;
+    margin-top: $spacer;
+    
+    .form-control {
+      width: 100%;
+      min-width: auto;
+    }
+  }
+}
+
+// 10. ANIMATIONS AVANCÉES
+.nav-link {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: navLinkReveal 0.5s ease-out forwards;
+  
+  @for $i from 1 through 20 {
+    &:nth-child(#{$i}) {
+      animation-delay: 0.05s * $i;
+    }
+  }
+}
+
+@keyframes navLinkReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  #navbar {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  .nav-link {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  .dropdown-menu {
+    animation: none !important;
+  }
 }

@@ -1,0 +1,493 @@
+// ============================================
+// STYLES POUR LES CARTES - Site Point Com
+// ============================================
+
+// Couleurs principales
+$primary: #299ECD;
+$secondary: #ED8E33;
+$tertiary: #412872;
+$white: #ffffff;
+$black: #000000;
+$gray-200: #e9ecef;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+
+// Espacements
+$spacer: 1rem;
+$spacer-sm: 0.5rem;
+$spacer-lg: 1.5rem;
+
+// Bordures
+$border-radius: 0.375rem;
+$border-radius-lg: 0.5rem;
+$border-radius-pill: 50rem;
+
+// Ombres
+$box-shadow: 0 0.5rem 1rem rgba($black, 0.15);
+$box-shadow-sm: 0 0.125rem 0.25rem rgba($black, 0.075);
+$box-shadow-lg: 0 1rem 3rem rgba($black, 0.175);
+
+// Transitions
+$transition-base: all 0.25s ease;
+$hover-translate-y: -2px;
+$hover-translate-y-lg: -4px;
+$hover-scale: 1.05;
+
+// ============================================
+
+// 1. CARTE DE BASE
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: $white;
+  background-clip: border-box;
+  border: 1px solid $gray-200;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow-sm;
+  transition: $transition-base;
+  
+  opacity: 0;
+  transform: translateY(10px);
+  animation: cardReveal 0.5s ease-out forwards;
+}
+
+@keyframes cardReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// 2. CARTE DE RUBRIQUE
+.card-rubrique {
+  border: none;
+  border-radius: $border-radius;
+  overflow: hidden;
+  color: $tertiary;
+  background: $white;
+  transition: $transition-base;
+  
+  opacity: 0;
+  transform: translateY(15px);
+  animation: cardRubriqueReveal 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  
+  @for $i from 1 through 20 {
+    &:nth-child(#{$i}) {
+      animation-delay: 0.05s * $i;
+    }
+  }
+}
+
+@keyframes cardRubriqueReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-rubrique,
+.card-rubrique .card-body {
+  height: 100%;
+}
+
+.card-rubrique .card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacer-lg;
+  gap: $spacer;
+  
+  &.horizontal {
+    flex-direction: row;
+    text-align: left;
+    gap: $spacer;
+  }
+}
+
+.card-rubrique .bi {
+  font-size: 3rem;
+  color: $primary;
+  transition: transform 0.25s ease;
+}
+
+.card-rubrique h2,
+.card-rubrique h3,
+.card-rubrique .h5,
+.card-rubrique .h4 {
+  color: $tertiary;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.card-rubrique p {
+  color: $gray-600;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+// Hover effect pour card-rubrique
+.card-rubrique {
+  &:hover,
+  &:focus-within {
+    transform: translateY($hover-translate-y);
+    box-shadow: $box-shadow;
+    
+    .bi {
+      transform: scale(1.1);
+    }
+    
+    .card-body {
+      background: linear-gradient(to bottom, rgba($primary, 0.05), transparent);
+    }
+  }
+}
+
+// 3. EFFETS DE SURVOL
+.card-hover-lift {
+  &:hover,
+  &:focus-within {
+    transform: translateY($hover-translate-y-lg);
+    box-shadow: $box-shadow-lg;
+  }
+}
+
+.card-hover-tilt {
+  transition: $transition-base;
+  
+  &:hover,
+  &:focus-within {
+    transform: translateY($hover-translate-y) rotate(1deg);
+    box-shadow: $box-shadow-lg;
+  }
+}
+
+.card-hover-scale {
+  transition: $transition-base;
+  
+  &:hover,
+  &:focus-within {
+    transform: scale($hover-scale);
+    box-shadow: $box-shadow-lg;
+  }
+}
+
+// 4. CARTE AVEC IMAGE
+.card-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: $border-radius;
+  
+  .card-img-top {
+    position: relative;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+  }
+  
+  &:hover .card-img-top,
+  &:focus-within .card-img-top {
+    transform: scale(1.05);
+  }
+  
+  .card-body {
+    position: relative;
+    padding: $spacer-lg;
+  }
+}
+
+// 5. CARTE DE FORMATION
+.formation-card {
+  border: none;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  box-shadow: $box-shadow-sm;
+  transition: $transition-base;
+  height: 100%;
+  
+  .formation-card-image {
+    position: relative;
+    height: 150px;
+    overflow: hidden;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.25s ease;
+    }
+    
+    .formation-badge {
+      position: absolute;
+      top: $spacer-sm;
+      right: $spacer-sm;
+      padding: $spacer-sm $spacer;
+      font-size: $spacer-sm;
+      font-weight: 600;
+      color: $white;
+      background: $primary;
+      border-radius: $border-radius-pill;
+      z-index: 2;
+    }
+  }
+  
+  .card-body {
+    padding: $spacer;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .formation-card-title {
+    font-size: $spacer-lg;
+    font-weight: 600;
+    color: $tertiary;
+    margin-bottom: $spacer-sm;
+    flex: 1;
+  }
+  
+  .formation-card-text {
+    color: $gray-600;
+    font-size: $spacer-sm;
+    margin-bottom: $spacer;
+    flex: 1;
+  }
+  
+  .formation-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: $spacer;
+    border-top: 1px solid $gray-200;
+    
+    .formation-date {
+      color: $gray-500;
+      font-size: $spacer-sm;
+    }
+    
+    .formation-link {
+      color: $primary;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: $spacer-sm;
+      
+      i {
+        transition: transform 0.25s ease;
+      }
+      
+      &:hover {
+        color: #2188b8;
+        gap: $spacer;
+        
+        i {
+          transform: translateX(3px);
+        }
+      }
+    }
+  }
+  
+  &:hover,
+  &:focus-within {
+    transform: translateY($hover-translate-y);
+    box-shadow: $box-shadow-lg;
+    
+    .formation-card-image img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// 6. CARTE D'ACTUALITÉ / RECRUTEMENT
+.news-card {
+  border: none;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  box-shadow: $box-shadow-sm;
+  transition: $transition-base;
+  height: 100%;
+  
+  .news-card-image {
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.25s ease;
+    }
+    
+    .news-category {
+      position: absolute;
+      top: $spacer-sm;
+      left: $spacer-sm;
+      padding: $spacer-sm $spacer;
+      font-size: $spacer-sm;
+      font-weight: 600;
+      color: $white;
+      background: $tertiary;
+      border-radius: $border-radius-pill;
+      z-index: 2;
+    }
+  }
+  
+  .card-body {
+    padding: $spacer;
+  }
+  
+  .news-card-title {
+    font-size: $spacer-lg;
+    font-weight: 600;
+    color: $tertiary;
+    margin-bottom: $spacer-sm;
+  }
+  
+  .news-card-excerpt {
+    color: $gray-600;
+    font-size: $spacer-sm;
+    margin-bottom: $spacer;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .news-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: $spacer;
+    color: $gray-500;
+    font-size: $spacer-sm;
+    
+    .news-date {
+      display: flex;
+      align-items: center;
+      gap: $spacer-sm;
+    }
+    
+    .news-read-more {
+      color: $primary;
+      font-weight: 500;
+      
+      &:hover {
+        color: #2188b8;
+        text-decoration: underline;
+      }
+    }
+  }
+  
+  &:hover,
+  &:focus-within {
+    transform: translateY($hover-translate-y);
+    box-shadow: $box-shadow-lg;
+    
+    .news-card-image img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// 7. CARTE MINIATURE
+.thumbnail-card {
+  border: none;
+  border-radius: $border-radius;
+  overflow: hidden;
+  transition: $transition-base;
+  
+  .thumbnail-card-image {
+    width: 100%;
+    height: 120px;
+    overflow: hidden;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.25s ease;
+    }
+  }
+  
+  .card-body {
+    padding: $spacer;
+  }
+  
+  .thumbnail-card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $tertiary;
+    margin-bottom: $spacer-sm;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .thumbnail-card-date {
+    color: $gray-500;
+    font-size: $spacer-sm;
+  }
+  
+  &:hover,
+  &:focus-within {
+    transform: translateY(-2px);
+    box-shadow: $box-shadow;
+    
+    .thumbnail-card-image img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// 8. RESPONSIVE
+.card-rubrique,
+.formation-card,
+.news-card,
+.thumbnail-card {
+  @media (max-width: 575.98px) {
+    .card-body {
+      padding: $spacer;
+    }
+  }
+}
+
+// Cartes en grid responsive
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: $spacer-lg;
+  
+  @media (max-width: 767.98px) {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: $spacer;
+  }
+  
+  @media (max-width: 575.98px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// 9. REDUCED MOTION
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card-rubrique,
+  .formation-card,
+  .news-card,
+  .thumbnail-card {
+    animation: none !important;
+    transform: none !important;
+    
+    &:hover,
+    &:focus-within {
+      transform: none !important;
+    }
+  }
+}
