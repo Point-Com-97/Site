@@ -21,27 +21,38 @@ $border-radius-sm: 0.25rem;
 
 // 1. LOGO
 .logo {
-  max-width: 180px;
+  max-width: 70px;
   height: auto;
   border-radius: $border-radius;
-  transition: transform 0.3s ease;
-  box-shadow: 0 0.125rem 0.25rem rgba($black, 0.075);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+  box-shadow: 0 0.25rem 0.5rem rgba($black, 0.15), 0 0 20px rgba($secondary, 0.3);
+  animation: logoGlow 3s ease-in-out infinite;
   
   &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0.5rem 1rem rgba($black, 0.15);
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 0.75rem 1.5rem rgba($black, 0.2), 0 0 35px rgba($secondary, 0.5);
+    animation: none;
+  }
+}
+
+@keyframes logoGlow {
+  0%, 100% {
+    box-shadow: 0 0.25rem 0.5rem rgba($black, 0.15), 0 0 15px rgba($secondary, 0.2);
+  }
+  50% {
+    box-shadow: 0 0.25rem 0.5rem rgba($black, 0.15), 0 0 30px rgba($secondary, 0.45);
   }
 }
 
 @media (max-width: 991.98px) {
   .logo {
-    max-width: 150px;
+    max-width: 70px;
   }
 }
 
 @media (max-width: 575.98px) {
   .logo {
-    max-width: 130px;
+    max-width: 70px;
     margin-top: $spacer-sm;
     margin-bottom: $spacer-sm;
   }
@@ -53,6 +64,7 @@ $border-radius-sm: 0.25rem;
   top: 0;
   z-index: 1020;
   padding: 0.5rem 1rem;
+  overflow-x: clip;
   
   background: linear-gradient(45deg, $tertiary, $primary, $tertiary);
   background-size: 200% 200%;
@@ -61,6 +73,28 @@ $border-radius-sm: 0.25rem;
   transform: translateY(-20px);
   animation: navbarIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards, 
              navbarFlow 15s ease-in-out infinite;
+  
+  .container-fluid {
+    min-width: 0;
+    overflow: visible;
+  }
+  
+  .navbar-brand {
+    flex-shrink: 0;
+  }
+  
+  .navbar-nav {
+    flex-shrink: 1;
+    min-width: 0;
+  } 
+  
+  .nav-item {
+    flex-shrink: 0;
+  }
+  
+  #search-form {
+    flex-shrink: 0;
+  }
 }
 
 @keyframes navbarIn {
@@ -84,29 +118,114 @@ $border-radius-sm: 0.25rem;
 
 // 3. NAVBAR - EFFETS AU SCROLL
 #navbar.scrolled {
-  padding: 0.5rem 1rem;
-  box-shadow: 0 2px 10px rgba($black, 0.1);
+  padding: 0.35rem 1rem;
+  box-shadow: 0 2px 15px rgba($black, 0.2);
   
-  .logo {
-    max-width: 140px;
-    
-    @media (max-width: 575.98px) {
-      max-width: 120px;
-    }
+  .container-fluid {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
   
-  .nav-link {
-    font-size: 0.875rem;
-    padding: 0.5rem 1rem;
+  .logo {
+    max-width: 90px;
+    
+    @media (max-width: 575.98px) {
+      max-width: 80px;
+    }
   }
   
   .navbar-brand {
     padding: 0;
+    margin-right: $spacer-sm;
+    flex-shrink: 0;
+  }
+  
+  .nav-link {
+    font-size: 0.8125rem;
+    padding: 0.4rem 0.6rem;
+    white-space: nowrap;
+  }
+  
+  .navbar-nav {
+    margin-right: $spacer-sm;
+  }
+  
+  .nav-item + .nav-item {
+    margin-left: 0.25rem;
+  }
+  
+  #search-form {
+    .form-control {
+      min-width: 120px;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.8125rem;
+    }
+    
+    .btn-search {
+      padding: 0.3rem 0.75rem;
+      font-size: 0.8125rem;
+      white-space: nowrap;
+    }
   }
 }
 
 #navbar {
   transition: padding 0.3s ease, box-shadow 0.3s ease;
+  
+  .navbar-collapse {
+    min-width: 0;
+  }
+}
+
+// Ajustement pour écrans moyens (tablettes paysage / petits laptops)
+@media (min-width: 992px) and (max-width: 1399.98px) {
+  #navbar {
+    padding: 0.5rem 0.75rem;
+    
+    .nav-link {
+      padding: 0.5rem 0.6rem;
+      font-size: 0.9375rem;
+      
+      i.bi {
+        font-size: 1.1em;
+      }
+    }
+    
+    .navbar-nav {
+      margin-right: $spacer-sm;
+    }
+    
+    .nav-item + .nav-item {
+      margin-left: 0.25rem;
+    }
+    
+    #search-form {
+      .form-control {
+        min-width: 140px;
+        max-width: 200px;
+      }
+      
+      .btn-search {
+        padding: $spacer-sm 0.75rem;
+      }
+    }
+    
+    &.scrolled {
+      padding: 0.3rem 0.5rem;
+      
+      .nav-link {
+        padding: 0.35rem 0.5rem;
+        font-size: 0.8125rem;
+      }
+      
+      #search-form {
+        .form-control {
+          min-width: 100px;
+          max-width: 150px;
+        }
+      }
+    }
+  }
 }
 
 // 4. NAVBAR BRAND
@@ -157,10 +276,12 @@ $border-radius-sm: 0.25rem;
 .navbar-nav {
   margin-left: auto;
   margin-right: $spacer;
+  flex-wrap: nowrap;
 }
 
 .nav-item {
   position: relative;
+  flex-shrink: 0;
   
   & + .nav-item {
     margin-left: $spacer-sm;
@@ -178,11 +299,13 @@ $border-radius-sm: 0.25rem;
   border-radius: $border-radius-sm;
   transition: all 0.3s ease;
   position: relative;
+  white-space: nowrap;
   
   i.bi {
     font-size: 1.2em;
     min-width: 1.2em;
     text-align: center;
+    flex-shrink: 0;
   }
   
   &:hover,
@@ -277,10 +400,15 @@ $border-radius-sm: 0.25rem;
   color: #343a40;
   border-radius: $border-radius-sm;
   transition: all 0.3s ease;
+  white-space: nowrap;
+  text-align: left;
   
   i.bi {
     font-size: 1.1em;
     color: $primary;
+    flex-shrink: 0;
+    width: 1.2em;
+    text-align: center;
   }
   
   &:hover,
@@ -359,12 +487,18 @@ $border-radius-sm: 0.25rem;
 // 8. NAVBAR TOOLS (Recherche)
 #search-form {
   margin-left: auto;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   
   .form-control {
     background: rgba($white, 0.2);
     border-color: rgba($white, 0.3);
     color: $white;
-    min-width: 200px;
+    min-width: 180px;
+    max-width: 250px;
+    transition: all 0.3s ease;
     
     &::placeholder {
       color: rgba($white, 0.7);
@@ -374,6 +508,8 @@ $border-radius-sm: 0.25rem;
       background: rgba($white, 0.25);
       border-color: $secondary;
       color: $white;
+      min-width: 200px;
+      max-width: 280px;
     }
   }
   
@@ -383,6 +519,8 @@ $border-radius-sm: 0.25rem;
     color: $white;
     padding: $spacer-sm $spacer;
     border-radius: $border-radius;
+    white-space: nowrap;
+    flex-shrink: 0;
     
     &:hover,
     &:focus {
@@ -511,6 +649,10 @@ $border-radius-sm: 0.25rem;
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+  
+  .logo {
+    animation: none !important;
   }
   
   .nav-link {

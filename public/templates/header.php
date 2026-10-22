@@ -12,7 +12,7 @@ $description = e($current_page['meta_description'] ?? '') ?: e($intro_rubrique) 
 $titre_page = e($current_page['titre'] ?? 'Accueil');
 $chemin_url = strtok($_SERVER['REQUEST_URI'], '?');
 $url_courante = SITE_URL . $chemin_url;
-$og_image = SITE_URL . '/assets/image/logo.jpeg';
+$og_image = SITE_URL . '/assets/image/Main.png';
 
 if (!empty($all_blocs)) {
     foreach ($all_blocs as $b) {
@@ -65,7 +65,7 @@ function menu_href(array $m): string
 <body>
     <nav class="navbar sticky-top navbar-expand-lg bg-primary navbar-animate" id="navbar">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/"><img src="/assets/image/logo.jpeg" alt="Point Com - accueil" class="logo"></a>
+            <a class="navbar-brand" href="/"><img src="/assets/image/Main.png" alt="Point Com - accueil" class="logo"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain"
                 aria-controls="navMain" aria-expanded="false" aria-label="Ouvrir le menu">
                 <span class="navbar-toggler-icon"></span>
