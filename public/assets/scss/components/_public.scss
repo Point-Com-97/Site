@@ -9,10 +9,10 @@
 
 .hero {
   background: url('/assets/image/rubriques/home.svg') center/cover;
-  min-height: 60vh;
-  max-height: 70vh;
+  min-height: 80vh;
   display: flex;
   align-items: center;
+  padding: 3rem 0;
 }
 
 // ============================================
@@ -41,6 +41,7 @@
 // ============================================
 
 .reveal {
+  color: $tertiary;
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.6s, transform 0.6s;
@@ -120,7 +121,7 @@
   .partenaires {
     overflow-x: auto;
   }
-  
+
   .partenaires-piste {
     animation: none;
   }
@@ -156,11 +157,11 @@
   max-width: 600px;
   margin: 0 auto;
   text-align: center;
-  
+
   .empty-menu-icon {
     display: inline-block;
     margin-bottom: $spacer-lg;
-    
+
     .icon-wrapper {
       display: inline-flex;
       align-items: center;
@@ -171,7 +172,7 @@
       background: linear-gradient(135deg, rgba($primary, 0.2), rgba($secondary, 0.2));
       border: 3px solid $primary;
       animation: emptyIconPulse 3s ease-in-out infinite;
-      
+
       i.bi {
         font-size: 2.5rem;
         color: $primary;
@@ -179,7 +180,7 @@
       }
     }
   }
-  
+
   .empty-menu-title {
     font-size: clamp(1.5rem, 3vw, 2rem);
     font-weight: 700;
@@ -187,7 +188,7 @@
     margin-bottom: $spacer;
     transition: opacity 0.5s ease, transform 0.5s ease;
   }
-  
+
   .empty-menu-text {
     font-size: clamp(1rem, 2vw, 1.125rem);
     color: $gray-600;
@@ -195,7 +196,7 @@
     margin-bottom: $spacer-lg;
     transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
   }
-  
+
   .empty-menu-cta {
     display: inline-flex;
     align-items: center;
@@ -207,17 +208,17 @@
     background: $primary;
     color: $white;
     transition: all 0.3s ease;
-    
+
     i.bi {
       transition: transform 0.25s ease;
     }
-    
+
     &:hover {
       background: #2188b8;
       gap: $spacer;
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba($primary, 0.3);
-      
+
       i.bi {
         transform: translateX(3px);
       }
@@ -231,10 +232,13 @@
 
 // Animations pour le message vide
 @keyframes emptyIconPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }
+
   50% {
     transform: scale(1.2);
     opacity: 0.8;
@@ -247,12 +251,12 @@
     .empty-menu-icon .icon-wrapper {
       width: 70px;
       height: 70px;
-      
+
       i.bi {
         font-size: 2rem;
       }
     }
-    
+
     .empty-menu-title {
       font-size: 1.5rem;
     }
@@ -264,16 +268,16 @@
     .empty-menu-icon .icon-wrapper {
       width: 60px;
       height: 60px;
-      
+
       i.bi {
         font-size: 1.75rem;
       }
     }
-    
+
     .empty-menu-title {
       font-size: 1.3rem;
     }
-    
+
     .empty-menu-text {
       font-size: 1rem;
     }
@@ -282,13 +286,38 @@
 
 // Reduced motion
 @media (prefers-reduced-motion: reduce) {
+
   .empty-menu-icon .icon-wrapper,
   .empty-menu-icon i.bi {
     animation: none !important;
     transform: none !important;
   }
-  
+
   .empty-menu-message-container::before {
     animation: none !important;
+  }
+}
+
+// ============================================
+// 8. LOGO SECTION (centré sur la page d'accueil)
+// ============================================
+
+.page-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.btn-outline-light {
+  color: $tertiary;
+  border: $tertiary solid 2px;
+  font-weight: bold;
+  transition: transform 0.4s;
+
+  &:hover {
+    color: $secondary;
+    border: $secondary solid 3px;
+    font-weight: bold;
+    transition: transform 0.4s;
   }
 }

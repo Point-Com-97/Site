@@ -12,7 +12,7 @@ $description = e($current_page['meta_description'] ?? '') ?: e($intro_rubrique) 
 $titre_page = e($current_page['titre'] ?? 'Accueil');
 $chemin_url = strtok($_SERVER['REQUEST_URI'], '?');
 $url_courante = SITE_URL . $chemin_url;
-$og_image = SITE_URL . '/assets/image/Main.png';
+$og_image = SITE_URL . '/assets/image/logo.png';
 
 if (!empty($all_blocs)) {
     foreach ($all_blocs as $b) {
@@ -65,7 +65,7 @@ function menu_href(array $m): string
 <body>
     <nav class="navbar sticky-top navbar-expand-lg bg-primary navbar-animate" id="navbar">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/"><img src="/assets/image/Main.png" alt="Point Com - accueil" class="logo"></a>
+            <a class="navbar-brand" href="/"><img src="/assets/image/logo.png" alt="Point Com - accueil" class="logo"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain"
                 aria-controls="navMain" aria-expanded="false" aria-label="Ouvrir le menu">
                 <span class="navbar-toggler-icon"></span>
@@ -128,11 +128,20 @@ function menu_href(array $m): string
                     <?php endforeach; ?>
                 </ul>
 
-                <form class="d-flex position-relative" role="search" id="search-form" autocomplete="off">
-                    <input class="form-control me-2" type="search" name="q" id="search-input" placeholder="Rechercher" aria-label="Rechercher">
-                    <button class="btn btn-search" type="submit">Recherche</button>
-                    <ul class="list-group position-absolute w-100" id="search-results" style="top:100%;z-index:1050;display:none;"></ul>
-                </form>
+                <!-- Recherche : bouton loupe + dropdown -->
+                <div class="dropdown search-dropdown">
+                    <button class="btn btn-search-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false" aria-label="Ouvrir la recherche">
+                        <i class="bi bi-search"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end search-dropdown-menu">
+                        <form class="d-flex position-relative" role="search" id="search-form" autocomplete="off">
+                            <input class="form-control" type="search" name="q" id="search-input" placeholder="Rechercher" aria-label="Rechercher">
+                            <button class="btn btn-search" type="submit">Recherche</button>
+                            <ul class="list-group position-absolute w-100" id="search-results" style="top:100%;z-index:1050;display:none;"></ul>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>

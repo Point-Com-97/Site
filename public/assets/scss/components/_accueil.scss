@@ -1,0 +1,175 @@
+// ============================================
+// ACCUEIL - Hero avec texte animé (roller)
+// ============================================
+
+.main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.main h1 {
+  text-align: center;
+  text-transform: uppercase;
+  color: $tertiary;
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.roller {
+  height: 3.5rem;
+  line-height: 3.5rem;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $primary;
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+}
+
+.roller #rolltext {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: slide 10s infinite;
+}
+
+.roll-item {
+  display: block;
+  height: 3.5rem;
+  line-height: 3.5rem;
+  white-space: nowrap;
+}
+
+@keyframes slide {
+  0%, 16% {
+    top: 0;
+  }
+  20%, 36% {
+    top: -3.5rem;
+  }
+  40%, 56% {
+    top: -7rem;
+  }
+  60%, 76% {
+    top: -10.5rem;
+  }
+  80%, 96% {
+    top: -14rem;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .main {
+    padding: 1rem 0;
+  }
+
+  .main h1 {
+    font-size: 1.5rem;
+  }
+
+  .roller {
+    height: 2.5rem;
+    line-height: 2.5rem;
+    font-size: 1.25rem;
+  }
+
+  .roll-item {
+    height: 2.5rem;
+    line-height: 2.5rem;
+  }
+
+  .roller #rolltext {
+    animation: slide-mob 10s infinite;
+  }
+
+  @keyframes slide-mob {
+    0%, 16% {
+      top: 0;
+    }
+    20%, 36% {
+      top: -2.5rem;
+    }
+    40%, 56% {
+      top: -5rem;
+    }
+    60%, 76% {
+      top: -7.5rem;
+    }
+    80%, 96% {
+      top: -10rem;
+    }
+    100% {
+      top: 0;
+    }
+  }
+}
+
+// ============================================
+// LOGO AVEC ANIMATION CLIP-PATH (fx)
+// ============================================
+
+.fxwrap {
+  max-width: 500px;
+  margin: 0 auto 1.5rem;
+  animation: fxReveal 4s ease-in-out infinite;
+}
+
+.fxwrap .page-logo.fx {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@keyframes fxReveal {
+  0% {
+    clip-path: polygon(
+      100% 0, 100% 0, 100% 0, 100% 0,
+      0 100%, 0 100%, 0 100%, 0 100%
+    );
+  }
+  15%, 85% {
+    clip-path: polygon(
+      0 50%, 0 0, 100% 0, 100% 50%,
+      0 50%, 0 100%, 100% 100%, 100% 50%
+    );
+  }
+  100% {
+    clip-path: polygon(
+      100% 0, 100% 0, 100% 0, 100% 0,
+      0 100%, 0 100%, 0 100%, 0 100%
+    );
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .fxwrap {
+    max-width: 160px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fxwrap {
+    animation: none;
+    clip-path: polygon(
+      0 50%, 0 0, 100% 0, 100% 50%,
+      0 50%, 0 100%, 100% 100%, 100% 50%
+    );
+  }
+}
+
+

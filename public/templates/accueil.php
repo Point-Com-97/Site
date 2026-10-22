@@ -4,8 +4,21 @@
 <!-- HERO -->
 <section class="hero text-center text-white">
     <div class="container py-5 hero-content">
-        <h1 class="display-4 fw-bold reveal"><?= e($current_page['titre']) ?></h1>
-        <p class="lead reveal"><?= e($current_page['meta_description'] ?: 'La formation tout au long de la vie') ?></p>
+        <div class="fxwrap">
+            <img src="/assets/image/logo-v2.png" alt="Point Com - Association" class="page-logo fx">
+        </div>
+        <div class="main">
+            <h1>La formation tout au long de la vie</h1>
+            <div class="roller">
+                <span id="rolltext">
+                    <span class="roll-item">Formation diplômante (Niveaux 3, 4, 5)</span>
+                    <span class="roll-item">Français Langues Étrangères (F.L.E)</span>
+                    <span class="roll-item">Bilan de compétences</span>
+                    <span class="roll-item">Formation Bureautique</span>
+                    <span class="roll-item">Écrivain public</span>
+                </span>
+            </div>
+        </div>
         <div class="d-flex flex-wrap justify-content-center gap-2 reveal">
             <a class="btn btn-outline-light btn-lg" href="/nos-formations"><i class="bi bi-book"></i> Nos formations</a>
             <a class="btn btn-outline-light btn-lg" href="/contact"><i class="bi bi-envelope"></i> Nous contacter</a>
