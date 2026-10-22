@@ -32,26 +32,6 @@
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
 }
 
-.reveal {
-    color: $tertiary;
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity .6s, transform .6s;
-}
-
-.reveal.visible {
-    opacity: 1;
-    transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .reveal {
-        opacity: 1;
-        transform: none;
-        transition: none;
-    }
-}
-
 .video-clic {
     background: #000;
 }
@@ -65,6 +45,7 @@
 
 .partenaires {
     overflow: hidden;
+    padding: 1rem 2rem;
 }
 
 .partenaires-piste {
@@ -99,5 +80,5 @@
 }
 
 .partenaires-piste a:hover img {
-    transform: scale(2.5);
+    transform: scale(1.5);
 }

@@ -38,7 +38,17 @@ if (!empty($pages_liees)) {
     <?php render_blocs($all_blocs); ?>
 
     <?php if (empty($all_blocs) && !$est_contact && empty($pages_liees) && empty($conf)): ?>
-        <p class="text-muted text-center">Cette page ne contient pas encore de contenu.</p>
+        <div class="row justify-content-center py-5">
+            <div class="col-12 col-md-10 col-lg-8">
+                <div class="empty-menu-message reveal">
+                    <div class="text-center">
+                        <i class="bi bi-info-circle-fill"></i>
+                        <h3 class="mt-3 mb-2">Contenu en préparation</h3>
+                        <p class="mb-0">Cette page est en cours de mise à jour. Revenez bientôt pour découvrir son contenu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     <?php endif; ?>
 
     <?php if ($est_contact) {

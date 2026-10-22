@@ -1,0 +1,56 @@
+.reveal {
+    color: $tertiary;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .6s, transform .6s;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+.empty-menu-message {
+    background: $tertiary;
+    color: $white;
+    border-radius: 14px;
+    padding: 2.5rem 1.5rem;
+    box-shadow: 1px 3px 2px rgba(0, 0, 0, .5);
+}
+
+.empty-menu-message .bi {
+    font-size: 3rem;
+    color: $secondary;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.empty-menu-message h3 {
+    font-weight: bold;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: .8;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .empty-menu-message .bi {
+        animation: none;
+    }
+}
