@@ -327,7 +327,7 @@ $hover-scale: 1.05;
       top: $spacer-sm;
       left: $spacer-sm;
       padding: $spacer-sm $spacer;
-      font-size: $spacer-sm;
+      font-size: 12px;
       font-weight: 600;
       color: $white;
       background: $tertiary;
@@ -365,7 +365,7 @@ $hover-scale: 1.05;
     margin-top: auto;
     padding-top: $spacer;
     color: $gray-500;
-    font-size: $spacer-sm;
+    font-size: 14px;
     
     .news-date {
       display: flex;

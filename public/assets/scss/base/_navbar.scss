@@ -85,8 +85,7 @@ $border-radius: 0.375rem;
     pointer-events: none;
   }
   
-  &:hover > .dropdown-menu,
-  &:focus-within > .dropdown-menu {
+  &:hover > .dropdown-menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -119,8 +118,7 @@ $border-radius: 0.375rem;
     pointer-events: none;
   }
   
-  .nav-hover:hover > .dropdown-menu,
-  .nav-hover:focus-within > .dropdown-menu {
+  .nav-hover:hover > .dropdown-menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -249,5 +247,56 @@ $border-radius: 0.375rem;
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+}
+
+// --------------------------------------------
+// 3b. CORRECTION HOVER DROPDOWN (desktop)
+// --------------------------------------------
+// Problème : le dropdown utilise transform: translateY(-10px) + margin-top
+// de Bootstrap (0.125rem), créant un "gap" entre le lien et le menu déroulant.
+// Quand la souris traverse ce gap, le :hover sur .nav-hover est perdu et
+// le dropdown se ferme (comportement "une fois sur deux").
+//
+// Solution :
+// 1. Animation par opacity/visibility uniquement (pas de transform)
+// 2. margin-top: 0 pour coller le dropdown au menu
+// 3. Pont invisible (::before) pour maintenir le hover en toutes circonstances
+
+@media (min-width: 992px) {
+  .nav-hover {
+    .dropdown-menu {
+      // Supprime le gap créé par Bootstrap
+      margin-top: 0;
+
+      // Animation sans déplacement : uniquement fondu
+      display: block;
+      opacity: 0;
+      visibility: hidden;
+      transform: none;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+      pointer-events: none;
+
+      // Pont invisible : zone de hover étendue vers le haut
+      // pour éviter toute perte du :hover entre le lien et le dropdown
+      &::before {
+        content: "";
+        position: absolute;
+        top: -8px;
+        left: 0;
+        right: 0;
+        height: 8px;
+        background: transparent;
+        pointer-events: auto;
+      }
+    }
+
+    &:hover > .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      pointer-events: auto;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
   }
 }

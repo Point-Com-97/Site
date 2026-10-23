@@ -32,41 +32,8 @@ if (window.matchMedia) {
 // 2. NAVBAR - EFFET AU SCROLL
 // ============================================
 
-function initNavbarScroll() {
-  const navbar = document.getElementById('navbar');
-  if (!navbar) return;
-
-  let lastScroll = 0;
-  const scrollThreshold = 50; // Seuil en pixels pour ajouter la classe
-
-  function handleScroll() {
-    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-    // Ajouter classe 'scrolled' si on a dépassé le seuil
-    if (currentScroll > scrollThreshold) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-
-    lastScroll = currentScroll;
-  }
-
-  // Écouter le scroll avec throttling
-  let scrollTimeout;
-  window.addEventListener('scroll', () => {
-    if (scrollTimeout) {
-      window.cancelAnimationFrame(scrollTimeout);
-    }
-    scrollTimeout = window.requestAnimationFrame(handleScroll);
-  }, { passive: true });
-
-  // Vérifier au chargement
-  handleScroll();
-}
 
 // Initialiser au chargement du DOM
-document.addEventListener('DOMContentLoaded', initNavbarScroll);
 
 // ============================================
 // 3. ANIMATIONS AU DÉFILEMENT (Intersection Observer)
@@ -734,7 +701,6 @@ window.triggerAnimation = triggerAnimation;
 // Fonction pour initialiser tous les composants
 function initAll() {
   disableAnimationsIfNeeded();
-  initNavbarScroll();
   initScrollAnimations();
   initCardAnimations();
   initVideoPlayers();

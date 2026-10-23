@@ -9,7 +9,7 @@ require_once __DIR__ . '/../../../src/php/Csrf.php';
 
 if (!verifier_csrf_token($_POST['csrf_token'] ?? null)) {
     set_flash('Requête invalide, veuillez réessayer.', 'danger');
-    header('Location: /admin/media/index.php');
+    header('Location: /admin/media/media-index.php');
     exit;
 }
 
@@ -24,7 +24,7 @@ try {
 } catch (PDOException $e) {
     error_log("Erreur de requête SQL : " . $e->getMessage(), 3, __DIR__ . "/../../../var/tmp/erreur.log");
     set_flash('Une erreur est survenue, veuillez réessayer plus tard.', 'danger');
-    header('Location: /admin/media/index.php');
+    header('Location: /admin/media/media-index.php');
     exit;
 }
 
@@ -73,21 +73,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     die(" Une erreur est survenue, veuillez réessayer plus tard."); // Message d'erreur pour les visiteur
                 }
                 set_flash('Média ajouté avec succès.', 'success');
-                header('Location: /admin/media/index.php');
+                header('Location: /admin/media/media-index.php');
                 exit;
             } else {
                 set_flash('Seuls les fichiers JPEG, PNG et PDF sont autorisés.', 'danger');
-                header('Location: /admin/media/index.php');
+                header('Location: /admin/media/media-index.php');
                 exit;
             }
         } else {
             set_flash('La taille de la pièce jointe dépasse la limite maximale de 10Mo', 'danger');
-            header('Location: /admin/media/index.php');
+            header('Location: /admin/media/media-index.php');
             exit;
         }
     } else {
         set_flash('Une erreur est survenue', 'danger');
-        header('Location: /admin/media/index.php');
+        header('Location: /admin/media/media-index.php');
         exit;
     }
 }
