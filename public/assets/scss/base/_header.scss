@@ -24,9 +24,12 @@ $border-radius-sm: 0.25rem;
   max-width: 70px;
   height: auto;
   border-radius: $border-radius;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 0.25rem 0.5rem rgba($black, 0.15), 0 0 20px rgba($secondary, 0.3);
   animation: logoGlow 3s ease-in-out infinite;
+  will-change: transform, max-width;
   
   &:hover {
     transform: scale(1.08) translateY(-2px);
@@ -127,7 +130,7 @@ $border-radius-sm: 0.25rem;
   }
   
   .logo {
-    max-width: 90px;
+    max-width: 80px;
     
     @media (max-width: 575.98px) {
       max-width: 80px;
@@ -141,7 +144,7 @@ $border-radius-sm: 0.25rem;
   }
   
   .nav-link {
-    font-size: 0.8125rem;
+    font-size: 1rem;
     padding: 0.4rem 0.6rem;
     white-space: nowrap;
   }
@@ -182,7 +185,9 @@ $border-radius-sm: 0.25rem;
 }
 
 #navbar {
-  transition: padding 0.3s ease, box-shadow 0.3s ease;
+  transition: padding 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: padding, box-shadow;
   
   .navbar-collapse {
     min-width: 0;
@@ -238,6 +243,7 @@ $border-radius-sm: 0.25rem;
 .navbar-brand {
   padding: 0;
   margin-right: $spacer;
+  transition: margin-right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   
   &:hover {
     text-decoration: none;
@@ -282,6 +288,7 @@ $border-radius-sm: 0.25rem;
 .navbar-nav {
   margin-right: $spacer;
   flex-wrap: nowrap;
+  transition: margin-right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-item {
@@ -290,6 +297,7 @@ $border-radius-sm: 0.25rem;
   
   & + .nav-item {
     margin-left: $spacer-sm;
+    transition: margin-left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
@@ -302,15 +310,20 @@ $border-radius-sm: 0.25rem;
   color: $white;
   font-size: 1rem;
   border-radius: $border-radius-sm;
-  transition: all 0.3s ease;
+  transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              font-size 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   white-space: nowrap;
+  will-change: font-size, padding;
   
   i.bi {
     font-size: 1.2em;
     min-width: 1.2em;
     text-align: center;
     flex-shrink: 0;
+    transition: font-size 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   &:hover,
@@ -501,10 +514,14 @@ $border-radius-sm: 0.25rem;
     padding: 0.4rem 0.6rem;
     border-radius: $border-radius-sm;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                background 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                font-size 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
+    will-change: font-size, padding;
     
     &::after {
       display: none;
@@ -530,6 +547,8 @@ $border-radius-sm: 0.25rem;
     background: $white;
     box-shadow: 0 0.5rem 1.5rem rgba($black, 0.2);
     margin-top: $spacer-sm;
+    transition: min-width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     
     @media (min-width: 992px) {
       border-top-right-radius: $border-radius;
@@ -549,7 +568,10 @@ $border-radius-sm: 0.25rem;
     color: #343a40;
     flex: 1;
     min-width: 0;
-    transition: all 0.3s ease;
+    transition: border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                font-size 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     
     &::placeholder {
       color: #6c757d;
@@ -571,6 +593,10 @@ $border-radius-sm: 0.25rem;
     border-radius: $border-radius-sm;
     white-space: nowrap;
     flex-shrink: 0;
+    transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                font-size 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     
     &:hover,
     &:focus {

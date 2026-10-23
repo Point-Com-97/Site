@@ -15,12 +15,12 @@ $flash = get_flash();
                 <div class="footer-block">
                     <h5 class="footer-title"><i class="bi bi-building-fill"></i>Pôle de Cayenne :</h5>
                     <p class="footer-text mb-1"><i class="bi bi-telephone-fill"></i><a href="tel:+594313724"> 05 94 31 37 24</a></p>
-                    <p class="footer-text mb-0"><i class="bi bi-geo-alt-fill"></i> 77 Rue René Jadfard 97300 Cayenne</p>
+                    <a class="footer-text mb-0" href="https://maps.app.goo.gl/Q2CUJc5bFmXquZ7i8" target="_blank" rel="noopener noreferrer"><i class="bi bi-geo-alt-fill"></i> 77 Rue René Jadfard 97300 Cayenne</a>
                     <p class="footer-text mb-0"><i class="bi bi-envelope-fill"></i> <a href="mailto:contact@cfa-pcom.fr">contact@cfa-pcom.fr</a></p>
 
                     <h5 class="footer-title pt-3"><i class="bi bi-building-fill"></i>Pôle de Matoury </h5>
                     <p class="footer-text mb-1"><i class="bi bi-telephone-fill"></i><a href="tel:+594281905"> 05 94 28 19 05</a></p>
-                    <p class="footer-text mb-0 pt-1"><i class="bi bi-geo-alt-fill"></i> 5 rue Orapus – Parc d’Activité Horizon 97351 Matoury</p>
+                    <a class="footer-text mb-0 pt-1" href="https://maps.app.goo.gl/zFjF2v5456S49M9m9" target="_blank" rel="noopener noreferrer"><i class="bi bi-geo-alt-fill"></i> 5 rue Orapus – Parc d’Activité Horizon 97351 Matoury</a>
                     <p class="footer-text mb-0"><i class="bi bi-envelope-fill"></i> <a href="mailto:pcb@cfa-pcom.fr">pcb@cfa-pcom.fr</a></p>
                 </div>
             </div>

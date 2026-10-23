@@ -23,7 +23,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarToggler">
                 <a class="navbar-brand" href="/admin/dashboard.php">
-                    <img src="/assets/image/logo.jpeg" alt="Logo" class="logo">
+                    <img src="/assets/image/logo.png" alt="Logo" class="logo">
                 </a>
                 <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                     <li class="nav-item">

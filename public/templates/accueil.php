@@ -48,21 +48,56 @@
     <?php render_blocs($all_blocs); ?>
 </section>
 
+<?php
+function current_year(): int
+{
+    $year = date("Y");
+    $age = $year - 2002;
+    return $age;
+}
+?>
 
-
-<section class="partenaires container pb-4 menu-block">
-    <ul class="partenaires-piste">
-        <?php for ($copie = 0; $copie <= 1; $copie++): ?>
-            <?php foreach (list_partenaires() as $p): ?>
-                <?php if (empty($p['url'])) continue; ?>
-                <li>
-                    <a href="<?= e($p['url']) ?>" target="_blank" rel="noopener noreferrer"
-                        <?= $copie ? 'tabindex="-1"' : '' ?>>
-                        <img src="<?= e($p['image']) ?>" alt="<?= $copie ? '' : e($p['nom']) ?>"
-                            height="60" loading="lazy">
-                    </a>
-                </li>
-            <?php endforeach; ?>
-        <?php endfor; ?>
-    </ul>
+<!-- PRÉSENTATION ÉCRITE DU CENTRE -->
+<section class="presentation-section">
+    <div class="container">
+        <div class="presentation-content reveal">
+            <h2>Le CFA Point Com</h2>
+            <p>Depuis plus de <?php echo current_year(); ?> ans , notre organisme de formation (OF) et centre de formation des apprentis (CFA) a le privilège de vous accueillir et de vous accompagner dans votre parcours de formation et d'insertion professionnelle. Nos centres sont implantés sur les communes de Cayenne et Matoury.</p>
+            <p>Dans nos locaux, vous trouverez un environnement propice à l'apprentissage et au développement professionnel. Nos salles vous offriront un cadre de formation confortable et interactif. Nos formateurs, hautement qualifiés et expérimentés, sont là pour vous guider à chaque étape de votre parcours</p>
+            <p>Nous proposons une large gamme de formations adaptées à tous les profils et à tous les besoins. Que vous souhaitiez acquérir de nouvelles compétences, vous réorienter professionnellement ou simplement vous perfectionner dans votre domaine, nous avons la formation qu'il vous faut. De plus, nos programmes sont régulièrement mis à jour pour répondre aux évolutions du marché du travail et aux besoins spécifiques de nos apprenants.</p>
+            <p>En plus de nos formations, nous mettons également à votre disposition un service d'aide à la rédaction. Nos écrivains publics sont là pour vous assister dans la rédaction de vos courriers personnels et documents administratifs, vous permettant ainsi de gagner du temps et d'obtenir des résultats professionnels de qualité.</p>
+        </div>
+    </div>
 </section>
+
+<!-- SECTION VIDÉO -->
+<section class="video-section">
+    <div class="container">
+        <div class="video-wrapper reveal">
+            <video controls preload="metadata" poster="/assets/image/rubriques/home.svg">
+                <source src="/assets/video/PC.mp4" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+            </video>
+        </div>
+    </div>
+</section>
+
+<div class="menu-title">
+    <h1>Nos partenaires</h1>
+    <section class="partenaires container pb-4 menu-block">
+        <ul class="partenaires-piste">
+            <?php for ($copie = 0; $copie <= 1; $copie++): ?>
+                <?php foreach (list_partenaires() as $p): ?>
+                    <?php if (empty($p['url'])) continue; ?>
+                    <li>
+                        <a href="<?= e($p['url']) ?>" target="_blank" rel="noopener noreferrer"
+                            <?= $copie ? 'tabindex="-1"' : '' ?>>
+                            <img src="<?= e($p['image']) ?>" alt="<?= $copie ? '' : e($p['nom']) ?>"
+                                height="60" loading="lazy">
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            <?php endfor; ?>
+        </ul>
+    </section>
+</div>

@@ -31,7 +31,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: $primary;
+  color: $tertiary;
   font-size: clamp(1.5rem, 3.5vw, 2.5rem);
   font-weight: 700;
 }
@@ -169,6 +169,185 @@
       0 50%, 0 0, 100% 0, 100% 50%,
       0 50%, 0 100%, 100% 100%, 100% 50%
     );
+  }
+}
+
+// ============================================
+// PRÉSENTATION ÉCRITE DU CENTRE
+// ============================================
+
+.presentation-section {
+  padding: 3rem 0;
+  background: $white;
+}
+
+.presentation-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  
+  // État initial des enfants (cachés, prêts à être révélés)
+  h2, p {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  // Révélation en cascade quand le parent devient visible
+  &.visible {
+    h2 {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.2s;
+    }
+    
+    p:nth-of-type(1) {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.35s;
+    }
+    
+    p:nth-of-type(2) {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.5s;
+    }
+    
+    p:nth-of-type(3) {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.65s;
+    }
+    
+    p:nth-of-type(4) {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.8s;
+    }
+    
+    p:nth-of-type(5) {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.95s;
+    }
+  }
+  
+  h2 {
+    color: $tertiary;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    display: inline-block;
+    
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, $primary, $secondary);
+      border-radius: 2px;
+    }
+  }
+  
+  p {
+    color: $gray-600;
+    font-size: clamp(1rem, 1.5vw, 1.125rem);
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+    text-align: justify; 
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .presentation-section {
+    padding: 2rem 0;
+  }
+  
+  .presentation-content {
+    h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    
+    p {
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      text-align: justify;  
+    }
+  }
+}
+
+// ============================================
+// SECTION VIDÉO
+// ============================================
+
+.video-section {
+  padding: 3rem 0;
+  background: linear-gradient(180deg, rgba($primary, 0.03) 0%, rgba($white, 1) 100%);
+}
+
+.video-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 720px;
+  margin: 0 auto;
+  
+  video {
+    max-height: 70vh;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    border-radius: $border-radius;
+    box-shadow: 0 1rem 3rem rgba($black, 0.15), 0 0 40px rgba($primary, 0.1);
+    background: $black;
+  }
+}
+
+// Tablettes et petits écrans
+@media screen and (max-width: 991.98px) {
+  .video-wrapper {
+    max-width: 100%;
+    
+    video {
+      max-height: 60vh;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .video-section {
+    padding: 2rem 0;
+  }
+  
+  .video-wrapper {
+    video {
+      max-height: 50vh;
+      border-radius: $border-radius-sm;
+      box-shadow: 0 0.5rem 1.5rem rgba($black, 0.15);
+    }
+  }
+}
+
+// Reduced motion : désactive l'animation en cascade de la présentation
+@media (prefers-reduced-motion: reduce) {
+  .presentation-content {
+    h2, p {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
   }
 }
 
