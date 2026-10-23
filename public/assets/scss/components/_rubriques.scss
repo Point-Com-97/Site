@@ -1,0 +1,798 @@
+// ============================================
+// STYLES DES RUBRIQUES SPÉCIFIQUES - Site Point Com
+// ============================================
+
+// ============================================
+// 1. NOS FORMATIONS - Rubriques par sous-menu
+// ============================================
+
+.formation-rubrique {
+  .formation-rubrique-header {
+    .formation-rubrique-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: $border-radius-lg;
+      background: linear-gradient(135deg, rgba($primary, 0.12), rgba($secondary, 0.12));
+      border: 2px solid rgba($primary, 0.2);
+
+      i.bi {
+        font-size: 1.75rem;
+        color: $primary;
+      }
+    }
+
+    h2 {
+      color: $tertiary;
+      font-weight: 700;
+    }
+  }
+}
+
+.formation-card {
+  border: none;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  box-shadow: $box-shadow-sm;
+  transition: $transition-base;
+  height: 100%;
+  background: $white;
+
+  .card-body {
+    padding: $spacer-lg;
+  }
+
+  .formation-card-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: $tertiary;
+    margin-bottom: $spacer-sm;
+  }
+
+  .formation-card-text {
+    color: $gray-600;
+    font-size: 0.875rem;
+    margin-bottom: $spacer;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .formation-card-footer {
+    margin-top: auto;
+    padding-top: $spacer;
+    border-top: 1px solid $gray-200;
+
+    .formation-link {
+      color: $primary;
+      font-weight: 500;
+      font-size: 0.875rem;
+      display: inline-flex;
+      align-items: center;
+      gap: $spacer-sm;
+
+      i {
+        transition: transform $transition-time-base $transition-ease;
+      }
+    }
+  }
+
+  &:hover,
+  &:focus-within {
+    transform: translateY($hover-translate-y-lg);
+    box-shadow: $box-shadow-lg;
+
+    .formation-link i {
+      transform: translateX(4px);
+    }
+  }
+}
+
+// ============================================
+// 2. RECRUTEMENT
+// ============================================
+
+.recrutement-intro {
+  background: linear-gradient(180deg, rgba($primary, 0.03) 0%, $white 100%);
+
+  .recrutement-intro-card {
+    background: $white;
+    border-radius: $border-radius-xl;
+    padding: $spacer-xxl $spacer-xl;
+    box-shadow: $box-shadow;
+    border: 1px solid $gray-200;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, $primary, $secondary);
+    }
+
+    .recrutement-intro-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba($primary, 0.15), rgba($secondary, 0.15));
+      margin-bottom: $spacer;
+
+      i.bi {
+        font-size: 2rem;
+        color: $primary;
+      }
+    }
+  }
+}
+
+// ============================================
+// 3. ALTERNANCE
+// ============================================
+
+.alternance-section {
+  background: $white;
+
+  .alternance-content {
+    h2 {
+      color: $tertiary;
+      position: relative;
+      padding-bottom: $spacer;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(90deg, $primary, $secondary);
+        border-radius: 2px;
+      }
+    }
+  }
+
+  .alternance-avantages {
+    display: flex;
+    flex-direction: column;
+    gap: $spacer;
+
+    .alternance-avantage {
+      display: flex;
+      align-items: flex-start;
+      gap: $spacer;
+      padding: $spacer;
+      border-radius: $border-radius;
+      background: $gray-100;
+      transition: $transition-base;
+
+      &:hover {
+        background: rgba($primary, 0.05);
+        transform: translateX(4px);
+      }
+
+      .alternance-avantage-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        border-radius: $border-radius;
+        background: $white;
+        box-shadow: $box-shadow-sm;
+
+        i.bi {
+          font-size: 1.25rem;
+          color: $primary;
+        }
+      }
+
+      h3 {
+        color: $tertiary;
+        margin-bottom: 0.25rem;
+      }
+    }
+  }
+}
+
+.alternance-etapes {
+  .etape-card {
+    background: $white;
+    border-radius: $border-radius-lg;
+    padding: $spacer-xl $spacer;
+    box-shadow: $box-shadow-sm;
+    height: 100%;
+    transition: $transition-base;
+
+    &:hover {
+      transform: translateY($hover-translate-y);
+      box-shadow: $box-shadow;
+    }
+
+    .etape-numero {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, $primary, $primary-light);
+      color: $white;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: $spacer;
+    }
+
+    h3 {
+      color: $tertiary;
+    }
+  }
+}
+
+.alternance-cta {
+  .alternance-cta-card {
+    background: linear-gradient(135deg, $tertiary, $primary);
+    border-radius: $border-radius-xl;
+    padding: $spacer-xxl $spacer-xl;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba($white, 0.05);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -30%;
+      left: -5%;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: rgba($secondary, 0.15);
+    }
+  }
+}
+
+// ============================================
+// 4. RHF INCLUSION
+// ============================================
+
+.inclusion-section {
+  background: $white;
+
+  .inclusion-content {
+    h2 {
+      color: $tertiary;
+      position: relative;
+      padding-bottom: $spacer;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(90deg, $primary, $secondary);
+        border-radius: 2px;
+      }
+    }
+  }
+
+  .inclusion-piliers {
+    display: flex;
+    flex-direction: column;
+    gap: $spacer;
+
+    .inclusion-pilier {
+      display: flex;
+      align-items: flex-start;
+      gap: $spacer;
+      padding: $spacer;
+      border-radius: $border-radius;
+      background: $gray-100;
+      transition: $transition-base;
+
+      &:hover {
+        background: rgba($primary, 0.05);
+        transform: translateX(4px);
+      }
+
+      .inclusion-pilier-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        border-radius: $border-radius;
+        background: $white;
+        box-shadow: $box-shadow-sm;
+
+        i.bi {
+          font-size: 1.25rem;
+          color: $secondary;
+        }
+      }
+
+      h3 {
+        color: $tertiary;
+        margin-bottom: 0.25rem;
+      }
+    }
+  }
+}
+
+.inclusion-chiffres {
+  .chiffre-card {
+    background: $white;
+    border-radius: $border-radius-lg;
+    padding: $spacer-xl $spacer;
+    box-shadow: $box-shadow-sm;
+    transition: $transition-base;
+
+    &:hover {
+      transform: translateY($hover-translate-y);
+      box-shadow: $box-shadow;
+    }
+
+    .chiffre-nombre {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: $primary;
+      line-height: 1;
+      margin-bottom: $spacer-sm;
+    }
+
+    .chiffre-label {
+      color: $gray-600;
+      font-size: 0.875rem;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.inclusion-cta {
+  .inclusion-cta-card {
+    background: linear-gradient(135deg, $secondary, $primary);
+    border-radius: $border-radius-xl;
+    padding: $spacer-xxl $spacer-xl;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -10%;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba($white, 0.05);
+    }
+  }
+}
+
+// ============================================
+// 5. BILAN DE COMPETENCES
+// ============================================
+
+.bilan-section {
+  background: $white;
+
+  .bilan-content {
+    h2 {
+      color: $tertiary;
+      position: relative;
+      padding-bottom: $spacer;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(90deg, $primary, $secondary);
+        border-radius: 2px;
+      }
+    }
+  }
+
+  .bilan-avantages {
+    display: flex;
+    flex-direction: column;
+    gap: $spacer;
+
+    .bilan-avantage {
+      display: flex;
+      align-items: flex-start;
+      gap: $spacer;
+      padding: $spacer;
+      border-radius: $border-radius;
+      background: $gray-100;
+      transition: $transition-base;
+
+      &:hover {
+        background: rgba($primary, 0.05);
+        transform: translateX(4px);
+      }
+
+      .bilan-avantage-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        border-radius: $border-radius;
+        background: $white;
+        box-shadow: $box-shadow-sm;
+
+        i.bi {
+          font-size: 1.25rem;
+          color: $tertiary;
+        }
+      }
+
+      h3 {
+        color: $tertiary;
+        margin-bottom: 0.25rem;
+      }
+    }
+  }
+}
+
+.bilan-deroulement {
+  .deroulement-card {
+    background: $white;
+    border-radius: $border-radius-lg;
+    padding: $spacer-xl $spacer;
+    box-shadow: $box-shadow-sm;
+    height: 100%;
+    transition: $transition-base;
+
+    &:hover {
+      transform: translateY($hover-translate-y);
+      box-shadow: $box-shadow;
+    }
+
+    .deroulement-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba($tertiary, 0.12), rgba($primary, 0.12));
+      margin-bottom: $spacer;
+
+      i.bi {
+        font-size: 1.5rem;
+        color: $tertiary;
+      }
+    }
+
+    .deroulement-duree {
+      display: inline-block;
+      padding: 0.25rem $spacer;
+      border-radius: $border-radius-pill;
+      background: $tertiary;
+      color: $white;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: $spacer-sm;
+    }
+
+    h3 {
+      color: $tertiary;
+    }
+  }
+}
+
+.bilan-publics {
+  .public-card {
+    background: $white;
+    border-radius: $border-radius-lg;
+    padding: $spacer-xl $spacer;
+    box-shadow: $box-shadow-sm;
+    text-align: center;
+    height: 100%;
+    transition: $transition-base;
+
+    &:hover {
+      transform: translateY($hover-translate-y);
+      box-shadow: $box-shadow;
+    }
+
+    > i.bi {
+      font-size: 2.5rem;
+      color: $primary;
+      margin-bottom: $spacer;
+    }
+
+    h3 {
+      color: $tertiary;
+      font-size: 1.125rem;
+    }
+  }
+}
+
+.bilan-cta {
+  .bilan-cta-card {
+    background: linear-gradient(135deg, $primary, $tertiary);
+    border-radius: $border-radius-xl;
+    padding: $spacer-xxl $spacer-xl;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -30%;
+      right: -5%;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background: rgba($secondary, 0.15);
+    }
+  }
+}
+
+// ============================================
+// 6. FORMULAIRE DE CONTACT AMÉLIORÉ
+// ============================================
+
+.contact-form-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $spacer-xl;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: $spacer-lg;
+
+  @media (min-width: 992px) {
+    grid-template-columns: 3fr 2fr;
+    align-items: start;
+  }
+}
+
+.contact-form-card {
+  background: $white;
+  border-radius: $border-radius-xl;
+  padding: $spacer-xxl;
+  box-shadow: $box-shadow-lg;
+  border: 1px solid $gray-200;
+
+  .contact-form-header {
+    .contact-form-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba($primary, 0.12), rgba($secondary, 0.12));
+      margin-bottom: $spacer;
+
+      i.bi {
+        font-size: 2rem;
+        color: $primary;
+      }
+    }
+
+    h2 {
+      color: $tertiary;
+      font-weight: 700;
+    }
+  }
+
+
+  .contact-form {
+    .form-floating {
+      > .form-control {
+        border: 2px solid $gray-300;
+        border-radius: $border-radius;
+        padding: 1rem 0.75rem;
+        transition: $transition-base;
+
+        &:focus {
+          border-color: $primary;
+          box-shadow: 0 0 0 0.2rem rgba($primary, 0.15);
+        }
+      }
+
+      > label {
+        padding: 1rem 0.75rem;
+        color: $gray-600;
+
+        i.bi {
+          color: $primary;
+        }
+      }
+    }
+
+    textarea.form-control {
+      min-height: 150px;
+      resize: vertical;
+    }
+  }
+
+  .contact-form-footer {
+    .contact-form-note {
+      font-size: 0.8125rem;
+      color: $gray-500;
+      display: flex;
+      align-items: center;
+      gap: $spacer-sm;
+      margin-bottom: $spacer;
+
+      i.bi {
+        color: $success;
+      }
+    }
+
+    .contact-form-submit {
+      border-radius: $border-radius;
+      padding: 0.875rem $spacer-xl;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.3px;
+      transition: $transition-base;
+      background: linear-gradient(135deg, $primary, $primary-dark);
+      border: none;
+
+      &:hover {
+        background: linear-gradient(135deg, $primary-dark, $primary);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba($primary, 0.35);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+.contact-info-card {
+  background: linear-gradient(135deg, $tertiary, $primary);
+  border-radius: $border-radius-xl;
+  padding: $spacer-xxl;
+  color: $white;
+  box-shadow: $box-shadow-lg;
+
+  h3 {
+    color: $white;
+    font-weight: 600;
+
+    i.bi {
+      color: rgba($white, 0.8);
+    }
+  }
+
+  .contact-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacer;
+    padding: $spacer-sm 0;
+    border-bottom: 1px solid rgba($white, 0.1);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .contact-info-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: $border-radius;
+      background: rgba($white, 0.15);
+
+      i.bi {
+        font-size: 1.125rem;
+        color: $white;
+      }
+    }
+
+    strong {
+      display: block;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: rgba($white, 0.7);
+      margin-bottom: 0.25rem;
+    }
+
+    a {
+      color: $white;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// ============================================
+// 7. RESPONSIVE
+// ============================================
+
+@media (max-width: 767.98px) {
+  .contact-form-card,
+  .contact-info-card {
+    padding: $spacer-lg;
+  }
+
+  .contact-form-card .contact-form-header .contact-form-icon {
+    width: 56px;
+    height: 56px;
+
+    i.bi {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+// ============================================
+// 8. REDUCED MOTION
+// ============================================
+
+@media (prefers-reduced-motion: reduce) {
+  .formation-card,
+  .alternance-avantage,
+  .alternance-etapes .etape-card,
+  .inclusion-pilier,
+  .chiffre-card,
+  .bilan-avantage,
+  .deroulement-card,
+  .public-card,
+  .contact-form-card .contact-form-submit {
+    transition: none !important;
+
+    &:hover {
+      transform: none !important;
+    }
+  }
+}
+
+// ============================================
+// 9. HONEYPOT - Masquage absolu (anti-spam)
+// ============================================
+// Règle globale prioritaire : le champ honeypot ne doit JAMAIS être visible.
+// Techniques combinées : hors écran + taille minimale + opacité nulle.
+
+.hp-field {
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

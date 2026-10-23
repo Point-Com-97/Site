@@ -21,6 +21,12 @@ $empty_message_icon = $conf['empty_icon'] ?? 'bi-info-circle-fill';
 $empty_message_cta = $conf['empty_cta'] ?? null;
 $empty_message_cta_url = $conf['empty_cta_url'] ?? null;
 
+// Template spécifique par rubrique (nos-formations, recrutement, alternance, etc.)
+if ($cle_menu && !$est_contact && file_exists(__DIR__ . '/rubrique-' . $cle_menu . '.php')) {
+    require __DIR__ . '/rubrique-' . $cle_menu . '.php';
+    return;
+}
+
 ?>
 <section class="page-titre text-white py-5">
     <div class="container">
