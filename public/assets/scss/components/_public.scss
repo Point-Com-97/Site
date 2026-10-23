@@ -135,29 +135,90 @@
 // 7. MESSAGE VIDE (Empty Menu)
 // ============================================
 
+// Conteneur externe : centrage parfait avec flexbox
 .empty-menu-message-container {
-  padding: $spacer-xl $spacer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  padding: $spacer-xxl $spacer-xl;
   position: relative;
 }
 
+// Halo radial subtil derrière la carte
 .empty-menu-message-container::before {
   content: "";
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba($primary, 0.05) 0%, transparent 70%);
-  z-index: -1;
+  width: 120%;
+  height: 120%;
+  max-width: 800px;
+  max-height: 600px;
+  background: radial-gradient(circle, rgba($primary, 0.06) 0%, rgba($secondary, 0.03) 40%, transparent 70%);
+  z-index: 0;
   pointer-events: none;
+  border-radius: 50%;
 }
 
+// Carte principale du message
 .empty-menu-message {
-  max-width: 600px;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560px;
   margin: 0 auto;
+  padding: $spacer-xxl $spacer-xl;
   text-align: center;
 
+  // Fond semi-transparent avec effet verre dépoli
+  background: rgba($white, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  // Bordures et coins arrondis
+  border: 1px solid rgba($primary, 0.15);
+  border-radius: $border-radius-xl * 1.5;
+
+  // Ombres en couches pour la profondeur
+  box-shadow:
+    0 1px 3px rgba($black, 0.05),
+    0 10px 40px rgba($primary, 0.08),
+    0 20px 60px rgba($tertiary, 0.05);
+
+  // Motif subtil en arrière-plan (points)
+  background-image:
+    radial-gradient(rgba($primary, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: center center;
+
+  // Bordure supérieure colorée (accent)
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, $primary, $secondary);
+    border-radius: 0 0 4px 4px;
+  }
+
+  // Effet de survol sur la carte
+  transition: transform $transition-time-normal $transition-ease,
+              box-shadow $transition-time-normal $transition-ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 2px 6px rgba($black, 0.06),
+      0 15px 50px rgba($primary, 0.12),
+      0 25px 80px rgba($tertiary, 0.08);
+  }
+
+  // --- Icône ---
   .empty-menu-icon {
     display: inline-block;
     margin-bottom: $spacer-lg;
@@ -166,108 +227,129 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 80px;
-      height: 80px;
+      width: 88px;
+      height: 88px;
       border-radius: 50%;
-      background: linear-gradient(135deg, rgba($primary, 0.2), rgba($secondary, 0.2));
+      background: linear-gradient(135deg, rgba($primary, 0.15), rgba($secondary, 0.15));
       border: 3px solid $primary;
-      animation: emptyIconPulse 3s ease-in-out infinite;
+      box-shadow: 0 4px 15px rgba($primary, 0.15);
 
       i.bi {
-        font-size: 2.5rem;
+        font-size: 2.75rem;
         color: $primary;
-        animation: emptyIconPulse 3s ease-in-out infinite reverse;
       }
     }
   }
 
+  // --- Titre ---
   .empty-menu-title {
     font-size: clamp(1.5rem, 3vw, 2rem);
     font-weight: 700;
     color: $tertiary;
+    line-height: 1.3;
     margin-bottom: $spacer;
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    letter-spacing: -0.01em;
   }
 
+  // --- Texte ---
   .empty-menu-text {
     font-size: clamp(1rem, 2vw, 1.125rem);
     color: $gray-600;
     line-height: 1.7;
     margin-bottom: $spacer-lg;
-    transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+    max-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
+  // --- Bouton CTA ---
   .empty-menu-cta {
     display: inline-flex;
     align-items: center;
     gap: $spacer-sm;
-    padding: $spacer-sm $spacer-lg;
+    padding: $spacer-sm + 0.25rem $spacer-lg;
     font-size: 1rem;
     font-weight: 600;
-    border-radius: $border-radius;
-    background: $primary;
+    font-family: inherit;
+    line-height: 1.5;
+    text-decoration: none;
+    border-radius: $border-radius-pill;
+    border: none;
+    background: linear-gradient(135deg, $primary, $primary-dark);
     color: $white;
-    transition: all 0.3s ease;
+    cursor: pointer;
+    transition: all $transition-time-normal $transition-ease;
+    box-shadow: 0 4px 15px rgba($primary, 0.25);
 
     i.bi {
-      transition: transform 0.25s ease;
+      transition: transform $transition-time-fast $transition-ease;
     }
 
     &:hover {
-      background: #2188b8;
-      gap: $spacer;
+      background: linear-gradient(135deg, $primary-dark, $primary);
+      color: $white;
+      text-decoration: none;
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba($primary, 0.3);
+      box-shadow: 0 8px 25px rgba($primary, 0.35);
 
       i.bi {
-        transform: translateX(3px);
+        transform: translateX(4px);
       }
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 10px rgba($primary, 0.25);
     }
   }
 }
 
-.empty-menu-message-container:hover .empty-menu-message {
-  transform: translateY(-3px);
-}
+// ============================================
+// 7b. RESPONSIVE - Message vide
+// ============================================
 
-// Animations pour le message vide
-@keyframes emptyIconPulse {
-
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  50% {
-    transform: scale(1.2);
-    opacity: 0.8;
-  }
-}
-
-// Responsive pour le message vide
 @media (max-width: 767.98px) {
+  .empty-menu-message-container {
+    min-height: 40vh;
+    padding: $spacer-xl $spacer;
+  }
+
   .empty-menu-message {
+    padding: $spacer-xl $spacer-lg;
+
     .empty-menu-icon .icon-wrapper {
-      width: 70px;
-      height: 70px;
+      width: 72px;
+      height: 72px;
 
       i.bi {
-        font-size: 2rem;
+        font-size: 2.25rem;
       }
     }
 
     .empty-menu-title {
       font-size: 1.5rem;
     }
+
+    .empty-menu-text {
+      font-size: 1rem;
+    }
   }
 }
 
 @media (max-width: 575.98px) {
+  .empty-menu-message-container {
+    min-height: 35vh;
+    padding: $spacer-lg $spacer-sm;
+  }
+
   .empty-menu-message {
+    padding: $spacer-lg $spacer;
+    border-radius: $border-radius-xl;
+
     .empty-menu-icon .icon-wrapper {
       width: 60px;
       height: 60px;
+      border-width: 2px;
 
       i.bi {
         font-size: 1.75rem;
@@ -279,22 +361,49 @@
     }
 
     .empty-menu-text {
-      font-size: 1rem;
+      font-size: 0.95rem;
+      margin-bottom: $spacer;
+    }
+
+    .empty-menu-cta {
+      padding: $spacer-sm $spacer-lg;
+      font-size: 0.9rem;
     }
   }
 }
 
-// Reduced motion
+// ============================================
+// 7c. REDUCED MOTION - Message vide
+// ============================================
+
 @media (prefers-reduced-motion: reduce) {
+  .empty-menu-message {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
 
   .empty-menu-icon .icon-wrapper,
   .empty-menu-icon i.bi {
     animation: none !important;
     transform: none !important;
+    box-shadow: 0 4px 15px rgba($primary, 0.15) !important;
   }
 
   .empty-menu-message-container::before {
     animation: none !important;
+  }
+
+  .empty-menu-title,
+  .empty-menu-text,
+  .empty-menu-cta {
+    opacity: 1 !important;
+    animation: none !important;
+    clip-path: none !important;
+    transform: none !important;
+    filter: none !important;
   }
 }
 

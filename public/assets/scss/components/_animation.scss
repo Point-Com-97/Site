@@ -350,17 +350,100 @@ $black: #000000;
 }
 
 // --------------------------------------------
-// 12. ANIMATIONS POUR MESSAGE VIDE
+// 12. ANIMATIONS POUR MESSAGE VIDE (Empty Menu)
 // --------------------------------------------
 
+// Icône pulsante avec effet de glow
 @keyframes emptyIconPulse {
   0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.2); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 0.85; }
 }
+
+@keyframes emptyIconGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(41, 158, 205, 0.4),
+                0 0 20px rgba(41, 158, 205, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(41, 158, 205, 0),
+                0 0 40px rgba(41, 158, 205, 0.4);
+  }
+}
+
+// Révélation du titre (clip-path de bas en haut)
+@keyframes titleReveal {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0% 0);
+    transform: translateY(0);
+  }
+}
+
+// Apparition du texte (fade-in + slide-up)
+@keyframes textFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+// Apparition du CTA (slide-up avec élasticité)
+@keyframes ctaSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(25px) scale(0.95);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-3px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Pulse de fond subtil
+@keyframes emptyBgPulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+// Flottement subtil de la carte
+@keyframes emptyCardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+// Ondulation de la bordure (effet vivant)
+@keyframes borderShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+// --- Application des animations ---
 
 .empty-menu-icon {
   display: inline-block;
-  
+
   .icon-wrapper {
     display: inline-flex;
     align-items: center;
@@ -370,8 +453,10 @@ $black: #000000;
     border-radius: 50%;
     background: linear-gradient(135deg, rgba(41, 158, 205, 0.2), rgba(237, 142, 51, 0.2));
     border: 3px solid #299ECD;
-    animation: emptyIconPulse 3s ease-in-out infinite;
-    
+    animation:
+      emptyIconPulse 3s ease-in-out infinite,
+      emptyIconGlow 2.5s ease-in-out infinite;
+
     i.bi {
       font-size: 2.5rem;
       color: #299ECD;
@@ -380,23 +465,30 @@ $black: #000000;
   }
 }
 
+// Titre avec effet de révélation (clip-path)
 .empty-menu-title {
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  opacity: 0;
+  animation: titleReveal 0.8s ease-out 0.3s forwards;
 }
 
+// Texte avec fade-in + slide-up + déblur
 .empty-menu-text {
-  transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+  opacity: 0;
+  animation: textFadeInUp 0.7s ease-out 0.6s forwards;
 }
 
+// CTA avec apparition élastique
 .empty-menu-cta {
-  transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
-  
+  opacity: 0;
+  animation: ctaSlideIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.9s forwards;
+
   &:hover {
     transform: translateY(-2px) scale(1.02);
     box-shadow: 0 8px 20px rgba(41, 158, 205, 0.3);
   }
 }
 
+// Conteneur avec fond animé
 .empty-menu-message-container {
   position: relative;
   padding: 2rem 1rem;
@@ -413,11 +505,7 @@ $black: #000000;
   background: radial-gradient(circle, rgba(41, 158, 205, 0.05) 0%, transparent 70%);
   z-index: -1;
   animation: emptyBgPulse 4s ease-in-out infinite;
-}
-
-@keyframes emptyBgPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(41, 158, 205, 0.1); }
-  50% { box-shadow: 0 0 0 30px rgba(41, 158, 205, 0); }
+  pointer-events: none;
 }
 
 .empty-menu-message {
@@ -428,7 +516,6 @@ $black: #000000;
 // --------------------------------------------
 // 13. REDUCED MOTION
 // --------------------------------------------
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -448,13 +535,36 @@ $black: #000000;
     animation: none !important;
   }
 
+  // Empty menu message - désactiver les animations mais tout afficher
   .empty-menu-icon .icon-wrapper,
   .empty-menu-icon i.bi {
     animation: none !important;
     transform: none !important;
+    box-shadow: none !important;
   }
 
   .empty-menu-message-container::before {
     animation: none !important;
   }
+
+  .empty-menu-title {
+    opacity: 1 !important;
+    animation: none !important;
+    clip-path: none !important;
+    transform: none !important;
+  }
+
+  .empty-menu-text {
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .empty-menu-cta {
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+  }
 }
+

@@ -45,7 +45,7 @@ $empty_message_cta_url = $conf['empty_cta_url'] ?? null;
 <div class="container py-4">
     <?php render_blocs($all_blocs); ?>
 
-    <?php if (empty($all_blocs) && !$est_contact && empty($pages_liees) && empty($conf)): ?>
+    <?php if (empty($all_blocs) && !$est_contact && empty($pages_liees)): ?>
         <div class="row justify-content-center py-5">
             <div class="col-12 col-md-10 col-lg-8">
                 <!-- NOUVEAU MESSAGE ANIMÉ POUR MENU VIDE -->
