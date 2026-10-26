@@ -1,0 +1,43 @@
+# ============================================================
+# .htaccess racine - Compatible dev local (DocumentRoot=racine) et OVH (DocumentRoot=public)
+# ============================================================
+
+Options -Indexes
+
+# --- Redirection vers public/ (en dev local, DocumentRoot = racine du projet) ---
+# Si la ressource existe dans public/, la servir depuis la
+RewriteEngine On
+
+# Ne pas rediriger si deja dans /public/
+RewriteCond %{REQUEST_URI} !^/public/
+
+# Ne pas rediriger les dossiers sensibles (proteges ci-dessous)
+RewriteCond %{REQUEST_URI} !^/(src|data|var|vendor|node_modules)/
+RewriteCond %{REQUEST_URI} !^/admin/auth/
+
+# Rediriger vers public/ si le fichier ou dossier y existe
+RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -d
+RewriteRule ^(.*)$ public/$1 [L]
+
+# --- Protections ---
+
+# Bloquer les fichiers caches (.env, .git, etc.)
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# Dossiers sensibles -> 404
+RedirectMatch 404 ^/(src|data|var|vendor|node_modules)/
+RedirectMatch 404 ^/admin/auth/
+
+# Fichiers sensibles -> 403
+<FilesMatch "\.log$">
+    Require all denied
+</FilesMatch>
+<FilesMatch "\.sql$">
+    Require all denied
+</FilesMatch>
+<FilesMatch "(composer\.(json|lock)|package(-lock)?\.json)$">
+    Require all denied
+</FilesMatch>

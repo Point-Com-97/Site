@@ -1,3 +1,9 @@
 User-agent: *
+Allow: /
 Disallow: /admin/
+Disallow: /Test/
+Disallow: /uploads/
+Disallow: /contact-send.php
+Disallow: /search.php
+
 Sitemap: https://www.cfa-pcom.fr/sitemap.xml

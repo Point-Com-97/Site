@@ -1,4 +1,14 @@
 <?php
+/**
+ * Point d'entrée principal du site (front controller).
+ * Toute requête non-fichier est routée ici via .htaccess.
+ */
+
+declare(strict_types=1);
+
+// Configuration sécurisée des sessions (cookies httponly, secure, samesite)
+require_once __DIR__ . '/../src/config/session.php';
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -8,10 +18,13 @@ const ACCUEIL = 'centre-de-formation';
 require_once __DIR__ . '/../src/php/Page.php';
 require_once __DIR__ . '/../src/php/Bloc.php';
 require_once __DIR__ . '/../src/php/Media.php';
+require_once __DIR__ . '/../src/php/helpers.php';
 require_once __DIR__ . '/../src/config/menus.php';
 require_once __DIR__ . '/templates/admin/item/menu.php';
 
-// Affiche la page 404 avec le vrai code HTTP, puis arrête le script
+/**
+ * Affiche la page 404 avec le vrai code HTTP, puis arrête le script.
+ */
 function page_404(): never
 {
     http_response_code(404);
@@ -28,7 +41,17 @@ function page_404(): never
     exit;
 }
 
+/**
+ * Valide le format d'un slug : lettres minuscules, chiffres, tirets uniquement.
+ * Évite les caractères spéciaux, espaces, etc.
+ */
+function slug_valide(string $slug): bool
+{
+    return (bool) preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slug);
+}
+
 try {
+    // Nettoyage et décodage de l'URI
     $chemin = trim(rawurldecode((string) parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)), '/');
 
     // "/" = accueil ; "/centre-de-formation" est redirigé vers "/" (une seule URL par page)
@@ -37,10 +60,18 @@ try {
         exit;
     }
 
+    // Déterminer le slug de la page demandée
     $slug = ($chemin === '') ? ACCUEIL : $chemin;
+
+    // Validation du format du slug (défense en profondeur)
+    // Si le slug ne correspond pas au format attendu, c'est une 404
+    if (!slug_valide($slug)) {
+        page_404();
+    }
 
     $is_admin = !empty($_SESSION['admin_id']);
 
+    // Récupération de la page (requête préparée, safe contre l'injection SQL)
     $pages = new Page();
     $current_page = $pages->getBySlug($slug);
 

@@ -1,12 +1,14 @@
 <?php
+declare(strict_types=1);
+
 require __DIR__ . '/../../auth-check.php';
 
 require_once __DIR__ . '/../../../../src/php/Csrf.php';
 
-// Définir l'en-tête de réponse pour indiquer que le contenu est au format JSON
 header('Content-Type: application/json; charset=utf-8');
 
-if (!verifier_csrf_token($_POST['csrf_token'] ?? $_GET['csrf_token'] ?? null)) {
+// CSRF : POST uniquement
+if (!verifier_csrf_token($_POST['csrf_token'] ?? null)) {
     echo json_encode(['success' => false, 'message' => 'Requête invalide']);
     exit;
 }
@@ -14,9 +16,12 @@ if (!verifier_csrf_token($_POST['csrf_token'] ?? $_GET['csrf_token'] ?? null)) {
 require_once __DIR__ . '/../../../../src/php/Media.php';
 require_once __DIR__ . '/../../../templates/admin/item/media.php';
 
-
-// Récupérer le paramètre de tri depuis la requête GET, par défaut 'created_at'
-$tri = $_GET['tri'] ?? 'created_at';
+// Récupérer le paramètre de tri (whitelist)
+$tri = $_POST['tri'] ?? 'created_at';
+$colonnesAutorisees = ['created_at', 'titre'];
+if (!in_array($tri, $colonnesAutorisees, true)) {
+    $tri = 'created_at';
+}
 
 $new_media = new Media();
 $medias = $new_media->getAll($tri);

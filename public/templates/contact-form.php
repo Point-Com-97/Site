@@ -1,6 +1,17 @@
 <?php
-// Jeton CSRF + heure d'affichage (anti-robot : un humain met plus de 3 s à remplir)
+/**
+ * Formulaire de contact avec protections anti-spam.
+ */
+
+require_once __DIR__ . '/../../src/config/session.php';
 require_once __DIR__ . '/../../src/php/Csrf.php';
+require_once __DIR__ . '/../../src/php/helpers.php';
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Enregistrer le timestamp d'affichage du formulaire (anti-robot rapide)
 $_SESSION['contact_time'] = time();
 ?>
 <div class="contact-form-wrapper reveal">

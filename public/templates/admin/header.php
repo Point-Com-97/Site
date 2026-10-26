@@ -1,3 +1,13 @@
+<?php
+require_once __DIR__ . '/../../../src/config/session.php';
+require_once __DIR__ . '/../../../src/php/Csrf.php';
+require_once __DIR__ . '/../../../src/php/helpers.php';
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$csrf_logout = generer_csrf_token();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -9,10 +19,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/assets/scss/main.css">
-    <link href="/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/vendor/quill/quill.snow.css" rel="stylesheet">
 </head>
-
 
 <body>
     <nav class="navbar sticky-top navbar-expand-lg bg-primary navbar-animate" id="navbar">
@@ -27,7 +36,7 @@
                 </a>
                 <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                     <li class="nav-item">
-                        <a class="nav-link" id="nav-item" aria-current="page" href="/" target="_blank">Voir Site</a>
+                        <a class="nav-link" id="nav-item" aria-current="page" href="/" target="_blank" rel="noopener noreferrer">Voir Site</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="nav-item" aria-current="page" href="/admin/dashboard.php">Tableau de bord</a>
@@ -39,7 +48,12 @@
 
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 nav-underline">
                     <li class="nav-item">
-                        <a class="btn btn-danger" id="nav-item" href="/admin/logout.php"><i class="bi bi-x-circle-fill"></i></a>
+                        <form method="post" action="/admin/logout.php" class="d-inline">
+                            <input type="hidden" name="csrf_token" value="<?= e($csrf_logout) ?>">
+                            <button type="submit" class="btn btn-danger" id="nav-item" title="Déconnexion">
+                                <i class="bi bi-x-circle-fill"></i>
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </div>

@@ -1,35 +1,34 @@
 <?php
-require_once __DIR__ . '/../../data/config/database.php';
+/**
+ * Classe d'authentification admin.
+ */
 
+declare(strict_types=1);
+
+require_once __DIR__ . '/../../data/config/database.php';
+require_once __DIR__ . '/../../src/php/Logger.php';
 
 class Admin
-
 {
-
-    private $pdo;
+    private PDO $pdo;
 
     public function __construct()
     {
-        $this->pdo = getConnexion(); // Connexion a la base de données
+        $this->pdo = getConnexion();
     }
 
-
-    public function getByUsername($username)
+    /**
+     * Récupère un admin par son nom d'utilisateur.
+     */
+    public function getByUsername(string $username): array|false
     {
-
         try {
-            // Préparer la requête SQL pour récupérer l'administrateur par nom d'utilisateur
             $stmt = $this->pdo->prepare("SELECT * FROM admins WHERE username = ?");
-
             $stmt->execute([$username]);
-
             return $stmt->fetch(PDO::FETCH_ASSOC);
-
         } catch (PDOException $e) {
-
-            error_log("Erreur de requête SQL : " . $e->getMessage(),3, __DIR__ . "../../var/tmp/erreur.log");
-
-            return $stmt = [];
+            log_exception($e, 'Admin::getByUsername');
+            return false;
         }
     }
 }

@@ -1,5 +1,74 @@
+# ============================================================
+# .htaccess public - Configuration du front controller + sécurité
+# OVH Cloud Web Eco (offre Perso) - Apache 2.4
+# ============================================================
+
+# --- Réécriture d'URL (Front Controller) ---
 RewriteEngine On
+
+# Rediriger /sitemap.xml vers sitemap.php
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+# Ne PAS rediriger les fichiers statiques vers index.php
+# (évite les erreurs de type MIME : HTML reçu à la place de CSS/JS)
+RewriteCond %{REQUEST_URI} \.(css|js|png|jpg|jpeg|gif|svg|ico|webp|woff|woff2|ttf|eot|mp4|webm|pdf|xml|txt|json|map)$ [NC]
+RewriteRule ^ - [L]
+
+# Toutes les autres requêtes non-fichier vers index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php [QSA,L]
+
+# --- En-têtes de sécurité HTTP ---
+<IfModule mod_headers.c>
+    # Empêcher le sniffing MIME
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Protection contre le clickjacking
+    Header always set X-Frame-Options "SAMEORIGIN"
+
+    # Politique de référent stricte
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Content Security Policy
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://www.dailymotion.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
+
+    # Permissions Policy
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+
+    # HSTS (décommenter en production avec HTTPS)
+    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+    # Supprimer les headers serveur révélateurs
+    Header always unset X-Powered-By
+    Header always unset Server
+</IfModule>
+
+# --- Désactiver l'affichage des répertoires ---
+Options -Indexes
+
+# --- Interdire l'accès aux fichiers sensibles (cachés) ---
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# --- Protection contre les attaques par traversal ---
+RewriteCond %{REQUEST_URI} \.\./ [OR]
+RewriteCond %{QUERY_STRING} \.\./
+RewriteRule ^ - [F,L]
+
+# --- Forcer HTTPS (décommenter en production) ---
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# --- Bloquer les requêtes avec des caractères suspects ---
+RewriteCond %{QUERY_STRING} (<|%3C)([^s]*s)+cript.*(>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} GLOBALS(=|\[|%[0-9A-Z]{0,2}) [OR]
+RewriteCond %{QUERY_STRING} _REQUEST(=|\[|%[0-9A-Z]{0,2})
+RewriteRule ^ - [F,L]
+
+# --- Limiter la taille des requêtes POST (upload max 10Mo + marge) ---
+LimitRequestBody 12582912
+
+# --- Bloquer l'accès au dossier de test ---
+RewriteRule ^Test(/|$) - [F,L]

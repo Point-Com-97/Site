@@ -1,76 +1,98 @@
 <?php
+/**
+ * Mise à jour d'un bloc de contenu.
+ * Le contenu texte est sanitisé à la réception.
+ */
+
+declare(strict_types=1);
+
 require __DIR__ . '/../auth-check.php';
 
 require_once __DIR__ . '/../../../src/php/Csrf.php';
+require_once __DIR__ . '/../../../src/php/HtmlSanitizer.php';
+require_once __DIR__ . '/../../../src/php/helpers.php';
 
-if (!verifier_csrf_token($_POST['csrf_token'] ?? $_GET['csrf_token'] ?? null)) {
+// CSRF : POST uniquement (pas de GET pour éviter la fuite du token)
+if (!verifier_csrf_token($_POST['csrf_token'] ?? null)) {
     echo json_encode(['success' => false, 'message' => 'Requête invalide']);
     exit;
 }
 
 require_once __DIR__ . '/../../../src/php/Bloc.php';
 
-// Définir l'en-tête de réponse pour indiquer que le contenu est au format JSON
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
-$id = $_POST['id'] ?? null;
-$type = $_POST['type'] ?? null;
-$classes = htmlspecialchars($_POST['classes_css'] ?? '', ENT_QUOTES, 'UTF-8');
+$id = (int) ($_POST['id'] ?? 0);
+$type = $_POST['type'] ?? '';
+$classes = htmlspecialchars($_POST['classes_css'] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+if ($id <= 0) {
+    echo json_encode(['success' => false, 'message' => 'ID invalide']);
+    exit;
+}
 
 switch ($type) {
     case 'texte':
+        // Sanitiser le HTML de l'éditeur Quill
         $donnees = [
-            'contenu' => $_POST['contenu'],
+            'contenu' => HtmlSanitizer::nettoyer($_POST['contenu'] ?? ''),
             'classes' => $classes
         ];
         break;
+
     case 'video':
+        $url = trim($_POST['url'] ?? '');
+        $parsed = parse_url($url);
+        $hotesAutorises = ['www.youtube.com', 'www.youtube-nocookie.com', 'youtube.com', 'player.vimeo.com', 'www.dailymotion.com'];
+        if (($parsed['scheme'] ?? '') !== 'https' || !in_array($parsed['host'] ?? '', $hotesAutorises, true)) {
+            echo json_encode(['success' => false, 'message' => 'URL vidéo non autorisée']);
+            exit;
+        }
         $donnees = [
-            'url' => $_POST['url'],
-            'legende' => $_POST['legende'],
+            'url' => $url,
+            'legende' => htmlspecialchars($_POST['legende'] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
             'classes' => $classes
         ];
         break;
+
     case 'image':
         $donnees = [
-            'media_id' => (int) $_POST['media_id'],
-            'legende' => $_POST['legende'],
+            'media_id' => (int) ($_POST['media_id'] ?? 0),
+            'legende' => htmlspecialchars($_POST['legende'] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
             'classes' => $classes
         ];
         break;
-    case 'stats':
 
+    case 'stats':
         $all_labels = [];
         $all_data = [];
         $count = 1;
-
         while (!empty($_POST["labels_{$count}"])) {
-            $all_labels[] = $_POST["labels_{$count}"];
-            $all_data[] = (float) $_POST["data_{$count}"];
+            $all_labels[] = htmlspecialchars($_POST["labels_{$count}"], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            $all_data[] = (float) ($_POST["data_{$count}"] ?? 0);
             $count++;
         }
-
         $donnees = [
-            "type" => $_POST['chart_type'],
+            "type" => htmlspecialchars($_POST['chart_type'] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
             "data" => [
                 "labels" => $all_labels,
                 "datasets" => [
                     [
-                        "label" => $_POST['dataset_label'],
+                        "label" => htmlspecialchars($_POST['dataset_label'] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
                         "data" => $all_data
                     ]
                 ]
             ],
             "classes" => $classes
         ];
-
         break;
+
     case 'tableau':
-        $name_tab = htmlspecialchars($_POST['name_tab'] ?? '', ENT_QUOTES, 'UTF-8');
+        $name_tab = htmlspecialchars($_POST['name_tab'] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
         $all_col = [];
         $count = 1;
         while (!empty($_POST["col_{$count}"])) {
-            $all_col[] = $_POST["col_{$count}"];
+            $all_col[] = htmlspecialchars($_POST["col_{$count}"], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
             $count++;
         }
         $nb_colonnes = count($all_col);
@@ -80,7 +102,7 @@ switch ($type) {
         while (isset($_POST["cell_{$ligne_count}_1"]) && $_POST["cell_{$ligne_count}_1"] !== '') {
             $ligne = [];
             for ($col_index = 1; $col_index <= $nb_colonnes; $col_index++) {
-                $ligne[] = $_POST["cell_{$ligne_count}_{$col_index}"] ?? '';
+                $ligne[] = htmlspecialchars($_POST["cell_{$ligne_count}_{$col_index}"] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
             }
             $all_lignes[] = $ligne;
             $ligne_count++;
@@ -88,12 +110,13 @@ switch ($type) {
 
         $donnees = ["nom" => $name_tab, "colonnes" => $all_col, "lignes" => $all_lignes, "classes" => $classes];
         break;
+
     default:
         echo json_encode(['success' => false, 'message' => 'Type invalide']);
         exit;
 }
 
 $bloc = new Bloc();
-$resultat = $bloc->update((int) $id, $donnees);
+$resultat = $bloc->update($id, $donnees);
 
 echo json_encode(['success' => (bool) $resultat]);

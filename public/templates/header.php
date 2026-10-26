@@ -1,9 +1,11 @@
 <?php
+require_once __DIR__ . '/../../src/config/session.php';
+require_once __DIR__ . '/../../src/config/menus.php';
+require_once __DIR__ . '/../../src/php/helpers.php';
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once __DIR__ . '/../../src/config/menus.php';
-require_once __DIR__ . '/../../src/php/helpers.php';
 
 const SITE_URL = 'https://www.cfa-pcom.fr';
 
@@ -48,7 +50,7 @@ function menu_href(array $m): string
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/assets/image/ico.png">
-    <link rel="stylesheet" href="assets/scss/main.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
 
     <title><?= $titre_page ?> - Point Com</title>
     <meta name="description" content="<?= $description ?>">

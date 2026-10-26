@@ -1,4 +1,12 @@
 <?php
+/**
+ * Rendu des blocs de contenu côté public.
+ * Le contenu texte (éditeur Quill) est sanitisé avant affichage.
+ */
+
+require_once __DIR__ . '/../../src/php/helpers.php';
+require_once __DIR__ . '/../../src/php/HtmlSanitizer.php';
+
 // Domaines autorisés pour les vidéos (iframes)
 const VIDEO_HOTES = ['www.youtube.com', 'www.youtube-nocookie.com', 'youtube.com', 'player.vimeo.com', 'www.dailymotion.com'];
 
@@ -8,8 +16,11 @@ function video_url_valide(string $url): bool
     return ($p['scheme'] ?? '') === 'https' && in_array($p['host'] ?? '', VIDEO_HOTES, true);
 }
 
-// Affiche tous les blocs d'une page. Le texte (éditeur Quill) est du HTML écrit par l'admin : il est affiché tel quel.
-// Tout le reste est échappé.
+/**
+ * Affiche tous les blocs d'une page.
+ * Le texte (éditeur Quill) est du HTML écrit par l'admin : il est sanitisé avant affichage.
+ * Tout le reste est échappé.
+ */
 function render_blocs(array $blocs): void
 {
     foreach ($blocs as $bloc) {
@@ -18,11 +29,13 @@ function render_blocs(array $blocs): void
 
         switch ($bloc['type']) {
             case 'texte':
-                echo '<div class="bloc reveal ' . $classes . '">' . ($d['contenu'] ?? '') . '</div>';
+                // Sanitiser le HTML de l'éditeur Quill (anti-XSS)
+                $contenu = HtmlSanitizer::nettoyer($d['contenu'] ?? '');
+                echo '<div class="bloc reveal ' . $classes . '">' . $contenu . '</div>';
                 break;
 
             case 'image':
-                $media = (new Media())->getById($d['media_id'] ?? 0);
+                $media = (new Media())->getById((int) ($d['media_id'] ?? 0));
                 if (!empty($media)) {
                     echo '<div class="bloc reveal ' . $classes . '"><img src="' . e($media['url']) . '" alt="' . e($d['legende'] ?? '')
                         . '" loading="lazy" class="img-fluid rounded d-block mx-auto"></div>';
@@ -49,7 +62,7 @@ function render_blocs(array $blocs): void
                 echo '<div class="table-responsive bloc reveal"><table class="table table-hover table-striped table-light caption-top ' . $classes . '">';
                 echo '<caption class="table-name">' . e($d['nom'] ?? '') . '</caption><thead><tr>';
                 foreach ($d['colonnes'] ?? [] as $col) {
-                    echo '<th>' . e($col) . '</th>';
+                    echo '<th>' . e((string) $col) . '</th>';
                 }
                 echo '</tr></thead><tbody>';
                 foreach ($d['lignes'] ?? [] as $ligne) {
