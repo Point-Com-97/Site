@@ -65,7 +65,7 @@ $icones_sous_menus = [
             <section class="formation-rubrique mb-5 reveal">
                 <div class="formation-rubrique-header d-flex align-items-center gap-3 mb-4">
                     <div class="formation-rubrique-icon">
-                        <i class="bi <?= e($icone_sm) ?>"></i>
+                        <i class="bi ico <?= e($icone_sm) ?>"></i>
                     </div>
                     <div>
                         <h2 class="h3 mb-1"><?= e($label) ?></h2>

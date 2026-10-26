@@ -28,8 +28,7 @@ $flash = get_flash();
             <div class="col-12 col-md-6 col-lg-3">
                 <div class="footer-block">
                     <h5 class="footer-title"><i class="bi bi-clock-fill"></i>Horaires</h5>
-                    <p class="footer-text mb-1">Lundi : 08:30 - 12:30</p>
-                    <p class="footer-text mb-1">Mardi - Vendredi</p>
+                    <p class="footer-text mb-1">Lundi - Vendredi</p>
                     <p class="footer-text mb-1"> Matin : 08:30 - 12:30</p>
                     <p class="footer-text mb-1"> Après-midi : 13:30 - 16:15</p>
                     <h5 class="footer-title pt-3"><i class="bi bi-share-fill"></i> Réseaux sociaux</h5>

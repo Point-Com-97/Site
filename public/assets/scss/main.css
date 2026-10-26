@@ -13833,7 +13833,7 @@ svg {
   position: sticky;
   top: 0;
   z-index: 1020;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.5rem;
   overflow-x: clip;
   background: linear-gradient(45deg, #412872, #299ECD, #412872);
   background-size: 200% 200%;
@@ -13878,7 +13878,7 @@ svg {
 }
 .navbar-brand {
   padding: 0;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
 }
 .navbar-brand:hover {
   text-decoration: none;
@@ -13920,7 +13920,7 @@ svg {
   }
 }
 .navbar-nav {
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   flex-wrap: nowrap;
 }
 
@@ -13929,16 +13929,16 @@ svg {
   flex-shrink: 0;
 }
 .nav-item + .nav-item {
-  margin-left: 0.5rem;
+  margin-left: 0.125rem;
 }
 
 .nav-link {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.5rem;
+  gap: 0.25rem;
+  padding: 0.5rem 0.3rem;
   color: #ffffff;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: bold;
   border-radius: 0.25rem;
   transition: color 0.3s ease, background 0.3s ease;
@@ -13946,8 +13946,8 @@ svg {
   white-space: nowrap;
 }
 .nav-link i.bi {
-  font-size: 1.2em;
-  min-width: 1.2em;
+  font-size: 1.1em;
+  min-width: 1.1em;
   text-align: center;
   flex-shrink: 0;
 }
@@ -13987,7 +13987,7 @@ svg {
 }
 
 .nav-item.dropdown .nav-link {
-  padding-right: 1.5rem;
+  padding-right: 0.3rem;
 }
 .nav-item.dropdown .dropdown-menu {
   min-width: 10rem;
@@ -14004,6 +14004,7 @@ svg {
     border-top-right-radius: 0.375rem;
   }
 }
+
 .dropdown-item {
   display: flex;
   align-items: center;
@@ -14055,14 +14056,20 @@ svg {
 
 .nav-caret {
   color: #ffffff;
-  padding: 0 0.2rem;
   background: transparent;
   border: none;
   cursor: pointer;
   transition: transform 0.3s ease;
+  padding: 1.2rem 0.45rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .nav-caret:hover, .nav-caret:focus {
   color: #ED8E33;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.25rem;
 }
 .nav-caret::before {
   display: none;
@@ -14075,10 +14082,10 @@ svg {
   height: 0;
   margin-left: 0;
   vertical-align: middle;
-  border-top: 5px solid #ffffff;
-  border-right: 5px solid transparent;
+  border-top: 4px solid #ffffff;
+  border-right: 4px solid transparent;
   border-bottom: 0;
-  border-left: 5px solid transparent;
+  border-left: 4px solid transparent;
   transition: transform 0.3s ease;
 }
 
@@ -14093,8 +14100,8 @@ svg {
   background: transparent;
   border: none;
   color: #ffffff;
-  font-size: 1.25rem;
-  padding: 0.4rem 0.6rem;
+  font-size: 1.1rem;
+  padding: 0.4rem 0.4rem;
   border-radius: 0.25rem;
   cursor: pointer;
   transition: color 0.3s ease, background 0.3s ease;
@@ -14202,7 +14209,7 @@ svg {
   }
   .nav-link.dropdown-toggle::after {
     content: "▼";
-    font-size: 0.8em;
+    font-size: 0.8rem;
     transition: transform 0.3s ease;
   }
   .nav-link.dropdown-toggle[aria-expanded=true]::after {
@@ -15015,7 +15022,7 @@ svg {
   top: 0.5rem;
   left: 0.5rem;
   padding: 0.5rem 1rem;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   color: #ffffff;
   background: #412872;
@@ -15056,8 +15063,8 @@ svg {
   gap: 0.5rem;
 }
 .news-card .news-card-meta .news-read-more {
-  color: #299ECD;
-  font-weight: 500;
+  color: #ED8E33;
+  font-weight: 600;
 }
 .news-card .news-card-meta .news-read-more:hover {
   color: #2188b8;
@@ -16494,7 +16501,7 @@ svg {
 }
 .formation-rubrique .formation-rubrique-header .formation-rubrique-icon i.bi {
   font-size: 1.75rem;
-  color: #299ECD;
+  color: #ED8E33;
 }
 .formation-rubrique .formation-rubrique-header h2, .formation-rubrique .formation-rubrique-header .h2 {
   color: #412872;
@@ -16536,13 +16543,18 @@ svg {
 .formation-card .formation-card-footer .formation-link {
   color: #299ECD;
   font-weight: 500;
-  font-size: 0.875rem;
+  font-size: 1rem;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
 }
 .formation-card .formation-card-footer .formation-link i {
   transition: transform 0.25s ease;
+}
+.formation-card .formation-card-footer .formation-link:hover {
+  background-color: rgb(202, 237, 255);
+  border-radius: 10px;
+  padding: 8px;
 }
 .formation-card:hover, .formation-card:focus-within {
   transform: translateY(-4px);
@@ -16563,6 +16575,7 @@ svg {
   border: 1px solid #e9ecef;
   position: relative;
   overflow: hidden;
+  text-align: center;
 }
 .recrutement-intro .recrutement-intro-card::before {
   content: "";
@@ -16585,7 +16598,7 @@ svg {
 }
 .recrutement-intro .recrutement-intro-card .recrutement-intro-icon i.bi {
   font-size: 2rem;
-  color: #299ECD;
+  color: #ED8E33;
 }
 
 .alternance-section {
@@ -16637,7 +16650,7 @@ svg {
 }
 .alternance-section .alternance-avantages .alternance-avantage .alternance-avantage-icon i.bi {
   font-size: 1.25rem;
-  color: #299ECD;
+  color: #ED8E33;
 }
 .alternance-section .alternance-avantages .alternance-avantage h3, .alternance-section .alternance-avantages .alternance-avantage .h3 {
   color: #412872;
@@ -16912,7 +16925,7 @@ svg {
 }
 .bilan-publics .public-card > i.bi {
   font-size: 2.5rem;
-  color: #299ECD;
+  color: #ED8E33;
   margin-bottom: 1rem;
 }
 .bilan-publics .public-card h3, .bilan-publics .public-card .h3 {
@@ -16972,7 +16985,7 @@ svg {
 }
 .contact-form-card .contact-form-header .contact-form-icon i.bi {
   font-size: 2rem;
-  color: #299ECD;
+  color: #ED8E33;
 }
 .contact-form-card .contact-form-header h2, .contact-form-card .contact-form-header .h2 {
   color: #412872;
@@ -16993,7 +17006,7 @@ svg {
   color: #6c757d;
 }
 .contact-form-card .contact-form .form-floating > label i.bi {
-  color: #299ECD;
+  color: #ED8E33;
 }
 .contact-form-card .contact-form textarea.form-control {
   min-height: 150px;

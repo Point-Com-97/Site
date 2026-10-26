@@ -20,7 +20,7 @@ function list_menus(): array
         ],
         'nos-formations' => [
             'editable' => false, 
-            'label' => 'Nos formations', 
+            'label' => 'NOS FORMATION', 
             'intro' => "Découvrez l’ensemble de notre offre de formations, conçue pour répondre à vos besoins et accompagner l’évolution de vos compétences.", 
             'image' => '/assets/image/rubriques/formation.svg', 
             'icone' => 'bi-book', 
@@ -35,7 +35,7 @@ function list_menus(): array
         ],
         'recrutement' => [
             'editable' => false, 
-            'label' => 'Recrutement', 
+            'label' => 'RECRUTEMENT', 
             'intro' => "Retrouvez nos offres d’emploi ainsi que les opportunités proposées par nos entreprises partenaires à la recherche d’apprentis.", 
             'image' => '/assets/image/rubriques/recrutement.svg', 
             'icone' => 'bi-person-fill', 
@@ -49,7 +49,7 @@ function list_menus(): array
         ],
         'alternance' => [
             'editable' => false, 
-            'label' => 'Alternance', 
+            'label' => 'ALTERNANCE', 
             'intro' => "Un diplôme, une expérience professionnelle et un premier pas dans l’emploi : l’alternance, c’est tout cela à la fois.", 
             'image' => '/assets/image/rubriques/alternance.svg', 
             'icone' => 'bi-people', 
@@ -63,7 +63,7 @@ function list_menus(): array
         ],
         'rhf-inclusion' => [
             'editable' => false, 
-            'label' => 'RHF Inclusion', 
+            'label' => 'RHF INCLUSION', 
             'intro' => "Un engagement concret pour rendre la formation accessible à toutes et à tous.", 
             'icone' => 'bi-universal-access', 
             'image' => '/assets/image/rubriques/rhf.svg', 
@@ -76,7 +76,7 @@ function list_menus(): array
             'empty_cta_url' => '/contact'
         ],
         'stat' => [
-            'label' => 'Statistiques', 
+            'label' => 'STATISTIQUES', 
             'intro' => "Parce que la transparence compte, nous publions les résultats de nos formations, mis à jour chaque année.", 
             'image' => '/assets/image/rubriques/stats.svg', 
             'icone' => 'bi-graph-up', 
@@ -89,7 +89,7 @@ function list_menus(): array
             'empty_cta_url' => null
         ],
         'bilan' => [
-            'label' => 'Bilan de compétences', 
+            'label' => 'BILAN DE COMPÉTENCES', 
             'intro' => "Faites le point sur votre situation professionnelle et envisagez sereinement une évolution ou une reconversion.", 
             'image' => '/assets/image/rubriques/bilan.svg', 
             'icone' => 'bi-bar-chart', 
@@ -101,8 +101,8 @@ function list_menus(): array
             'empty_cta' => 'Prendre rendez-vous',
             'empty_cta_url' => '/contact'
         ],
-        'contact' => ['editable' => false, 'label' => 'Contact', 'icone' => 'bi-envelope', 'page' => 'contact', 'dropdown' => false],
-        'portail' => ['label' => 'Portail', 'icone' => 'bi-box-arrow-in-right', 'url' => 'https://point-com-97.github.io/Portail/', 'dropdown' => false],
+        'contact' => ['editable' => false, 'label' => 'CONTACT', 'icone' => 'bi-envelope', 'page' => 'contact', 'dropdown' => false],
+        'portail' => ['label' => "PORTAIL D'INSCRIPTION", 'icone' => 'bi-box-arrow-in-right', 'url' => 'https://point-com-97.github.io/Portail/', 'dropdown' => false],
     ];
     return $menus;
 }

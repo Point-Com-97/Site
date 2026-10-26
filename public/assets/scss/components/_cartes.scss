@@ -327,7 +327,7 @@ $hover-scale: 1.05;
       top: $spacer-sm;
       left: $spacer-sm;
       padding: $spacer-sm $spacer;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 600;
       color: $white;
       background: $tertiary;
@@ -374,8 +374,8 @@ $hover-scale: 1.05;
     }
     
     .news-read-more {
-      color: $primary;
-      font-weight: 500;
+      color: $secondary;
+      font-weight: 600;
       
       &:hover {
         color: #2188b8;

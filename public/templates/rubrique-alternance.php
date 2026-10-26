@@ -28,7 +28,7 @@
                 <div class="alternance-content">
                     <h2 class="h3 mb-4">L'alternance, un tremplin vers l'emploi</h2>
                     <p class="lead">L'alternance permet de combiner formation théorique en centre de formation et expérience pratique en entreprise. C'est la voie royale pour acquérir des compétences concrètes tout en préparant un diplôme reconnu.</p>
-                    <p>Chez Point Com, nous accompagnons chaque apprenti dans sa recherche d'entreprise et assurons un suivi personnalisé tout au long de son parcours. Notre équipe pédagogique reste à votre écoute pour garantir la réussite de votre projet professionnel.</p>
+                    <p>Chez Point Com, nous accompagnons chaque apprenti et assurons un suivi personnalisé tout au long de son parcours. Notre équipe pédagogique reste à votre écoute pour garantir la réussite de votre projet professionnel.</p>
                 </div>
             </div>
             <div class="col-12 col-lg-6 reveal">
@@ -76,14 +76,14 @@
                 <div class="etape-card text-center">
                     <div class="etape-numero">1</div>
                     <h3 class="h5">Candidature</h3>
-                    <p class="text-muted">Déposez votre candidature en ligne ou auprès de notre équipe.</p>
+                    <p class="text-muted">Déposez votre candidature auprès de notre équipe.</p>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3 reveal">
                 <div class="etape-card text-center">
                     <div class="etape-numero">2</div>
                     <h3 class="h5">Recherche d'entreprise</h3>
-                    <p class="text-muted">Nous vous accompagnons dans la recherche de votre entreprise d'accueil.</p>
+                    <p class="text-muted">Trouvez l'entreprise qui vous accueillera pendant votre alternance.</p>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3 reveal">
@@ -97,7 +97,7 @@
                 <div class="etape-card text-center">
                     <div class="etape-numero">4</div>
                     <h3 class="h5">Début de la formation</h3>
-                    <p class="text-muted">Votre alternance démarre : cours en centre et travail en entreprise.</p>
+                    <p class="text-muted">Votre alternance démarre : cours théorique en centre et travail en entreprise.</p>
                 </div>
             </div>
         </div>
