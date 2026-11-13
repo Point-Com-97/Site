@@ -1,7 +1,8 @@
 <?php
 /**
- * Configuration SMTP pour l'envoi d'emails.
- * Les credentials sont chargés depuis le fichier .env (hors versioning).
+ * Template de configuration SMTP pour l'envoi d'emails.
+ * Copiez ce fichier en mail.php (non versionne) : les credentials
+ * sont charges depuis le fichier .env (hors versioning).
  */
 
 declare(strict_types=1);

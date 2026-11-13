@@ -17,8 +17,8 @@
 │       └── vendor|font|image|video/
 ├── src/                   # Code source PHP (NON accessible web)
 ├── data/
-│   ├── config/            # database.php + mail.php VERSIONNES (sans secret, lisent .env)
-│   └── sql/               # Schema + seed (NON accessible web)
+│   ├── config/            # *.example.php VERSIONNES ; database.php + mail.php NON versionnes (creds dans .env)
+│   └── sql/               # Schema + seed NON versionnes (NON accessible web)
 ├── admin/                 # Auth admin (NON accessible web)
 ├── var/tmp/               # Logs (NON accessible web - a creer en FTP)
 └── vendor/                # Dependances Composer
@@ -37,8 +37,10 @@ git add public/assets/css/
 git commit -m "refonte: mise a jour CSS compile"
 ```
 
-> `data/config/database.php` et `data/config/mail.php` sont aussi versionnes :
-> ils ne contiennent plus aucun secret (les credentials sont dans `.env`).
+> `data/config/database.php`, `data/config/mail.php` et `data/sql/*.sql` ne sont
+> **pas versionnes** (fichiers sensibles exclus du depot public via `.gitignore`).
+> Sur le serveur, copiez `database.example.php` -> `database.php` et
+> `mail.example.php` -> `mail.php` : les credentials sont lus dans `.env`.
 
 ## Etapes de deploiement
 
@@ -72,7 +74,8 @@ APP_ENV=prod
 L'offre Perso se deploie par **FTP uniquement** (pas de SSH, pas de rsync).
 
 **Methode A - FTP (FileZilla)** : uploader tout le dossier du projet vers `/www/`
-**en EXCLUANT** : `.git/`, `node_modules/`, `.env`, `.env.example`, `var/`, `*.log`
+**en EXCLUANT** : `.git/`, `node_modules/`, `.env`, `var/`, `*.log`,
+`data/config/database.php`, `data/config/mail.php`, `data/sql/`
 
 **Methode B - git archive (recommande)** :
 
@@ -82,8 +85,11 @@ git archive --format=zip -o site.zip HEAD
 
 Uploader `site.zip` par FTP dans `/www/`, puis le dezipper (bouton "Extraire"
 dans le gestionnaire de fichiers OVH, ou en ligne de commande si SSH dispo).
-`git archive` n'inclut que les fichiers versionnes : `.env`, `var/tmp/` et
-`public/uploads/` devront etre crees manuellement (etapes 1 et 4).
+`git archive` n'inclut que les fichiers versionnes : `.env`, `var/tmp/`,
+`public/uploads/` devront etre crees manuellement (etapes 1 et 4), et
+`data/config/database.php` + `data/config/mail.php` doivent etre copies depuis
+les templates `*.example.php` versionnes (les credentials viennent du `.env`).
+`data/sql/shema.sql` n'est pas non plus versionne : le telecharger separement pour l'etape 6.
 
 ### 4. Creer les dossiers manquants + permissions
 
@@ -112,7 +118,7 @@ chmod 750 var/tmp/
 ### 6. Base de donnees
 
 1. Creer la BDD via phpMyAdmin OVH
-2. Importer `data/sql/shema.sql`
+2. Importer `data/sql/shema.sql` (fichier local, non versionne - a uploader manuellement)
 3. Creer un user BDD dedie (pas root)
 4. Mettre a jour `.env`
 
@@ -131,7 +137,7 @@ Si vous migrez un site existant :
 |---------|--------|
 | Credentials dans `.env` | OK |
 | CSS compiles versionnes dans Git | OK |
-| Config BDD/Mail versionnee sans secret | OK |
+| Config BDD/Mail + SQL non versionnes (hors depot public) | OK |
 | DocumentRoot = `public/` | A configurer OVH |
 | HTTPS force | A activer OVH |
 | HSTS | A decommenter |

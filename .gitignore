@@ -3,9 +3,17 @@ node_modules
 .env.local
 .env.production
 var
+*.sql
 data/sql/make-seed.php
 data/sql/seed.sql
 public/Test
+# Configs sensibles (credentials charges depuis .env) - non versionnees
+data/config/database.php
+data/config/mail.php
+
+# Uploads utilisateurs non versionnes, sauf le .htaccess de protection
+public/uploads/*
+!public/uploads/.htaccess
 
 # Logs
 *.log
