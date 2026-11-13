@@ -21,7 +21,7 @@ $border-radius-sm: 0.25rem;
 
 // 1. LOGO
 .logo {
-  max-width: 70px;
+  max-width: 55px;
   height: auto;
   border-radius: $border-radius;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
@@ -46,7 +46,7 @@ $border-radius-sm: 0.25rem;
 
 @media (max-width: 991.98px) {
   .logo {
-    max-width: 70px;
+    max-width: 55px;
   }
 }
 

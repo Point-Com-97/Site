@@ -5,11 +5,11 @@ function list_menus(): array
 {
     $menus = [
         'centre' => [
-            'editable' => false, 
-            'label' => 'ASSOCIATION POINT COM', 
-            'icone' => 'bi-building', 
-            'page' => 'centre-de-formation', 
-            'dropdown' => true, 
+            'editable' => false,
+            'label' => 'ASSOCIATION POINT COM',
+            'icone' => 'bi-building',
+            'page' => 'centre-de-formation',
+            'dropdown' => true,
             'liens' => [['label' => 'Catalogue', 'icone' => 'bi-journal-text', 'url' => 'https://www.canva.com/design/DAFQI_-V5xY/7p5Fap0JhS1J8emdZRf1Lg/view?utm_content=DAFQI_-V5xY&utm_campaign=designshare&utm_medium=link&utm_source=editor']],
             // Message personnalisé pour menu vide
             'empty_title' => 'Découvrez notre centre',
@@ -19,12 +19,12 @@ function list_menus(): array
             'empty_cta_url' => '/contact'
         ],
         'nos-formations' => [
-            'editable' => false, 
-            'label' => 'NOS FORMATION', 
-            'intro' => "Découvrez l’ensemble de notre offre de formations, conçue pour répondre à vos besoins et accompagner l’évolution de vos compétences.", 
-            'image' => '/assets/image/rubriques/formation.svg', 
-            'icone' => 'bi-book', 
-            'page' => 'nos-formations', 
+            'editable' => false,
+            'label' => 'NOS FORMATIONS',
+            'intro' => "Découvrez l’ensemble de notre offre de formations, conçue pour répondre à vos besoins et accompagner l’évolution de vos compétences.",
+            'image' => '/assets/image/rubriques/formation.svg',
+            'icone' => 'bi-book',
+            'page' => 'nos-formations',
             'sous_menus' => ['niveau-3' => 'Certification de niveau 3', 'niveau-4' => 'Certification de niveau 4', 'niveau-5' => 'Certification de niveau 5', 'atelier' => 'Atelier de formation'],
             'dropdown' => true,
             'empty_title' => 'Formations à venir',
@@ -33,27 +33,13 @@ function list_menus(): array
             'empty_cta' => 'Voir le catalogue',
             'empty_cta_url' => 'https://www.canva.com/design/DAFQI_-V5xY/7p5Fap0JhS1J8emdZRf1Lg/view?utm_content=DAFQI_-V5xY&utm_campaign=designshare&utm_medium=link&utm_source=editor'
         ],
-        'recrutement' => [
-            'editable' => false, 
-            'label' => 'RECRUTEMENT', 
-            'intro' => "Retrouvez nos offres d’emploi ainsi que les opportunités proposées par nos entreprises partenaires à la recherche d’apprentis.", 
-            'image' => '/assets/image/rubriques/recrutement.svg', 
-            'icone' => 'bi-person-fill', 
-            'page' => 'recrutement', 
-            'dropdown' => true,
-            'empty_title' => 'Pas d\'offres disponibles',
-            'empty_text' => 'Il n\'y a actuellement aucune offre d\'emploi ou d\'alternance publiée. Revenez régulièrement pour ne rien manquer.',
-            'empty_icon' => 'bi-briefcase-fill',
-            'empty_cta' => 'Être alerté des nouvelles offres',
-            'empty_cta_url' => '/contact'
-        ],
         'alternance' => [
-            'editable' => false, 
-            'label' => 'ALTERNANCE', 
-            'intro' => "Un diplôme, une expérience professionnelle et un premier pas dans l’emploi : l’alternance, c’est tout cela à la fois.", 
-            'image' => '/assets/image/rubriques/alternance.svg', 
-            'icone' => 'bi-people', 
-            'page' => 'alternance', 
+            'editable' => false,
+            'label' => 'ALTERNANCE',
+            'intro' => "Un diplôme, une expérience professionnelle et un premier pas dans l’emploi : l’alternance, c’est tout cela à la fois.",
+            'image' => '/assets/image/rubriques/alternance.svg',
+            'icone' => 'bi-people',
+            'page' => 'alternance',
             'dropdown' => true,
             'empty_title' => 'Alternance avec Point Com',
             'empty_text' => 'L\'alternance est un excellent moyen de se former tout en acquérant de l\'expérience professionnelle. Contactez-nous pour en savoir plus.',
@@ -61,13 +47,41 @@ function list_menus(): array
             'empty_cta' => 'Nous contacter',
             'empty_cta_url' => '/contact'
         ],
+        'bilan' => [
+            'label' => 'BILAN DE COMPÉTENCES',
+            'intro' => "Faites le point sur votre situation professionnelle et envisagez sereinement une évolution ou une reconversion.",
+            'image' => '/assets/image/rubriques/bilan.svg',
+            'icone' => 'bi-bar-chart',
+            'page' => 'bilan-de-competences',
+            'dropdown' => false,
+            'empty_title' => 'Bilan de compétences',
+            'empty_text' => 'Le bilan de compétences est un outil puissant pour faire le point sur vos acquis et envoyer une nouvelle dynamique à votre carrière.',
+            'empty_icon' => 'bi-clipboard-data-fill',
+            'empty_cta' => 'Prendre rendez-vous',
+            'empty_cta_url' => '/contact'
+        ],
+
+                'recrutement' => [
+            'editable' => false,
+            'label' => 'RECRUTEMENT',
+            'intro' => "Retrouvez nos offres d’emploi ainsi que les opportunités proposées par nos entreprises partenaires à la recherche d’apprentis.",
+            'image' => '/assets/image/rubriques/recrutement.svg',
+            'icone' => 'bi-person-fill',
+            'page' => 'recrutement',
+            'dropdown' => true,
+            'empty_title' => 'Pas d\'offres disponibles',
+            'empty_text' => 'Il n\'y a actuellement aucune offre d\'emploi ou d\'alternance publiée. Revenez régulièrement pour ne rien manquer.',
+            'empty_icon' => 'bi-briefcase-fill',
+            'empty_cta' => 'Être alerté des nouvelles offres',
+            'empty_cta_url' => '/contact'
+        ],
         'rhf-inclusion' => [
-            'editable' => false, 
-            'label' => 'RHF INCLUSION', 
-            'intro' => "Un engagement concret pour rendre la formation accessible à toutes et à tous.", 
-            'icone' => 'bi-universal-access', 
-            'image' => '/assets/image/rubriques/rhf.svg', 
-            'page' => 'rhf-inclusion', 
+            'editable' => false,
+            'label' => 'RHF INCLUSION',
+            'intro' => "Un engagement concret pour rendre la formation accessible à toutes et à tous.",
+            'icone' => 'bi-universal-access',
+            'image' => '/assets/image/rubriques/rhf.svg',
+            'page' => 'rhf-inclusion',
             'dropdown' => true,
             'empty_title' => 'Inclusion et accessibilité',
             'empty_text' => 'Nous travaillons activement pour rendre nos formations accessibles au plus grand nombre. Découvrez bientôt nos actions et engagements.',
@@ -76,30 +90,17 @@ function list_menus(): array
             'empty_cta_url' => '/contact'
         ],
         'stat' => [
-            'label' => 'STATISTIQUES', 
-            'intro' => "Parce que la transparence compte, nous publions les résultats de nos formations, mis à jour chaque année.", 
-            'image' => '/assets/image/rubriques/stats.svg', 
-            'icone' => 'bi-graph-up', 
-            'page' => 'statistiques', 
+            'label' => 'STATISTIQUES',
+            'intro' => "Parce que la transparence compte, nous publions les résultats de nos formations, mis à jour chaque année.",
+            'image' => '/assets/image/rubriques/stats.svg',
+            'icone' => 'bi-graph-up',
+            'page' => 'statistiques',
             'dropdown' => true,
             'empty_title' => 'Statistiques à venir',
             'empty_text' => 'Nos statistiques pour cette année sont en cours de compilation. Elles seront disponibles prochainement.',
             'empty_icon' => 'bi-bar-chart-fill',
             'empty_cta' => null,
             'empty_cta_url' => null
-        ],
-        'bilan' => [
-            'label' => 'BILAN DE COMPÉTENCES', 
-            'intro' => "Faites le point sur votre situation professionnelle et envisagez sereinement une évolution ou une reconversion.", 
-            'image' => '/assets/image/rubriques/bilan.svg', 
-            'icone' => 'bi-bar-chart', 
-            'page' => 'bilan-de-competences', 
-            'dropdown' => false,
-            'empty_title' => 'Bilan de compétences',
-            'empty_text' => 'Le bilan de compétences est un outil puissant pour faire le point sur vos acquis et envoyer une nouvelle dynamique à votre carrière.',
-            'empty_icon' => 'bi-clipboard-data-fill',
-            'empty_cta' => 'Prendre rendez-vous',
-            'empty_cta_url' => '/contact'
         ],
         'contact' => ['editable' => false, 'label' => 'CONTACT', 'icone' => 'bi-envelope', 'page' => 'contact', 'dropdown' => false],
         'portail' => ['label' => "PORTAIL D'INSCRIPTION", 'icone' => 'bi-box-arrow-in-right', 'url' => 'https://point-com-97.github.io/Portail/', 'dropdown' => false],
@@ -144,7 +145,7 @@ function destination_validation(string $valeur): ?array
         return null;                       // menu inconnu ou sans dropdown
     }
 
-    $sous_menus = list_menus()[$menu_slug]['sous_menus'] ?? []; 
+    $sous_menus = list_menus()[$menu_slug]['sous_menus'] ?? [];
 
     if ($sous_menus === []) {              // menu sans sous-menus : aucun sous-menu accepté
         return $sous_menu === null ? [$menu_slug, null] : null;
