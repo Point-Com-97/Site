@@ -1,7 +1,6 @@
 <?php
 /**
  * Chargeur de variables d'environnement depuis le fichier .env
- * Compatible OVH Cloud Web Eco (offre Perso) - pas de support natif des .env
  */
 
 declare(strict_types=1);

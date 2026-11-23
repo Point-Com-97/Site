@@ -105,8 +105,9 @@ $_SESSION['contact_time'] = time();
             <div class="contact-info-icon"><i class="bi bi-clock-fill"></i></div>
             <div>
                 <strong>Horaires</strong><br>
-                Lun : 08:30 - 12:30<br>
-                Mar - Ven : 08:30 - 12:30 / 13:30 - 16:15
+                Lundi - Vendredi<br>
+                Matin : 08:30 - 12:30<br>
+                Après-midi : 13:30 - 16:15
             </div>
         </div>
     </div>
