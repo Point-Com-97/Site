@@ -2,9 +2,6 @@
 # .htaccess uploads - Interdiction totale d'exécution de scripts
 # ============================================================
 
-# Désactiver le moteur PHP dans ce dossier
-php_flag engine off
-
 # Interdire tous les fichiers exécutables
 <FilesMatch "\.(php|php3|php4|php5|phtml|phar|inc|cgi|pl|py|sh|asp|aspx|jsp)$">
     Require all denied

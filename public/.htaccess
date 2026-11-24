@@ -72,4 +72,7 @@ RewriteRule ^Test(/|$) - [F,L]
 RewriteCond %{HTTPS} off [OR]
 RewriteCond %{HTTP_HOST} !^www\.cfa-pcom\.fr$ [NC]
 RewriteCond %{REQUEST_URI} !^/\.well-known/
+RewriteCond %{HTTP_HOST} !^localhost$ [NC]
+RewriteCond %{HTTP_HOST} !^127\.0\.0\.1$
+RewriteCond %{HTTP_HOST} !^192\.168\.
 RewriteRule ^(.*)$ https://www.cfa-pcom.fr/$1 [R=301,L]
